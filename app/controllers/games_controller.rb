@@ -11,6 +11,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    @game.slug = rand(10000).to_s
     @game.save
     redirect_to game_path(slug: @game.slug)
   end
@@ -22,6 +23,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:slug, :number_of_players)
+    params.require(:game).permit(:number_of_players, :slug)
   end
 end
