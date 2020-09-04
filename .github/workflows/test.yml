@@ -16,7 +16,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:11.6-alpine
         env:
           POSTGRES_PASSWORD: postgres
         ports:
