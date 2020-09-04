@@ -22,6 +22,12 @@ bundle install
 rails db:migrate
 ```
 
+* Running the Ruby tests
+
+```
+rspec
+```
+
 * Running the server
 
 ```
