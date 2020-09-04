@@ -10,7 +10,7 @@ PostgreSQL 12.2
 
 * Install library dependencies
 
-E.g. rails. These are managed by bundler:
+These are managed by bundler:
 
 ```bash
 bundle install
@@ -19,19 +19,21 @@ bundle install
 * Database creation
 
 ```bash
-rails db:migrate
+bundle exec rails db:migrate
 ```
+
+To avoid writing `bundle exec` all the time (which means 'use the bundled dependency, not the global version'), install rails globally (with the same version), or alias `rails` to `bundle exec rails` (preferred way).
 
 * Running the Ruby tests
 
 ```
-rspec
+bundle exec rspec
 ```
 
 * Running the server
 
 ```
-rails server
+bundle exec rails server
 ```
 
 Then visit http://localhost:3000
