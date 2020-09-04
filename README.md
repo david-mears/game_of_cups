@@ -14,6 +14,7 @@ These are managed by bundler:
 
 ```bash
 bundle install
+yarn install
 ```
 
 * Database creation
