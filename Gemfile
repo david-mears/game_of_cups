@@ -33,6 +33,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
   gem 'pry', '~> 0.12.2'
+  gem 'rspec_junit_formatter'
   gem 'rspec-rails'
   gem 'rubocop-rails', require: false
 end
