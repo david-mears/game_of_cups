@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.6-node
+      - image: circleci/ruby:2.7.1-node
     executor: ruby/default
     steps:
       - checkout
@@ -26,7 +26,7 @@ jobs:
     parallelism: 3 
     # here we set TWO docker images.
     docker:
-      - image: circleci/ruby:2.6.6-node # primary docker image
+      - image: circleci/ruby:2.7.1-node # primary docker image
       - image: circleci/postgres:9.5-alpine 
         environment:
           POSTGRES_USER: postgres
