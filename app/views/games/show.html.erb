@@ -1,8 +1,16 @@
-<h1>You are viewing the game called <%= @game.slug %></h1>
-<h2>Slug: <%= @game.slug %></h2>
-<h2>Players: <%= @game.players.count%></h2>
-<h2>Cups:</h2>
-<% @game.cups.each do |cup| %>
-  <h3><%= cup.human_readable_name%></h3>
-  <%= image_tag("cups/#{cup.image}", height: '100', alt: cup.human_readable_name) %>
-<% end %>
+<h1>You are viewing the game called <span class="newthought"><%= @game.slug %></span></h1>
+<section>
+<p>Slug: <%= @game.slug %></p>
+<p>Players: <%= @game.players.count%></p>
+<p>Cups:</p>
+</section>
+
+<section>
+  <% @game.cups.each do |cup| %>
+    <figure style="text-align: center">
+      <%= image_tag("cups/#{cup.image}", height: '100', alt: cup.human_readable_name) %>
+      <p><span class="newthought"><%= cup.human_readable_name%></span></p>
+    </figure>
+  <% end %>
+</section>
+

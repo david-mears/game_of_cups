@@ -1,11 +1,14 @@
-<h1>Avalon II</h1>
-<h2><i>Arthur's Choice</i></h2>
+<h1>The Game of Cups</h1>
 
-<%= form_with model: Game.new, url: 'games/find' do |f| %>
-  <%= label_tag :slug, 'Enter the name of an existing game:' %>
-  <%= f.text_field :slug %>
-  <%= f.submit "Next" %>
-<% end %>
+<p class="subtitle">A social deduction game in the genre of Werewolf, Mafia, Avalon, Secret Hitler, etc</p>
 
-<p>Or:</p>
-<%= link_to 'Make new game', new_game_path %>
+<section>
+  <%= form_with model: Game.new, url: 'games/find' do |f| %>
+    <%= label_tag :slug, 'Enter the name of an existing game:' %>
+    <%= f.text_field :slug %>
+    <%= f.submit "Next" %>
+  <% end %>
+
+  <p>Or:</p>
+  <%= link_to 'Make new game', new_game_path %>
+</section>
