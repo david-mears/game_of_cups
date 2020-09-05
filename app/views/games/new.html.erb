@@ -1,15 +1,18 @@
-<h1>Make new game</h1>
+<div class="fixed-position">
+  <h1>Make new game</h1>
+
+  <section>
+    <%= form_with model: @game do |f| %>
+      <%= label_tag :number_of_players, 'How many players are there?'%>
+      <%= f.number_field :number_of_players, min: 3, max: 20 %>
+      <%= f.submit "Begin" %>
+    <% end %>
+  </section>
+</div>
 
 <section>
-  <%= form_with model: @game do |f| %>
-    <%= label_tag :number_of_players, 'How many players are there?'%>
-    <%= f.number_field :number_of_players, min: 3, max: 20 %>
-    <%= f.submit "Begin" %>
-  <% end %>
-</section>
-
-<section>
-  <p>If this page is the lobby...
+  <p id="monologue-demo" class="fixed-position">If this page is the lobby...</p>
+  <p>
   <label for="mn-monologue" class="margin-toggle">&#8853;</label>
   <input type="checkbox" id="mn-monologue" class="margin-toggle"/>
   <span class="marginnote">

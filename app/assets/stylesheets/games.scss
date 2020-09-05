@@ -1,3 +1,21 @@
 // Place all the styles related to the Games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+img {
+  border-radius: 5px;
+  border-style: outset;
+}
+
+img:hover {
+  border-style: inset;
+}
+
+.fixed-position {
+  position: fixed;
+  top: 0;
+}
+
+#monologue-demo {
+  margin-top: 400px;
+}
