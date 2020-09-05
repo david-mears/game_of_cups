@@ -11,7 +11,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    @game.slug = rand(10000).to_s
+    @game.slug = rand(10_000).to_s
     @game.save
     redirect_to game_path(slug: @game.slug)
   end
