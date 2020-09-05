@@ -29,7 +29,9 @@ class WordsApi
   private
 
   def get_word(part_of_speech, max_letters)
+    # rubocop:disable Layout/LineLength
     url = URI("https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=#{part_of_speech}&lettersMax=#{max_letters}")
+    # rubocop:enable Layout/LineLength
 
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
