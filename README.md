@@ -32,6 +32,12 @@ To avoid writing `bundle exec` all the time (which means 'use the bundled depend
 bundle exec rspec
 ```
 
+* Lint Ruby
+
+```
+rubocop -a
+```
+
 * Running the server
 
 ```
