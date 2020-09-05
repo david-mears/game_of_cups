@@ -14,8 +14,9 @@
  *= require_self
  */
 
- @import 'tufte';
+@import 'tufte';
 
- input {
-   font: inherit;
- }
+input, textarea {
+  font: inherit;
+}
+
