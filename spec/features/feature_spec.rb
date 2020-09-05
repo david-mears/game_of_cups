@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'End-to-end test' do
-  before { allow_any_instance_of(Object).to receive(:rand).and_return(12345) }
+  before { allow_any_instance_of(Object).to receive(:rand).and_return(12_345) }
 
   scenario 'can create and view a game' do
     visit root_path
