@@ -20,8 +20,8 @@
 
 <section>
   <% @game.cups.each do |cup| %>
-    <figure style="text-align: center">
-      <%= image_tag("cups/#{cup.image}", height: '100', alt: cup.human_readable_name) %>
+    <figure>
+      <%= image_tag("cups/#{cup.image}", alt: cup.human_readable_name) %>
       <p><span class="newthought"><%= cup.human_readable_name%></span></p>
     </figure>
   <% end %>
