@@ -8,7 +8,6 @@ RSpec.feature 'End-to-end test' do
     click_on 'Make new game'
     fill_in 'game_number_of_players', with: 5
     click_on 'Begin'
-    expect(page).to have_content('You are viewing the game called test')
     expect(page).to have_content('Slug: test')
     expect(Game.find_by(slug: 'test').number_of_players).to eq 5
     expect(page).to have_content("Cups:\nThe Accursed Chalice\nMerlin's Goblet\nThe Holy Grail")
