@@ -11,13 +11,13 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    @game.slug = rand(10_000).to_s
+    @game.slug = WordsApi.new.get_word(min_letters: 4, max_letters: 4)
     @game.save
     redirect_to game_path(slug: @game.slug)
   end
 
   def show
-    @game = Game.find_by(slug: params.permit(:slug)[:slug]) or not_found
+    @game = Game.find_by(slug: params.permit(:slug)[:slug].downcase) or not_found
   end
 
   private
