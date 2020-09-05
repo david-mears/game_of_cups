@@ -26,7 +26,7 @@
   <% @game.cups.each do |cup| %>
     <figure>
       <%= image_tag("cups/#{cup.image}", alt: cup.human_readable_name) %>
-      <p><span class="newthought"><%= cup.human_readable_name%></span></p>
+      <h4><i><%= cup.human_readable_name%></i></h4>
     </figure>
   <% end %>
 </section>
