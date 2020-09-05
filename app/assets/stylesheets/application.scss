@@ -20,3 +20,11 @@ input, textarea {
   font: inherit;
 }
 
+img {
+  border-radius: 5px;
+  border-style: outset;
+}
+
+img:hover {
+  border-style: inset;
+}
