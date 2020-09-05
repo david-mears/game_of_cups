@@ -4,7 +4,8 @@ class Player < ApplicationRecord
 
   SYMBOLS = {
     good: '♱',
-    evil: '𖤐'
+    evil: '𖤐',
+    arthur: '♔',
   }.freeze
 
   enum allegiance: { evil: 0, good: 1 }, _suffix: :allegiance
