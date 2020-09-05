@@ -1,17 +1,17 @@
 <h1>You are viewing the game called <span class="newthought"><%= @game.slug %></span></h1>
 <section>
-  <p>Slug: <%= @game.slug %></p>
-  <p>Players: <%= @game.players.count%></p>
-  <p>Cups:</p>
-
   <p>
-    <label for="mn-demo" class="margin-toggle">&#8853;</label>
+    <label for="mn-notepad" class="margin-toggle">&#8853;</label>
     <input type="checkbox" id="mn-notepad" class="margin-toggle"/>
     <span class="marginnote">
       My notes:<br/>
-      <textarea>I think...</textarea>
+      <textarea placeholder="I think... (drag to expand)"></textarea>
     </span>
   </p>
+
+  <p>Slug: <%= @game.slug %></p>
+  <p>Players: <%= @game.players.count%></p>
+  <p>Cups:</p>
 </section>
 
 <section>
