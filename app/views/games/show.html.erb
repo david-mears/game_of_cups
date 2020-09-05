@@ -10,7 +10,11 @@
   </p>
 
   <p>Slug: <%= @game.slug %></p>
-  <p>Players: <%= @game.players.count%></p>
+  <p>Players:
+    <% @game.players.each do |player| %>
+      <%= player.name %><sup><%=player.allegiance_symbol %></sup> 
+    <% end %>
+  </p>
   <p>Cups:</p>
 </section>
 

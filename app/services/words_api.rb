@@ -7,10 +7,8 @@ class WordsApi
   # https://www.wordsapi.com/docs/?ruby#random-words
 
   def sentence(starting_letters)
-    [adjective, noun, verb, adverb](' ')
+    [adjective, noun, verb, adverb].join(' ')
   end
-
-  private
 
   def verb
     get_word('verb', 5)
@@ -27,6 +25,8 @@ class WordsApi
   def adverb
     get_word('adverb', 7)
   end
+
+  private
 
   def get_word(part_of_speech, max_letters)
     url = URI("https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=#{part_of_speech}&lettersMax=#{max_letters}")

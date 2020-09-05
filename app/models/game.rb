@@ -23,6 +23,8 @@ class Game < ApplicationRecord
     players = []
     number_of_players.to_i.times do
       player = Player.create(game: @game)
+      player.name = ['Jenny', 'David', 'Amber', 'Shannon', 'James', 'Charles', 'Kirstie'].sample
+      player.allegiance = ['good', 'evil'].sample
       player.save
       players.push player
     end
