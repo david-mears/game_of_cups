@@ -44,16 +44,24 @@ html {
     font-size: 18px;
 }
 
+$black: #111;
+$white: #fffff8;
+
 body {
     width: 87.5%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 12.5%;
     font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-    background-color: #fffff8;
-    color: #111;
+    background-color: $white;
+    color: $black;
     max-width: 1400px;
     counter-reset: sidenote-counter;
+}
+
+.evil {
+  background-color: $black;
+  color: $white;
 }
 
 h1 {
@@ -231,16 +239,32 @@ a:visited {
     text-shadow: unset;
 }
 
-a:link, .tufte-underline, .hover-tufte-underline:hover {
+.good {
+  a:link, .tufte-underline, .hover-tufte-underline:hover {
     text-decoration: none;
-    background: -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(currentColor, currentColor);
-    background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(currentColor, currentColor);
+    background: -webkit-linear-gradient($white, $white), -webkit-linear-gradient($white, $white), -webkit-linear-gradient(currentColor, currentColor);
+    background: linear-gradient($white, $white), linear-gradient($white, $white), linear-gradient(currentColor, currentColor);
     -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
     -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
     background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
     background-repeat: no-repeat, no-repeat, repeat-x;
-    text-shadow: 0.03em 0 #fffff8, -0.03em 0 #fffff8, 0 0.03em #fffff8, 0 -0.03em #fffff8, 0.06em 0 #fffff8, -0.06em 0 #fffff8, 0.09em 0 #fffff8, -0.09em 0 #fffff8, 0.12em 0 #fffff8, -0.12em 0 #fffff8, 0.15em 0 #fffff8, -0.15em 0 #fffff8;
+    text-shadow: 0.03em 0 $white, -0.03em 0 $white, 0 0.03em $white, 0 -0.03em $white, 0.06em 0 $white, -0.06em 0 $white, 0.09em 0 $white, -0.09em 0 $white, 0.12em 0 $white, -0.12em 0 $white, 0.15em 0 $white, -0.15em 0 $white;
     background-position: 0% 93%, 100% 93%, 0% 93%;
+  }
+}
+
+.evil {
+  a:link, .tufte-underline, .hover-tufte-underline:hover {
+    text-decoration: none;
+    background: -webkit-linear-gradient($black, $black), -webkit-linear-gradient($black, $black), -webkit-linear-gradient(currentColor, currentColor);
+    background: linear-gradient($black, $black), linear-gradient($black, $black), linear-gradient(currentColor, currentColor);
+    -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    text-shadow: 0.03em 0 $black, -0.03em 0 $black, 0 0.03em $black, 0 -0.03em $black, 0.06em 0 $black, -0.06em 0 $black, 0.09em 0 $black, -0.09em 0 $black, 0.12em 0 $black, -0.12em 0 $black, 0.15em 0 $black, -0.15em 0 $black;
+    background-position: 0% 93%, 100% 93%, 0% 93%;
+  }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {

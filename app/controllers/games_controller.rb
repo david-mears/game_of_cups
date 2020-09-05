@@ -20,6 +20,12 @@ class GamesController < ApplicationController
     @game = Game.find_by(slug: params.permit(:slug)[:slug].downcase) or not_found
   end
 
+  def change_team
+    @game = Game.find_by(slug: params.permit(:slug)[:slug]) or not_found
+    session[:allegiance] = session[:allegiance] == 'good' ? 'evil' : 'good'
+    redirect_to game_path(slug: @game.slug)
+  end
+
   private
 
   def game_params

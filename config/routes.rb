@@ -4,4 +4,5 @@ Rails.application.routes.draw do
 
   resources :games, only: %i[create new show], param: :slug
   post '/games/find', to: 'games#find'
+  post '/games/(/:slug)', to: 'games#change_team'
 end
