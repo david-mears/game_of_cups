@@ -9,13 +9,13 @@
     </span>
   </p>
 
-  <p>Slug: <%= @game.slug %></p>
-  <p>Players:
+  <p><span class="newthought">Slug:</span> <%= @game.slug %></p>
+  <p><span class="newthought">Players:</span>
     <% @game.players.each do |player| %>
       <%= player.name %><sup><%=player.allegiance_symbol %></sup> 
     <% end %>
   </p>
-  <p>Cups:</p>
+  <p><span class="newthought">Cups:</span></p>
 </section>
 
 <section>
