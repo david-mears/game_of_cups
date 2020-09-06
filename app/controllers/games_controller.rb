@@ -11,7 +11,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    @game.slug = WordsApi.new.get_word(min_letters: 4, max_letters: 4)
+    @game.slug = get_slug
     @game.save
     redirect_to game_path(slug: @game.slug)
   end
@@ -31,5 +31,13 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(:number_of_players, :slug)
+  end
+
+  def get_slug
+    begin
+      WordsApi.new.get_word(min_letters: 4, max_letters: 4)
+    rescue SocketError => error
+      return ('a'..'z').to_a.shuffle[0..3].join()
+    end
   end
 end
