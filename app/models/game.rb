@@ -4,7 +4,7 @@ class Game < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :number_of_players, presence: true
 
-  after_create :create_cups, :create_players
+  after_create :create_cups
 
   private
 
@@ -17,17 +17,5 @@ class Game < ApplicationRecord
       cups.push cup
     end
     self.cups = cups
-  end
-
-  def create_players
-    players = []
-    number_of_players.to_i.times do
-      player = Player.create(game: @game)
-      player.name = %w[Jenny David Amber Shannon James Charles Kirstie].sample
-      player.allegiance = %w[good evil].sample
-      player.save
-      players.push player
-    end
-    self.players = players
   end
 end

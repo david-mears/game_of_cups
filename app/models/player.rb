@@ -11,6 +11,6 @@ class Player < ApplicationRecord
   enum allegiance: { evil: 0, good: 1 }, _suffix: :allegiance
 
   def allegiance_symbol
-    SYMBOLS[allegiance.to_sym]
+    SYMBOLS[allegiance&.to_sym]
   end
 end

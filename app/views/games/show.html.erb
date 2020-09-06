@@ -14,11 +14,11 @@
     </span>
   </p>
 
-  <p><span class="newthought">Slug:</span> <%= @game.slug %></p>
+  <p><span class="newthought">Player:</span> <%=@player.name%></p>
   <p><span class="newthought">Players:</span>
     Arthur<sup>♔</sup>,
     <% @game.players.each do |player| %>
-      <%= player.name %><sup><%=player.allegiance_symbol %></sup> 
+      <%= player&.name %><sup><%=player&.allegiance_symbol %></sup>
     <% end %>
   </p>
   <p><span class="newthought">Cups:</span></p>
