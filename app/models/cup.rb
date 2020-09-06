@@ -4,7 +4,7 @@ class Cup < ApplicationRecord
   validates :image, presence: true
 
   NAMES = {
-    accursed_chalice: 'The Accursed Chalice',
+    accursed_chalice: 'The Accursèd Chalice',
     merlins_goblet: "Merlin's Goblet",
     holy_grail: 'The Holy Grail'
   }.freeze

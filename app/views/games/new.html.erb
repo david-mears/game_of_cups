@@ -11,23 +11,47 @@
 </div>
 
 <section>
-  <p id="monologue-demo" class="fixed-position">If this page is the lobby...</p>
   <p>
-  <label for="mn-monologue" class="margin-toggle">&#8853;</label>
-  <input type="checkbox" id="mn-monologue" class="margin-toggle"/>
-  <span class="marginnote">
-    ...here is the margin-note where I would put the monologue
-    for people to read while they are waiting.
-    <br/><br/>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fermentum purus sit amet mi venenatis, eget convallis magna posuere. Cras urna arcu, rhoncus in elit varius, ullamcorper tincidunt odio. Phasellus in fringilla velit, nec dictum massa. Nunc ut suscipit erat, quis lobortis nulla. Aliquam feugiat lacus at egestas tristique. Etiam quis quam vel quam congue tristique. Vestibulum lobortis elit sit amet mi posuere tempor. Ut imperdiet varius nisl, scelerisque tempus augue porta non. Nullam nec auctor augue, interdum pharetra nibh. Fusce molestie quam tristique tempus gravida. Sed consectetur tortor ac erat convallis varius.
-    <br/><br/>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet dolor quis tortor laoreet, vel placerat purus convallis. Aenean accumsan auctor nisl eu varius. Donec sollicitudin tortor luctus, commodo diam non, cursus lectus. In non tortor vestibulum, auctor risus ut, suscipit eros. Nunc efficitur sit amet ex ac condimentum. Sed finibus urna sed dignissim placerat. Nunc dictum magna risus, id tincidunt nisl dignissim nec. Etiam ac hendrerit velit, eu posuere sapien. Donec consequat, velit a rutrum tempus, nibh lacus imperdiet mi, at fermentum augue augue sit amet erat. Vivamus fringilla nec lorem ut tincidunt.
-    <br/><br/>
-    Ut vitae convallis dolor. Nam pellentesque finibus accumsan. Sed lobortis et lorem pharetra tristique. Quisque vel lobortis libero, quis vestibulum nibh. Etiam at felis nec libero pellentesque porta. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut congue lobortis ligula a venenatis. Aliquam erat volutpat. Pellentesque vel ultricies nunc, ut tempus erat. Suspendisse rutrum cursus ligula. Praesent pellentesque iaculis lacinia. Maecenas hendrerit ante sit amet augue eleifend, cursus lobortis turpis ornare. Morbi placerat hendrerit turpis, vitae fermentum justo hendrerit sit amet. Nulla convallis dolor turpis, ac faucibus quam maximus sit amet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis finibus dui est, eget egestas dolor egestas in.
-    <br/><br/>
-    Donec vulputate mauris lacinia quam luctus, quis blandit metus blandit. Vestibulum quis orci ullamcorper, mollis tortor sed, elementum quam. Sed ullamcorper mi ut orci egestas finibus. Aenean scelerisque imperdiet orci, sit amet sodales sem sollicitudin ut. Sed vulputate bibendum purus, id bibendum tortor facilisis vel. Etiam sit amet interdum tellus, non commodo purus. Donec dapibus blandit nisl, in faucibus metus. Integer ac arcu vitae magna suscipit ullamcorper id nec arcu. Sed feugiat lobortis lacinia. Integer fermentum justo quis mollis congue. Fusce in scelerisque justo, accumsan cursus sem. Nulla nec tempor odio, in commodo dolor. Phasellus posuere eros arcu, ac pulvinar nisi hendrerit ut.
-    <br/><br/>
-    Vestibulum vehicula sit amet nibh eu viverra. In hac habitasse platea dictumst. Nam sit amet placerat velit. Phasellus nisi lacus, volutpat id diam eget, blandit pulvinar risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque in sapien condimentum, posuere tortor id, sodales quam. Nullam elementum, nunc eu euismod tempor, metus lacus sodales augue, ut congue mi purus a mauris. Vestibulum vulputate nibh quis nulla luctus finibus. Nullam eu laoreet ante, nec vestibulum felis.
-  </span>
+    <label for="mn-monologue" class="margin-toggle">&#8853;</label>
+    <input type="checkbox" id="mn-monologue" class="margin-toggle"/>
+    <span class="marginnote">
+      My good knights,
+      <br/><br/>
+      All my life, I have sought the <span class="newthought">Holy Grail</span>, in order that all people might share in its wealth, and enjoy a supernaturally long span of healthy life.
+      <br/><br/>
+      Not all you who sit here this <%=@day_or_night%> were yet born at this quest's beginning. I still fervently believe in the cause of life, and our eventual victory over death.
+      <br/><br/>
+      But I am grown old, and the <span class="newthought">Grail</span> eludes us yet. It pains me to say this, my young friends, but I scarecly retain the sharpness of — what's that word? — <i>mind</i>, that was it. Now, where was I...? Ah yes. I scarcely retain the sharpness of mind to rule. No, do not flatter me with contradictions. I know I am wasting away, and am not in my prime.
+      <br/><br/>
+      What, you rightly ask, prevents me from passing on the mantle to the right person?
+      <br/><br/>
+      <% # TODO: make 'one' below responsive to the game set up. %>
+      One of our number has done a great evil, who surely sits at this uncorner'd table.
+      <br/><br/>
+      They have found the <span class="newthought">Holy Grail</span>, and have taken it for themselves!
+      <br/><br/>
+      This traitor in our mythst shall <i>never</i> wear the crown, else my name is not Arthur Pendragon.
+      <br/><br/>
+      As if unsated by this evil, it is also known that the enemy consulted with unholy powers, in order to forge a false <span class="newthought">Grail</span>, indistinguishable from the original.
+      <br/><br/>
+      Any who drink from this <span class="newthought">Accursèd Chalice</span> will likewise lose their faith and pledge allegiancy to dark forces.
+      <br/><br/>
+      That low trick might well have confounded and ensnared us all, were it not for Merlin's cunning. After uncovering the forgery, Merlin called upon strong magics to fashion a <i>third</i> goblet, to reverse the effect of the <span class="newthought">Accursèd Chalice</span>.
+      <br/><br/>
+      In order to ensnare and confound the enemy, <span class="newthought">Merlin's Goblet</span> is indistinguishable in every single aspect from the <span class="newthought">Accursèd Chalice</span>. A clever trick, as you will agree!
+      <br/><br/>
+      The enemy was not careful in all things, and covered their tracks poorly, allowing Merlin to uncover the hiding place of the <span class="newthought">Holy Grail</span> and the <span class="newthought">Accursèd Chalice</span>, which are now in our possession — though indistinguishable.
+      <br/><br/>
+      Slightly embarrassingly, the cups were dropped in transit, so we are not now sure which is <span class="newthought">Merlin's Goblet</span>.
+      <br/><br/>
+      Never mind. All that stands between us and victory is simply to work out which cup is which, without becoming corrupted ourselves in the process. Then we may vouchsafe the health and happiness of Britain and all the world, for all time.
+      <br/><br/>
+      Of course, if you should fail, and the <span class="newthought">Accursèd Chalice</span> I do drink, it will spell disaster, doom, demise, despair — not to mention devastation. I shall be a device for dark deeds, for the delight of demons, enduring in deathless dominion.
+      <br/><br/>
+      But no pressure! Take your time!
+      <br/><br/>
+      But don't take too long, or I might die of old age! So be quick, and get it right. No rush! Hurry, we haven't much time! — but you must be absolutely certain, or all will be lost! So for Heaven's sake get cracking!
+      <br/><br/><br/><br/><br/><br/><br/><br/>
+    </span>
   </p>
 </section>

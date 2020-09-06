@@ -8,6 +8,7 @@ class GamesController < ApplicationController
   end
 
   def new
+    @day_or_night = Time.zone.now.hour >= 17 && Time.zone.now.hour <= 7 ? 'night' : 'day'
     @game = Game.new
   end
 

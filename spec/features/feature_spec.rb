@@ -13,7 +13,7 @@ RSpec.feature 'End-to-end test' do
     expect(page).to have_content('Player: Mr Bean')
     expect(current_path).to match(/test/)
     expect(Game.find_by(slug: 'test').number_of_players).to eq 5
-    expect(page).to have_content("Cups:\nThe Accursed Chalice\nMerlin's Goblet\nThe Holy Grail")
+    expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin's Goblet\nThe Holy Grail")
     visit root_path
     fill_in 'game_slug', with: 'test'
     click_on 'Next'
