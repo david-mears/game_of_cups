@@ -8,19 +8,22 @@ RSpec.feature 'End-to-end test' do
     click_on 'Make new game'
     fill_in 'game_number_of_players', with: 5
     click_on 'Begin'
-    expect(page).to have_content('Slug: test')
+    fill_in 'player_name', with: 'Mr Bean'
+    click_on 'Create Player'
+    expect(page).to have_content('Player: Mr Bean')
+    expect(current_path).to match(/test/)
     expect(Game.find_by(slug: 'test').number_of_players).to eq 5
     expect(page).to have_content("Cups:\nThe Accursed Chalice\nMerlin's Goblet\nThe Holy Grail")
     visit root_path
     fill_in 'game_slug', with: 'test'
     click_on 'Next'
-    expect(page).to have_content('Slug: test')
+    expect(current_path).to match(/test/)
   end
 
   scenario 'game not found' do
     visit root_path
     fill_in 'game_slug', with: 'sausages'
     click_on 'Next'
-    expect(page).to have_content("No game called 'sausages' was found.")
+    expect(page).to have_content("No game called sausages was found.")
   end
 end
