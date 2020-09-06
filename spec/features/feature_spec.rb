@@ -16,4 +16,11 @@ RSpec.feature 'End-to-end test' do
     click_on 'Next'
     expect(page).to have_content('Slug: test')
   end
+
+  scenario 'game not found' do
+    visit root_path
+    fill_in 'game_slug', with: 'sausages'
+    click_on 'Next'
+    expect(page).to have_content("No game called 'sausages' was found.")
+  end
 end

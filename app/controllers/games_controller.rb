@@ -17,7 +17,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find_by(slug: params.permit(:slug)[:slug].downcase) or not_found
+    @slug = params.permit(:slug)[:slug].downcase
+    @game = Game.find_by(slug: @slug) or render 'game_not_found'
   end
 
   def change_team
