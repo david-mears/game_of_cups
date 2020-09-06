@@ -14,6 +14,6 @@ RSpec.feature 'End-to-end test' do
     visit root_path
     fill_in 'game_slug', with: 'test'
     click_on 'Next'
-    expect(page).to have_content('You are viewing the game called test')
+    expect(page).to have_content('Slug: test')
   end
 end
