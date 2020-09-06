@@ -12,6 +12,12 @@
 
   <body class=<%=@allegiance%>>
     <article>
+      <% flash.each do |type, msg| %>
+        <div>
+          <%= msg %>
+        </div>
+        <hr/>
+      <% end %>
       <%= yield %>
     </article>
   </body>

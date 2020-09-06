@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :set_player, only: %w[show]
+
   def index; end
 
   def find
@@ -18,7 +20,6 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
-    set_player
   end
 
   def change_team
@@ -37,6 +38,10 @@ class GamesController < ApplicationController
     params.require(:game).permit(:number_of_players, :slug)
   end
 
+  def slug_param
+    params.permit(:slug)[:slug].downcase
+  end
+
   def set_slug
     begin
       slug = WordsApi.new.get_word(min_letters: 4, max_letters: 4)
@@ -51,11 +56,7 @@ class GamesController < ApplicationController
     if session[:player_id].blank?
       redirect_to new_game_player_path(game_slug: slug_param)
     else
-      @player = Player.find(session[:player_id])
+      @player = session_player
     end
-  end
-
-  def slug_param
-    params.permit(:slug)[:slug].downcase
   end
 end

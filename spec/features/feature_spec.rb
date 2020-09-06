@@ -17,6 +17,7 @@ RSpec.feature 'End-to-end test' do
     visit root_path
     fill_in 'game_slug', with: 'test'
     click_on 'Next'
+    expect(page).to have_content('Player: Mr Bean')
     expect(current_path).to match(/test/)
   end
 
@@ -25,5 +26,37 @@ RSpec.feature 'End-to-end test' do
     fill_in 'game_slug', with: 'sausages'
     click_on 'Next'
     expect(page).to have_content("No game called sausages was found.")
+  end
+
+  context 'game is full' do
+    let(:game) { Game.create(slug: 'full', number_of_players: 3) }
+    before { 3.times { Player.create(game: game) } }
+
+    context 'when the player does NOT belong to the game' do
+      scenario 'reject user' do
+        visit game_path(slug: 'full')
+        expect(page).to have_content("Sorry, the game 'full' is full.")
+      end
+    end
+
+    context 'when the player DOES belong to the game' do
+      before do
+        visit root_path
+        click_on 'Make new game'
+        fill_in 'game_number_of_players', with: 5
+        click_on 'Begin'
+        fill_in 'player_name', with: 'Alice'
+        click_on 'Create Player'
+        game.players.last.delete
+        game.players.reload
+        Player.find_by(name: 'Alice').game_id = game.id
+      end
+
+      scenario 'allow user in' do
+        expect(game.players.count).to eq 3
+        visit game_path(slug: 'full')
+        expect(page).to have_content('Player: Mr Bean')
+      end
+    end
   end
 end
