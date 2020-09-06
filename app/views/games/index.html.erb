@@ -5,7 +5,7 @@
 <section>
   <%= form_with model: Game.new, url: 'games/find' do |f| %>
     <%= label_tag :slug, 'Enter the name of an existing game:' %>
-    <%= f.text_field :slug %>
+    <%= f.text_field :slug, required: true, autofocus: true %>
     <%= f.submit "Next" %>
   <% end %>
 

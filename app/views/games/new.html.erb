@@ -4,7 +4,7 @@
   <section>
     <%= form_with model: @game do |f| %>
       <%= label_tag :number_of_players, 'How many players are there?'%>
-      <%= f.number_field :number_of_players, min: 3, max: 20 %>
+      <%= f.number_field :number_of_players, min: 3, max: 20, required: true, autofocus: true %>
       <%= f.submit "Begin" %>
     <% end %>
   </section>
