@@ -1,10 +1,25 @@
-<h1>The Game of Cups</h1>
-<p>Styled as if <span class="newthought"><%=@allegiance.capitalize%></span> <%=@allegiance_symbol%></p>
+<section>
+  <p>
+    <label for="mn-playername" class="margin-toggle">&#8853;</label>
+    <input type="checkbox" id="mn-playername" class="margin-toggle"/>
+    <span class="marginnote">
+      Styled as if <span class="newthought"><%=@allegiance.capitalize%></span> <%=@allegiance_symbol%>
+    </span>
+    
+    <label for="mn-playername" class="margin-toggle">&#8853;</label>
+    <input type="checkbox" id="mn-playername" class="margin-toggle"/>
+    <span class="marginnote">
+      <span class="newthought">Player:</span> <%=@player.name%>
+    </span>
+  </p>
+</section>
+
 <%= form_with do |f| %>
   <%= f.submit "Change team" %>
 <% end %>
 
 <section>
+  
   <p>
     <label for="mn-notepad" class="margin-toggle">&#8853;</label>
     <input type="checkbox" id="mn-notepad" class="margin-toggle"/>
@@ -12,9 +27,7 @@
       My notes:<br/>
       <textarea placeholder="I think... (drag to expand)"></textarea>
     </span>
-  </p>
-
-  <p><span class="newthought">Player:</span> <%=@player.name%></p>
+  </p>  
   <p><span class="newthought">Players:</span>
     Arthur<sup>♔</sup>,
     <% @game.players.each do |player| %>
