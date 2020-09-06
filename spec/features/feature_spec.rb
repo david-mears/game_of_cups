@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.feature 'End-to-end test' do
   before { allow_any_instance_of(WordsApi).to receive(:get_word).and_return('test') }
 
@@ -25,7 +26,7 @@ RSpec.feature 'End-to-end test' do
     visit root_path
     fill_in 'game_slug', with: 'sausages'
     click_on 'Next'
-    expect(page).to have_content("No game called sausages was found.")
+    expect(page).to have_content('No game called sausages was found.')
   end
 
   context 'game is full' do
@@ -48,15 +49,15 @@ RSpec.feature 'End-to-end test' do
         fill_in 'player_name', with: 'Alice'
         click_on 'Create Player'
         game.players.last.delete
+        Player.find_by(name: 'Alice').update!(game_id: game.id)
         game.players.reload
-        Player.find_by(name: 'Alice').game_id = game.id
       end
 
       scenario 'allow user in' do
-        expect(game.players.count).to eq 3
         visit game_path(slug: 'full')
-        expect(page).to have_content('Player: Mr Bean')
+        expect(page).to have_content('Player: Alice')
       end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

@@ -29,9 +29,8 @@ class PlayersController < ApplicationController
   end
 
   def check_if_game_is_full
-    return if @game.players.include? session_player
-    if @game.players.count >= @game.number_of_players
-      redirect_to root_path, alert: "Sorry, the game '#{@game.slug}' is full."
-    end
+    return if (@game.players.include? session_player) || (@game.players.count < @game.number_of_players)
+
+    redirect_to root_path, alert: "Sorry, the game '#{@game.slug}' is full."
   end
 end
