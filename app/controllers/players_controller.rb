@@ -11,6 +11,7 @@ class PlayersController < ApplicationController
     @player.game_id = @game.id
     @player.save
     session[:player_id] = @player.id
+    # GameChannel.broadcast_to 'games', @game
     redirect_to game_path(slug: game_slug_param)
   end
 
