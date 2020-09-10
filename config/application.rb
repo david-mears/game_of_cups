@@ -31,5 +31,9 @@ module GameOfCups
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Include the fonts folder in assets pipeline
+    # https://gist.github.com/anotheruiguy/7379570
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
   end
 end
