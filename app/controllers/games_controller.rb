@@ -58,6 +58,7 @@ class GamesController < ApplicationController
       redirect_to new_game_player_path(game_slug: slug_param)
     else
       @player = session_player
+      redirect_to new_game_player_path(game_slug: slug_param) unless @player.present?
     end
   end
 end
