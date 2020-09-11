@@ -14,11 +14,16 @@
  *= require_self
  */
 
-@import 'tufte';
-@import 'drop-caps';
+$tufte-breakpoint: 760px;
 
 input, textarea {
   font: inherit;
+}
+
+@media only screen and (min-width: $tufte-breakpoint) {
+  article {
+    margin-right: 2rem;
+  }
 }
 
 .sidenote, .marginnote {

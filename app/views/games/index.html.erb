@@ -1,14 +1,15 @@
-<h1>The Game of Cups</h1>
+<h1><span class="drop-caps-t">T</span><span>he Game of Cups</span></h1>
 
 <p class="subtitle">A social deduction game in the genre of Werewolf, Mafia, Avalon, Secret Hitler, &c.</p>
+<div>
+  <section>
+    <%= form_with model: Game.new, url: 'games/find' do |f| %>
+      <%= label_tag :slug, 'Enter the name of an existing game:' %>
+      <%= f.text_field :slug, required: true, autofocus: true %>
+      <%= f.submit "Next" %>
+    <% end %>
 
-<section>
-  <%= form_with model: Game.new, url: 'games/find' do |f| %>
-    <%= label_tag :slug, 'Enter the name of an existing game:' %>
-    <%= f.text_field :slug, required: true, autofocus: true %>
-    <%= f.submit "Next" %>
-  <% end %>
-
-  <p>Or:</p>
-  <%= link_to 'Make new game', new_game_path %>
-</section>
+    <p>Or:</p>
+    <%= link_to 'Make new game', new_game_path %>
+  </section>
+</div>

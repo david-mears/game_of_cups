@@ -4,11 +4,29 @@
 
 $black: #111;
 $white: #fffff8;
+$tufte-breakpoint: 760px;
+
+// Index (home) path
+
+@media only screen and (min-width: 1160px) {
+  span.drop-caps-t {
+    font-family: yinit-t, et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+    font-size: 25rem;
+    float: left;
+    margin-right: 0.2rem;
+  }
+}
+
+// Show game path
 
 figure {
   text-align: center;
   display: inline-block;
   width: 20%;
+
+  @media only screen and (max-width: $tufte-breakpoint){
+    width: 33.3%;
+  }
 
   img {
     height: 100px;
@@ -23,11 +41,64 @@ figure {
   }  
 }
 
-.fixed-position {
-  position: fixed;
-  top: 0;
+// New game path
+
+@media only screen and (min-width: 980px) {
+  .fixed-position {
+    position: fixed;
+    top: 0;
+  }
 }
 
 .red {
   color: red;
+}
+
+@media only screen and (min-width: $tufte-breakpoint) {
+  span.drop-caps-m {
+    // Fall back to Palatino, not et-book, for the straight edge of M.
+    font-family: yinit-m, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+    font-size: 5.6rem; // magic number to maximize size and avoid blocking the 4th line. 3.6 is the next available size with good wrapping.
+    float: left;
+    margin-right: 0.5rem;
+  }
+}
+
+// Added div marginnotes so I can have paragraphs inside marginnote classes
+// (spans cannot contain p's)
+// Results in large margin, so reduced to 10%
+div.marginnote {
+  margin-right: 10%;
+  margin-bottom: 3rem;
+
+  @media only screen and (min-width: 980px) {
+    width: 30%;
+  }
+
+  @media only screen and (max-width: 979px) {
+    float: none;
+    width: auto;
+    margin-top: 3rem;
+  }
+
+  @media only screen and (max-width: $tufte-breakpoint) {
+    display: auto; // Override tufte.css display: none for mobile
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: inherit;
+    text-indent: 1rem;
+  }
+
+  p:first-of-type {
+    text-indent: 0;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  p:nth-of-type(2) {
+    text-indent: 0;
+  }
 }
