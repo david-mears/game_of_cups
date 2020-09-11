@@ -8,5 +8,8 @@ Rails.application.routes.draw do
   resources :games, only: %i[create new show], param: :slug do
     resources :players, only: %i[create new]
   end
+
+  post '/games/leave_game', to: 'games#leave_game'
   post '/games/(/:slug)', to: 'games#change_team'
+
 end

@@ -41,6 +41,13 @@ class GamesController < ApplicationController
     @slug = slug_param
   end
 
+  def leave_game
+    @game = Game.find_by(slug: slug_param) or games_not_found
+    @game.players.delete(session_player)
+    if @game.players.empty? then @game.destroy end
+    redirect_to root_path
+  end
+
   private
 
   def lobby(game:)
