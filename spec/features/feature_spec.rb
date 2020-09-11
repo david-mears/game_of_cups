@@ -36,7 +36,7 @@ RSpec.feature 'End-to-end test' do
     context 'when the player does NOT belong to the game' do
       scenario 'reject user' do
         visit game_path(slug: 'full')
-        expect(page).to have_content("Sorry, the game ‘full’ is full.")
+        expect(page).to have_content('Sorry, the game ‘full’ is full.')
       end
     end
 

@@ -5,7 +5,7 @@ class Cup < ApplicationRecord
 
   NAMES = {
     accursed_chalice: 'The Accursèd Chalice',
-    merlins_goblet: "Merlin’s Goblet",
+    merlins_goblet: 'Merlin’s Goblet',
     holy_grail: 'The Holy Grail'
   }.freeze
 

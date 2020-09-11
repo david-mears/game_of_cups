@@ -298,6 +298,22 @@ img {
     position: relative;
 }
 
+// Added div marginnotes so I can have paragraphs inside marginnote classes
+// (spans cannot contain p's)
+// Results in large margin, so got rid of that
+div.marginnote {
+  margin-right: 10%;
+  margin-bottom: 100px;
+  width: 30%;
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: inherit;
+    text-indent: 1rem;
+  }
+}
+
 .sidenote-number {
     counter-increment: sidenote-counter;
 }

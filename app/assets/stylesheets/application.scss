@@ -21,7 +21,10 @@ input, textarea {
   font: inherit;
 }
 
-span.drop-caps-m {
-  font-family: yinit-m, et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-  font-size: 5rem;
+.sidenote, .marginnote {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  line-height: 1.8;
 }
