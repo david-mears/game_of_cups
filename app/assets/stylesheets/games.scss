@@ -58,7 +58,7 @@ figure {
   span.drop-caps-m {
     // Fall back to Palatino, not et-book, for the straight edge of M.
     font-family: yinit-m, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-    font-size: 3.6rem; // magic number to maximize size and avoid blocking the third line. 5.6 is the next available size with good wrapping.
+    font-size: 5.6rem; // magic number to maximize size and avoid blocking the 4th line. 3.6 is the next available size with good wrapping.
     float: left;
     margin-right: 0.5rem;
   }
