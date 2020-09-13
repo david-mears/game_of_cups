@@ -27,11 +27,16 @@ jobs:
     # here we set TWO docker images.
     docker:
       - image: circleci/ruby:2.7.1-node # primary docker image
-      - image: circleci/postgres:9.5-alpine 
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+      - image: circleci/postgres:12.2
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: game_of_cups_test
           POSTGRES_PASSWORD: ""
+          POSTGRES_HOST_AUTH_METHOD: trust
     environment: # these variables apply to the primary container
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
@@ -41,7 +46,17 @@ jobs:
       RAILS_ENV: test
     steps:
       - checkout 
-      - ruby/install-deps 
+      - ruby/install-deps
+      
+      # Install psql because using structure.sql not schema.rb
+      # See https://circleci.com/docs/2.0/postgres-config/
+
+      - run: sudo apt install -y postgresql-client || true
+
+      - run:
+          name: See what version of psql is installed
+          command: echo apt list postgresql-client
+
       - node/install-packages:
           pkg-manager: yarn
           cache-key: "yarn.lock"
@@ -52,7 +67,8 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Database setup
-          command: bundle exec rails db:schema:load --trace
+          command: bundle exec rake db:structure:load --trace
+
       # Run rspec in parallel
       - ruby/rspec-test
 
