@@ -32,6 +32,10 @@ module GameOfCups
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # Use structure.sql over schema.rb
+    # https://sipsandbits.com/2018/04/30/using-database-native-enums-with-rails/
+    config.active_record.schema_format = :sql
+
     # Include the fonts folder in assets pipeline
     # https://gist.github.com/anotheruiguy/7379570
     config.assets.paths << Rails.root.join('app/assets/fonts')

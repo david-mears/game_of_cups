@@ -6,6 +6,12 @@ class Game < ApplicationRecord
 
   after_create :create_cups
 
+  enum status: {
+    draft: "draft",
+    started: "started",
+    trashed: "trashed"
+  }
+
   private
 
   def create_cups
