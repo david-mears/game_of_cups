@@ -18,10 +18,16 @@ class GamesController < ApplicationController
     @game.save
     redirect_to game_path(slug: @game.slug)
   end
-
+  
   def show
     @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
-    render 'lobby' if @game
+    lobby(game: @game) unless @game.quorate?
+  end
+
+  def lobby(game:)
+    @game = game
+    @url = request.original_url
+    render 'lobby'
   end
 
   def change_team

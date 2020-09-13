@@ -12,6 +12,10 @@ class Game < ApplicationRecord
     trashed: "trashed"
   }
 
+  def quorate?
+    players.count == number_of_players
+  end
+
   private
 
   def create_cups

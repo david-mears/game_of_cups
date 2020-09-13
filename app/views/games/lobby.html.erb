@@ -2,15 +2,18 @@
   <h1>Lobby</h1>
 
   <section>
+    <p>URL to invite players: <%=@url%> </p>
+    <p><span class="newthought">You:</span> <%=@player.name%></p>
+    <p><span class="newthought">Other players:</span>
+      Arthur<sup>♔</sup>
+      <% @game.players.each do |player| %>
+        <% next if player == @player%>
+        , <%= player&.name %><sup><%=player&.allegiance_symbol %></sup>
+      <% end %>
+    </p>
     <p>TODO: display game name and test that it is shown and tell user to invite friends to this url</p>
     <p>Also test that lobby is shown IFF game is not quorate</p>
     <p>And that 'Start game' button is only shown if game IS quorate</p>
-    <p><span class="newthought">Players:</span>
-      Arthur<sup>♔</sup>,
-      <% @game.players.each do |player| %>
-        <%= player&.name %><sup><%=player&.allegiance_symbol %></sup>
-      <% end %>
-    </p>
   </section>
 </div>
 
