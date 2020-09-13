@@ -21,6 +21,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
+    render 'lobby' if @game
   end
 
   def change_team
