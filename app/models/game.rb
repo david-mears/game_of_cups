@@ -7,9 +7,9 @@ class Game < ApplicationRecord
   after_create :create_cups
 
   enum status: {
-    draft: "draft",
-    started: "started",
-    trashed: "trashed"
+    draft: 'draft',
+    started: 'started',
+    trashed: 'trashed'
   }
 
   def quorate?

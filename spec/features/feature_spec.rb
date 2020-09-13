@@ -13,23 +13,18 @@ RSpec.feature 'End-to-end test' do
     click_on 'Begin'
     fill_in 'player_name', with: 'Mr Bean'
     click_on 'Create Player'
-    expect(page).to have_content('You: Mr Bean')
+
+    # Goes to lobby because not yet quorate
     expect(current_path).to match(/test/)
     expect(game.number_of_players).to eq number_of_players
-    
-    # Goes to lobby because not yet quorate
-    
     expect(page).to have_content('Lobby')
+    expect(page).not_to have_content('Start') # Because we are not quorate
+    expect(page).to have_content('/games/test') # Displays the url to share
+    expect(page).to have_content("1. Mr Bean (you)\n2.\n3.\n4.\n5.")
 
-    # Displays the url to share
-    expect(page).to have_content('/games/test')
-    
-    # TODO: test that the list of other players does not contain Mr Bean
-    
     # Show game itself if quorate (at the moment only happens if you reload/renavigate to page)
-
     (number_of_players - 1).times { Player.create(game: game) }
-    
+
     visit root_path
     fill_in 'game_slug', with: 'test'
     click_on 'Next'
