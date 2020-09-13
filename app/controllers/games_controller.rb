@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_player, only: %w[show]
-  before_action :set_game, only: %w[show change_team start]
+  before_action :set_game, only: %w[show change_team start leave_game]
 
   def index; end
 
@@ -42,7 +42,6 @@ class GamesController < ApplicationController
   end
 
   def leave_game
-    @game = Game.find_by(slug: slug_param) or games_not_found
     @game.players.delete(session_player)
     @game.destroy if @game.players.empty?
     redirect_to root_path

@@ -9,7 +9,7 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     @player.game = @game
-    if no_arthur? then @player.arthur = true end
+    @player.arthur = true unless @game.has_arthur?
     @player.save
     session[:player_id] = @player.id
     redirect_to game_path(slug: game_slug_param)
@@ -17,7 +17,9 @@ class PlayersController < ApplicationController
 
   private
 
-  def player_params; end
+  def player_params
+    params.require(:player).permit(:name)
+  end
 
   def game_slug_param
     params.permit(:game_slug)[:game_slug].downcase
@@ -31,12 +33,5 @@ class PlayersController < ApplicationController
     return if (@game.players.include? session_player) || (@game.players.count < @game.number_of_players)
 
     redirect_to root_path, alert: "Sorry, the game ‘#{@game.slug}’ is full."
-  end
-
-  def no_arthur?
-    @game.players.each do |player|
-      return false if player&.arthur == true
-    end
-    true
   end
 end
