@@ -11,5 +11,4 @@ Rails.application.routes.draw do
 
   post '/games/leave_game', to: 'games#leave_game'
   post '/games/(/:slug)', to: 'games#change_team'
-
 end

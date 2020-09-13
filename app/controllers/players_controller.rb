@@ -17,8 +17,7 @@ class PlayersController < ApplicationController
 
   private
 
-  def player_params
-  end
+  def player_params; end
 
   def game_slug_param
     params.permit(:game_slug)[:game_slug].downcase
@@ -36,10 +35,8 @@ class PlayersController < ApplicationController
 
   def no_arthur?
     @game.players.each do |player|
-      if player&.arthur == true then 
-        return false 
-      end
+      return false if player&.arthur == true
     end
-    return true
+    true
   end
 end
