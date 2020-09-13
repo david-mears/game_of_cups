@@ -5,7 +5,7 @@ class GameChannel < ApplicationCable::Channel
     stream_from "games"
     # stream_from "game_#{params[:game_id]}"
     # or:
-    # game = Game.find(params[:game_id])
+    # game = Game.find_by(params[:slug])
     # stream_for game
     # TODO: find out what a 'room' is and whether I should use one to distinguish
     # streams of info about different games.

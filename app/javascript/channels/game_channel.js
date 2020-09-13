@@ -2,7 +2,7 @@ import consumer from "./consumer"
  
 consumer.subscriptions.create({ channel: "GameChannel"}, {
   received(data) {
-    console.log(data)
+    alert(data['message'])
   }
 })
 // TODO: find out what a 'room' is and whether I should use one to distinguish

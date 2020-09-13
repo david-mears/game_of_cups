@@ -7,6 +7,7 @@
 * System dependencies
 
 PostgreSQL 12.2
+Redis 5.0.8
 
 * Install library dependencies
 
