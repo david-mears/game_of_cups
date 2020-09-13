@@ -17,6 +17,6 @@ class Player < ApplicationRecord
   end
 
   def broadcast_new_player_name
-    ActionCable.server.broadcast 'games', { message: "a new player #{self.name} joined!" }
+    ActionCable.server.broadcast 'games', { message: "a new player #{name} joined!" }
   end
 end
