@@ -37,3 +37,6 @@ yarn-debug.log*
 
 # Environment variables
 .env
+
+# Redis
+dump.rdb
