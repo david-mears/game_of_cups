@@ -21,7 +21,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
-    lobby(game: @game) unless @game.quorate?
+    lobby(game: @game) unless @game.quorate? && @game.draft?
   end
 
   def lobby(game:)
@@ -43,7 +43,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:number_of_players, :slug)
+    params.require(:game).permit(:number_of_players, :slug).merge(status: 'draft')
   end
 
   def slug_param

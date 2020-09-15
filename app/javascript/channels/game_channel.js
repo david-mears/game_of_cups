@@ -12,6 +12,11 @@ consumer.subscriptions.create({ channel: "GameChannel"}, {
         break;
       };
     };
+
+    if (data['quorate'] === true) {
+      document.getElementById('startButtonDiv')
+        .innerHTML = `<button>Start the game already!</button>`
+    }
   }
 })
 // TODO: find out what a 'room' is and whether I should use one to distinguish
