@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_player, only: %w[show]
+  before_action :set_game, only: %w[show change_team start]
 
   def index; end
 

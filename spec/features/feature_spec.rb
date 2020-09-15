@@ -22,8 +22,11 @@ RSpec.feature 'End-to-end test' do
     expect(page).to have_content('/games/test') # Displays the url to share
     expect(page).to have_content("1. Mr Bean (you)\n2.\n3.\n4.\n5.")
 
-    # Show game itself if quorate (at the moment only happens if you reload/renavigate to page)
+    
     (number_of_players - 1).times { Player.create(game: game) }
+
+    click_on 'Start the game already!'
+    expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
 
     visit root_path
     fill_in 'game_slug', with: 'test'

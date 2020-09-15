@@ -61,7 +61,7 @@ CREATE TABLE public.cups (
     image character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_id integer
+    game_id uuid
 );
 
 
@@ -89,7 +89,7 @@ CREATE TABLE public.players (
     allegiance integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_id integer
+    game_id uuid
 );
 
 
@@ -150,6 +150,22 @@ CREATE UNIQUE INDEX index_games_on_slug ON public.games USING btree (slug);
 
 
 --
+-- Name: cups fk_rails_9217cbbd43; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cups
+    ADD CONSTRAINT fk_rails_9217cbbd43 FOREIGN KEY (game_id) REFERENCES public.games(id);
+
+
+--
+-- Name: players fk_rails_d71756309d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT fk_rails_d71756309d FOREIGN KEY (game_id) REFERENCES public.games(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -166,6 +182,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200831225041'),
 ('20200831233526'),
 ('20200913163000'),
-('20200913163114');
+('20200913163114'),
+('20200915182552'),
+('20200915183002');
 
 
