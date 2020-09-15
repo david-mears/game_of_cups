@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get '/games/(/:slug)/not_found', to: 'games#games_not_found', as: 'games_not_found'
   post '/games/find', to: 'games#find'
+  post '/games/(/:slug)/start', to: 'games#start', as: 'start_game'
   resources :games, only: %i[create new show], param: :slug do
     resources :players, only: %i[create new]
   end

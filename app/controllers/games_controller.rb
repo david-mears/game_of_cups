@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_player, only: %w[show]
+  before_action :set_game, only: %w[show change_team start]
 
   def index; end
 
@@ -20,20 +21,20 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
-    lobby(game: @game) unless @game.quorate?
-  end
-
-  def lobby(game:)
-    @game = game
-    @url = request.original_url
-    render 'lobby'
+    lobby(game: @game) unless @game.quorate? && @game.started?
   end
 
   def change_team
-    @game = Game.find_by(slug: slug_param) or not_found
     session[:allegiance] = session[:allegiance] == 'good' ? 'evil' : 'good'
     redirect_to game_path(slug: @game.slug)
+  end
+
+  def start
+    return unless @game.quorate?
+    @game.status = 'started' unless @game.started?
+    @game.save
+    ActionCable.server.broadcast 'games', { message: 'The game started', event: 'game_started' }
+    redirect_to game_path(slug: slug_param)
   end
 
   def games_not_found
@@ -42,8 +43,14 @@ class GamesController < ApplicationController
 
   private
 
+  def lobby(game:)
+    @game = game
+    @url = request.original_url
+    render 'lobby'
+  end
+
   def game_params
-    params.require(:game).permit(:number_of_players, :slug)
+    params.require(:game).permit(:number_of_players, :slug).merge(status: 'draft')
   end
 
   def slug_param
@@ -67,5 +74,9 @@ class GamesController < ApplicationController
       @player = session_player
       redirect_to new_game_player_path(game_slug: slug_param) if @player.blank?
     end
+  end
+
+  def set_game
+    @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
   end
 end

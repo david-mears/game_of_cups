@@ -9,6 +9,7 @@ class Game < ApplicationRecord
   enum status: {
     draft: 'draft',
     started: 'started',
+    finished: 'finished',
     trashed: 'trashed'
   }
 

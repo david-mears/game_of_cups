@@ -47,6 +47,9 @@ figure {
   .fixed-position {
     position: fixed;
     top: 0;
+    max-height: 90%;
+    overflow: auto;
+    width: 45%;
   }
 }
 
@@ -101,5 +104,13 @@ div.marginnote {
 
   p:nth-of-type(2) {
     text-indent: 0;
+  }
+}
+
+div#players {
+  p {
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 }
