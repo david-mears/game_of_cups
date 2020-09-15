@@ -3,11 +3,7 @@
 
   <section>
     <p>Share this URL to invite players: <a href="<%=@url%>"><%=@url%></a> </p>
-    <div id="startButtonDiv">
-      <% if @game.quorate? and @game.draft? %>
-        <button>Start the game already!</button>
-      <% end %>
-    </div>
+    <%= button_to 'Start (when all the players are here)', start_game_path(slug: @game.slug), disabled: (!@game.quorate? || @game.started? ), id: 'startButton' %>
     <h2>The Players</h2>
       <div id="players">
       <% @game.number_of_players.times do |index| %>

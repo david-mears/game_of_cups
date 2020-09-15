@@ -6,6 +6,8 @@ RSpec.feature 'End-to-end test' do
   let(:number_of_players) { 5 }
   before { allow_any_instance_of(WordsApi).to receive(:get_word).and_return('test') }
 
+  # Remember that JS probably isn't running in the tests.
+
   scenario 'can create and view a game' do
     visit root_path
     click_on 'Make new game'
@@ -25,7 +27,9 @@ RSpec.feature 'End-to-end test' do
     
     (number_of_players - 1).times { Player.create(game: game) }
 
-    click_on 'Start the game already!'
+    # Reload page to enable start button because test has no JS
+    visit game_path(slug: game.slug)
+    click_on 'Start (when all the players are here)'
     expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
 
     visit root_path
@@ -69,7 +73,7 @@ RSpec.feature 'End-to-end test' do
 
       scenario 'allow user in' do
         visit game_path(slug: 'full')
-        expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+        expect(page).to have_content("Lobby")
       end
     end
   end

@@ -2,20 +2,26 @@ import consumer from "./consumer"
  
 consumer.subscriptions.create({ channel: "GameChannel"}, {
   received(data) {
-    const players = document.getElementsByClassName('player');
 
-    let i;
-    for (i = 0; i < players.length; i++) {
-      const playerNameElement = document.getElementById(`playerName${i}`);
-      if (playerNameElement.innerText === '') {
-        playerNameElement.innerHTML = data['name'];
-        break;
+    if (data['event'] === 'new_player') {
+      const players = document.getElementsByClassName('player');
+
+      let i;
+      for (i = 0; i < players.length; i++) {
+        const playerNameElement = document.getElementById(`playerName${i}`);
+        if (playerNameElement.innerText === '') {
+          playerNameElement.innerHTML = data['name'];
+          break;
+        };
       };
-    };
 
-    if (data['quorate'] === true) {
-      document.getElementById('startButtonDiv')
-        .innerHTML = `<button>Start the game already!</button>`
+      if (data['quorate'] === true) {
+        const button = document.getElementById('startButton');
+        button.disabled = false;
+        button.value = 'Start the game already!'
+      };
+    } else {
+      window.location.reload();
     }
   }
 })

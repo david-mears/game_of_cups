@@ -19,6 +19,7 @@ class Player < ApplicationRecord
   def broadcast_new_player_name
     ActionCable.server.broadcast 'games', {
       message: 'A new player joined',
+      event: 'new_player',
       name: name,
       quorate: game.quorate?
     }
