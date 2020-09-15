@@ -26,7 +26,7 @@ class PlayersController < ApplicationController
   end
 
   def set_game
-    @game = Game.find_by(slug: game_slug_param) or return redirect_to games_not_found_path(slug: game_slug_param)
+    @game = Game.find_by(slug: game_slug_param) or return redirect_to game_not_found_path(slug: game_slug_param)
   end
 
   def check_if_game_is_full

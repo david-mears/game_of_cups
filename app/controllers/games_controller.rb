@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
-  before_action :set_player, only: %w[show]
-  before_action :set_game, only: %w[show change_team start leave_game]
+  before_action :set_game, except: %w[index find new create game_not_found]
+  before_action :check_game_status, only: %w[show]
+  before_action :check_session_player, only: %w[show]
 
   def index; end
 
@@ -15,13 +16,15 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    @game.slug = set_slug
+    @game.slug = generate_slug
     @game.save
     redirect_to game_path(slug: @game.slug)
   end
 
   def show
-    lobby(game: @game) unless @game.quorate? && @game.started?
+    @player = session_player
+    @url = request.original_url
+    render 'lobby' and return unless @game.quorate? && @game.started?
   end
 
   def change_team
@@ -31,29 +34,26 @@ class GamesController < ApplicationController
 
   def start
     return unless @game.quorate?
-    @game.status = 'started' unless @game.started?
+
+    @game.started! unless @game.started?
     @game.save
     ActionCable.server.broadcast 'games', { message: 'The game started', event: 'game_started' }
     redirect_to game_path(slug: slug_param)
   end
 
-  def games_not_found
+  def game_not_found
     @slug = slug_param
   end
 
+  def game_trashed; end
+
   def leave_game
     @game.players.delete(session_player)
-    @game.destroy if @game.players.empty?
+    @game.trashed! if @game.players.empty?
     redirect_to root_path
   end
 
   private
-
-  def lobby(game:)
-    @game = game
-    @url = request.original_url
-    render 'lobby'
-  end
 
   def game_params
     params.require(:game).permit(:number_of_players, :slug).merge(status: 'draft')
@@ -63,26 +63,25 @@ class GamesController < ApplicationController
     params.permit(:slug)[:slug].downcase
   end
 
-  def set_slug
+  def generate_slug
     begin
       slug = WordsApi.new.get_word(min_letters: 4, max_letters: 4)
     rescue SocketError
       slug = ('a'..'z').to_a.sample(4).join
     end
-    slug = set_slug if slug == 'find'
+    slug = generate_slug if slug == 'find'
     slug
   end
 
-  def set_player
-    if session[:player_id].blank?
-      redirect_to new_game_player_path(game_slug: slug_param)
-    else
-      @player = session_player
-      redirect_to new_game_player_path(game_slug: slug_param) if @player.blank?
-    end
+  def set_game
+    @game = Game.find_by(slug: slug_param) or return redirect_to game_not_found_path(slug: slug_param)
   end
 
-  def set_game
-    @game = Game.find_by(slug: slug_param) or return redirect_to games_not_found_path(slug: slug_param)
+  def check_game_status
+    return redirect_to game_trashed_path(slug: slug_param) if @game.trashed?
+  end
+
+  def check_session_player
+    redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
   end
 end

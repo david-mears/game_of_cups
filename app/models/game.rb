@@ -16,7 +16,7 @@ class Game < ApplicationRecord
   def quorate?
     players.count == number_of_players
   end
-  
+
   # rubocop:disable Naming/PredicateName
   def has_arthur?
     players.each { |player| return true if player.arthur? }

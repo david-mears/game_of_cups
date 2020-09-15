@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.feature 'End-to-end test' do
+RSpec.feature 'Gameplay' do
   let(:game) { Game.find_by(slug: 'test') }
   let(:number_of_players) { 5 }
   before { allow_any_instance_of(WordsApi).to receive(:get_word).and_return('test') }
@@ -24,7 +24,6 @@ RSpec.feature 'End-to-end test' do
     expect(page).to have_content('/games/test') # Displays the url to share
     expect(page).to have_content("1. Mr Bean (you)\n2.\n3.\n4.\n5.")
 
-    
     (number_of_players - 1).times { Player.create(game: game) }
 
     # Reload page to enable start button because test has no JS
@@ -47,7 +46,16 @@ RSpec.feature 'End-to-end test' do
     expect(page).to have_content('No game called sausages was found.')
   end
 
-  context 'game is already full' do
+  context 'when leaving a game' do
+    let(:game) { Game.create(slug: 'kurz', number_of_players: 3, status: 'trashed') }
+
+    scenario 'if the game is trashed, do not show it' do
+      visit game_path(slug: game.slug)
+      expect(page).to have_content('kurz no longer exists.')
+    end
+  end
+
+  context 'when the game is already full' do
     let(:game) { Game.create(slug: 'full', number_of_players: 3) }
     before { 3.times { Player.create(game: game) } }
 
@@ -73,7 +81,7 @@ RSpec.feature 'End-to-end test' do
 
       scenario 'allow user in' do
         visit game_path(slug: 'full')
-        expect(page).to have_content("Lobby")
+        expect(page).to have_content('Lobby')
       end
     end
   end
