@@ -28,9 +28,10 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 --
 
 CREATE TYPE public.game_statuses AS ENUM (
-    'published',
     'draft',
-    'reviewed'
+    'started',
+    'finished',
+    'trashed'
 );
 
 
@@ -55,7 +56,7 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.cups (
-    id bigint NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     kind integer,
     image character varying,
     created_at timestamp(6) without time zone NOT NULL,
@@ -65,30 +66,11 @@ CREATE TABLE public.cups (
 
 
 --
--- Name: cups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.cups_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: cups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.cups_id_seq OWNED BY public.cups.id;
-
-
---
 -- Name: games; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.games (
-    id bigint NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     slug character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -98,30 +80,11 @@ CREATE TABLE public.games (
 
 
 --
--- Name: games_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.games_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: games_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.games_id_seq OWNED BY public.games.id;
-
-
---
 -- Name: players; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.players (
-    id bigint NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     name character varying,
     allegiance integer,
     created_at timestamp(6) without time zone NOT NULL,
@@ -131,52 +94,12 @@ CREATE TABLE public.players (
 
 
 --
--- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.players_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.players_id_seq OWNED BY public.players.id;
-
-
---
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
-
-
---
--- Name: cups id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cups ALTER COLUMN id SET DEFAULT nextval('public.cups_id_seq'::regclass);
-
-
---
--- Name: games id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.games ALTER COLUMN id SET DEFAULT nextval('public.games_id_seq'::regclass);
-
-
---
--- Name: players id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.players_id_seq'::regclass);
 
 
 --
