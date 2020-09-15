@@ -4,15 +4,21 @@
   <section>
     <p>Share this URL to invite players: <a href="<%=@url%>"><%=@url%></a> </p>
     <h2>The Players</h2>
+      <div id="players">
       <% @game.number_of_players.times do |index| %>
-        <p>
+        <p class="player">
           <%= index + 1 %>. 
-          <%= @game.players[index]&.name %>
-          <% if @game.players[index] == @player%>
-            (you)
-          <% end %>
+          <span id="playerName<%= index %>">
+            <% if @game.players[index] %>
+              <%= @game.players[index]&.name %>
+              <% if @game.players[index] == @player%>
+                (you)
+              <% end %>
+            <% end %>
+          </span>
         </p>
       <% end %>
+      </div>
     </p>
     <% if @game.quorate? %>
       <button>Start the game already!</button>

@@ -2,7 +2,16 @@ import consumer from "./consumer"
  
 consumer.subscriptions.create({ channel: "GameChannel"}, {
   received(data) {
-    alert(data['message'])
+    const players = document.getElementsByClassName('player');
+
+    let i;
+    for (i = 0; i < players.length; i++) {
+      const playerNameElement = document.getElementById(`playerName${i}`);
+      if (playerNameElement.innerText === '') {
+        playerNameElement.innerHTML = data['name'];
+        break;
+      };
+    };
   }
 })
 // TODO: find out what a 'room' is and whether I should use one to distinguish

@@ -48,7 +48,8 @@ figure {
     position: fixed;
     top: 0;
     max-height: 90%;
-    overflow: scroll;
+    overflow: auto;
+    width: 45%;
   }
 }
 
