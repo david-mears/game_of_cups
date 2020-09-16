@@ -2,8 +2,8 @@ class GamesController < ApplicationController
   before_action :set_game, except: %w[index find new create game_not_found]
   before_action :check_game_status, only: %w[show]
   before_action :check_if_game_is_full, only: %w[show]
-  before_action :destroy_session_player_if_from_another_game, only: %w[show]
-  before_action :check_session_player, only: %w[show]
+  before_action :check_session_player_presence, only: %w[show]
+  before_action :check_if_session_player_belongs_to_game, only: %w[show]
 
   def index; end
 
@@ -24,7 +24,6 @@ class GamesController < ApplicationController
   end
 
   def show
-    session[:slug] = slug_param
     @player = session_player
     @url = request.original_url
     render 'lobby' and return unless @game.quorate? && @game.started?
@@ -81,10 +80,6 @@ class GamesController < ApplicationController
     return redirect_to game_trashed_path(slug: slug_param) if @game.trashed?
   end
 
-  def check_session_player
-    redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
-  end
-
   def check_if_game_is_full
     return if @game.players.include? session_player
     return if @game.players.count < @game.number_of_players
@@ -92,9 +87,14 @@ class GamesController < ApplicationController
     redirect_to root_path, alert: "Sorry, the game ‘#{@game.slug}’ is full."
   end
 
-  def destroy_session_player_if_from_another_game
-    return if session[:slug].blank?
+  def check_session_player_presence
+    redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
+  end
 
-    session.destroy if session[:slug] != slug_param
+  def check_if_session_player_belongs_to_game
+    return if @game.players.include? session_player
+
+    session_player.destroy
+    session.destroy
   end
 end
