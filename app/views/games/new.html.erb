@@ -5,7 +5,7 @@
     <%= form_with model: @game do |f| %>
       <%= label_tag :number_of_players, 'How many players are there?'%>
       <%= f.number_field :number_of_players, min: 3, max: 20, required: true, autofocus: true %>
-      <%= f.submit "Begin" %>
+      <%= f.submit %>
     <% end %>
     <p>Note: this is a social game. That means if you are playing remotely, you will need some way to talk to each other.</p>
   </section>

@@ -89,7 +89,8 @@ CREATE TABLE public.players (
     allegiance integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_id uuid
+    game_id uuid,
+    arthur boolean DEFAULT false
 );
 
 
@@ -181,6 +182,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200816013524'),
 ('20200831225041'),
 ('20200831233526'),
+('20200911155424'),
 ('20200913163000'),
 ('20200913163114'),
 ('20200915182552'),
