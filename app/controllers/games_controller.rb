@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, except: %w[index find new create game_not_found]
   before_action :check_game_status, only: %w[show]
+  before_action :check_if_game_is_full, only: %(show)
   before_action :check_session_player, only: %w[show]
 
   def index; end
@@ -48,15 +49,16 @@ class GamesController < ApplicationController
   def game_trashed; end
 
   def leave_game
-    @game.players.delete(session_player)
+    @game.players.destroy(session_player)
     @game.trashed! if @game.players.empty?
+    session.destroy
     redirect_to root_path
   end
 
   private
 
   def game_params
-    params.require(:game).permit(:number_of_players, :slug).merge(status: 'draft')
+    params.require(:game).permit(:number_of_players, :slug)
   end
 
   def slug_param
@@ -73,15 +75,18 @@ class GamesController < ApplicationController
     slug
   end
 
-  def set_game
-    @game = Game.find_by(slug: slug_param) or return redirect_to game_not_found_path(slug: slug_param)
-  end
-
   def check_game_status
     return redirect_to game_trashed_path(slug: slug_param) if @game.trashed?
   end
 
   def check_session_player
     redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
+  end
+
+  def check_if_game_is_full
+    return if @game.players.include? session_player
+    return if @game.players.count < @game.number_of_players
+
+    redirect_to root_path, alert: "Sorry, the game ‘#{@game.slug}’ is full."
   end
 end

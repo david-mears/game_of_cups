@@ -4,6 +4,7 @@ class Game < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :number_of_players, presence: true
 
+  after_create :set_default_status
   after_create :create_cups
 
   enum status: {
@@ -35,5 +36,9 @@ class Game < ApplicationRecord
       cups.push cup
     end
     self.cups = cups
+  end
+
+  def set_default_status
+    draft! if status.nil?
   end
 end

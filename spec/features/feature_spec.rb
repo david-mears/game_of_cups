@@ -1,42 +1,45 @@
 require 'rails_helper'
 
-# rubocop:disable Metrics/BlockLength
 RSpec.feature 'Gameplay' do
-  let(:game) { Game.find_by(slug: 'test') }
-  let(:number_of_players) { 5 }
-  before { allow_any_instance_of(WordsApi).to receive(:get_word).and_return('test') }
+  let(:word_api_slug) { 'test' }
+  before { allow_any_instance_of(WordsApi).to receive(:get_word).and_return(word_api_slug) }
 
   # Remember that JS probably isn't running in the tests.
 
-  scenario 'can create and view a game' do
-    visit root_path
-    click_on 'Make new game'
-    fill_in 'game_number_of_players', with: number_of_players
-    click_on 'Begin'
-    fill_in 'player_name', with: 'Mr Bean'
-    click_on 'Create Player'
+  context 'basic gameplay' do
+    let(:game) { Game.find_by(slug: word_api_slug) }
+    let(:number_of_players) { 3 }
 
-    # Goes to lobby because not yet quorate
-    expect(current_path).to match(/test/)
-    expect(game.number_of_players).to eq number_of_players
-    expect(page).to have_content('Lobby')
-    expect(page).not_to have_content('Start') # Because we are not quorate
-    expect(page).to have_content('/games/test') # Displays the url to share
-    expect(page).to have_content("1. Mr Bean (you)\n2.\n3.\n4.\n5.")
+    scenario 'can create and view a game' do
+      visit root_path
+      click_on 'Make new game'
+      fill_in 'game_number_of_players', with: number_of_players
+      click_on 'Create Game'
+      fill_in 'player_name', with: 'Mr Bean'
+      click_on 'Create Player'
 
-    (number_of_players - 1).times { Player.create(game: game) }
+      # Goes to lobby because not yet quorate
+      expect(current_path).to match(/#{word_api_slug}/)
+      expect(game.number_of_players).to eq number_of_players
+      expect(page).to have_content('Lobby')
+      expect(page).not_to have_content('Start') # Because we are not quorate
+      expect(page).to have_content("/games/#{word_api_slug}") # Displays the url to share
+      expect(page).to have_content("1. Mr Bean (you)\n2.\n3.")
 
-    # Reload page to enable start button because test has no JS
-    visit game_path(slug: game.slug)
-    click_on 'Start (when all the players are here)'
-    expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+      (number_of_players - 1).times { Player.create(game: game) }
 
-    visit root_path
-    fill_in 'game_slug', with: 'test'
-    click_on 'Next'
-    expect(page).to have_content('Player: Mr Bean') # Remembers the player
-    expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
-    expect(current_path).to match(/test/)
+      # Reload page to enable start button because test has no JS
+      visit game_path(slug: game.slug)
+      click_on 'Start (when all the players are here)'
+      expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+
+      visit root_path
+      fill_in 'game_slug', with: word_api_slug
+      click_on 'Next'
+      expect(page).to have_content('Player: Mr Bean') # Remembers the player
+      expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+      expect(current_path).to match(/#{word_api_slug}/)
+    end
   end
 
   scenario 'game not found' do
@@ -47,17 +50,43 @@ RSpec.feature 'Gameplay' do
   end
 
   context 'when leaving a game' do
-    let(:game) { Game.create(slug: 'kurz', number_of_players: 3, status: 'trashed') }
+    let(:word_api_slug) { 'kurz' }
+    let!(:game) { Game.create(slug: 'kurz', number_of_players: 3) }
+    let!(:other_player_1) { Player.create(game: game) }
+    let!(:other_player_2) { Player.create(game: game) }
 
-    scenario 'if the game is trashed, do not show it' do
-      visit game_path(slug: game.slug)
-      expect(page).to have_content('kurz no longer exists.')
+    before do
+      visit game_path(slug: 'kurz')
+      fill_in 'player_name', with: 'Mr Bean'
+      click_on 'Create Player'
+      click_on 'Start (when all the players are here)'
+      other_player_1.destroy
+      other_player_2.destroy
+      click_on 'Leave Game'
+    end
+
+    scenario 'trashes the game' do
+      visit game_path(slug: word_api_slug)
+      expect(Game.find_by(slug: word_api_slug)).to be_trashed
+      expect(page).to have_content('no longer exists.')
+    end
+
+    context 'when playing a new game' do
+      let(:word_api_slug) { 'new_game' }
+
+      scenario 'requires a player to be created because session was destroyed' do
+        visit root_path
+        click_on 'Make new game'
+        fill_in 'game_number_of_players', with: 4
+        click_on 'Create Game'
+        expect(page).to have_content('new player')
+      end
     end
   end
 
   context 'when the game is already full' do
-    let(:game) { Game.create(slug: 'full', number_of_players: 3) }
-    before { 3.times { Player.create(game: game) } }
+    let(:full_game) { Game.create(slug: 'full', number_of_players: 5) }
+    before { 5.times { Player.create(game: full_game) } }
 
     context 'when the player does NOT belong to the game' do
       scenario 'reject user' do
@@ -67,23 +96,24 @@ RSpec.feature 'Gameplay' do
     end
 
     context 'when the player DOES belong to the game' do
+      let(:slug) { 'game_with_room_for_10' }
+
       before do
         visit root_path
         click_on 'Make new game'
-        fill_in 'game_number_of_players', with: 5
-        click_on 'Begin'
+        fill_in 'game_number_of_players', with: 10
+        click_on 'Create Game'
         fill_in 'player_name', with: 'Alice'
         click_on 'Create Player'
-        game.players.last.delete
-        Player.find_by(name: 'Alice').update!(game_id: game.id)
-        game.players.reload
+        full_game.players.last.delete
+        Player.find_by(name: 'Alice').update!(game: full_game)
+        full_game.players.reload
       end
 
       scenario 'allow user in' do
-        visit game_path(slug: 'full')
+        visit game_path(slug: full_game.slug)
         expect(page).to have_content('Lobby')
       end
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

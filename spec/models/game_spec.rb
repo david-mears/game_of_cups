@@ -1,12 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+  let(:game) { Game.create(slug: 'test', number_of_players: 4) }
+
   it 'can have a new blank game with no arthur' do
-    expect(Game.new.has_arthur?).to eq false
+    expect(Game.new).not_to have_arthur
+  end
+
+  it 'has a default status of draft which can be overridden' do
+    expect(game).to be_draft
+    expect(Game.create(slug: 'test', number_of_players: 4, status: 'started')).to be_started
   end
 
   context 'which is created with no arthur' do
-    let(:game) { Game.create(slug: 'test', number_of_players: 4) }
     before { 3.times { Player.create(game: game) } }
     it 'returns false' do
       expect(game).to_not have_arthur
@@ -15,7 +21,6 @@ RSpec.describe Game, type: :model do
   end
 
   context 'which is created with arthur' do
-    let(:game) { Game.create(slug: 'test', number_of_players: 4) }
     before do
       3.times { Player.create(game: game) }
       Player.create(game: game, arthur: true)
