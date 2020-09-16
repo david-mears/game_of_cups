@@ -111,7 +111,7 @@ RSpec.feature 'Gameplay' do
       end
 
       scenario 'allow user in' do
-        visit game_path(slug: full_game.slug)
+        visit game_path(slug: 'full')
         expect(page).to have_content('Lobby')
       end
     end

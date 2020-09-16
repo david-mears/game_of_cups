@@ -72,7 +72,7 @@ class GamesController < ApplicationController
     rescue StandardError
       slug = ('a'..'z').to_a.sample(4).join
     end
-    slug = generate_slug if slug == 'find'
+    slug = set_slug if slug == 'find' || Game.all.map(&:slug).include?(slug)
     slug
   end
 
