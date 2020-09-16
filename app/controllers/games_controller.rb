@@ -60,7 +60,7 @@ class GamesController < ApplicationController
   def set_slug
     begin
       slug = WordsApi.new.get_word(min_letters: 4, max_letters: 4)
-    rescue SocketError
+    rescue StandardError
       slug = ('a'..'z').to_a.sample(4).join
     end
     slug = set_slug if slug == 'find'
