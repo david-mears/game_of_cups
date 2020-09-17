@@ -16,6 +16,15 @@ class Player < ApplicationRecord
     SYMBOLS[allegiance&.to_sym]
   end
 
+  def drink(cup)
+    case cup.kind
+    when 'accursed_chalice'
+      evil!
+    when 'merlins_goblet'
+      good!
+    end
+  end
+
   def broadcast_new_player_name
     ActionCable.server.broadcast 'games', {
       message: 'A new player joined',
