@@ -16,8 +16,8 @@ class Game < ApplicationRecord
 
   def start
     started!
-    assign_arthur
-    set_player_allegiances
+    players.sample.update!(arthur: true)
+    players.reject(&:arthur?).sample.evil!
   end
 
   def quorate?
@@ -39,17 +39,5 @@ class Game < ApplicationRecord
 
   def set_default_status
     draft! if status.nil?
-  end
-
-  def assign_arthur
-    arthur_player = players.sample
-    arthur_player.arthur = true
-    arthur_player.save
-  end
-
-  def set_player_allegiances
-    evil_player = players.reject(&:arthur?).sample
-    evil_player.evil!
-    players.reject(&:evil?).each(&:good!)
   end
 end

@@ -10,7 +10,9 @@ RSpec.describe Game, type: :model do
 
   it 'has a default status of draft which can be overridden' do
     expect(game).to be_draft
-    expect(Game.create(slug: 'test', number_of_players: number_of_players, status: 'started')).to be_started
+    expect(Game.create(slug: 'test',
+                       number_of_players: number_of_players,
+                       status: 'started')).to be_started
   end
 
   describe '#start' do
@@ -35,7 +37,7 @@ RSpec.describe Game, type: :model do
       expect(players.select(&:evil?).size).to eq 1
     end
 
-    it 'makes any other players good' do
+    it 'leaves any other players good' do
       expect(players.select(&:good?).size).to eq number_of_players - 1
     end
   end
