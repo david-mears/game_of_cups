@@ -14,6 +14,11 @@ class Game < ApplicationRecord
     trashed: 'trashed'
   }
 
+  def start
+    started!
+    assign_arthur
+  end
+
   def quorate?
     players.count == number_of_players
   end
@@ -33,5 +38,10 @@ class Game < ApplicationRecord
 
   def set_default_status
     draft! if status.nil?
+  end
+
+  def assign_arthur
+    random_player = players.sample
+    random_player.arthur = true
   end
 end
