@@ -17,6 +17,7 @@ class Game < ApplicationRecord
   def start
     started!
     assign_arthur
+    set_player_allegiances
   end
 
   def quorate?
@@ -45,5 +46,10 @@ class Game < ApplicationRecord
     arthur_player.good!
     arthur_player.arthur = true
     arthur_player.save
+  end
+
+  def set_player_allegiances
+    evil_player = players.reject(&:arthur?).sample
+    evil_player.evil!
   end
 end

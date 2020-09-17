@@ -13,6 +13,7 @@ RSpec.describe Game, type: :model do
   end
 
   describe '#start' do
+    let(:players) { game.players }
     before { game.start }
 
     it 'sets the game status to started' do
@@ -20,11 +21,15 @@ RSpec.describe Game, type: :model do
     end
 
     it 'assigns one player to be arthur' do
-      expect(game.players.select(&:arthur?).size).to eq 1
+      expect(players.select(&:arthur?).size).to eq 1
     end
 
     it 'gives arthur an allegiance of good' do
-      expect(game.players.select(&:arthur?).first).to be_good
+      expect(players.select(&:arthur?).first).to be_good
+    end
+
+    it 'makes one other player evil' do
+      expect(players.select(&:evil?).size).to eq 1
     end
   end
 end
