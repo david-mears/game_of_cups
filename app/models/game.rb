@@ -43,7 +43,6 @@ class Game < ApplicationRecord
 
   def assign_arthur
     arthur_player = players.sample
-    arthur_player.good!
     arthur_player.arthur = true
     arthur_player.save
   end
@@ -51,5 +50,6 @@ class Game < ApplicationRecord
   def set_player_allegiances
     evil_player = players.reject(&:arthur?).sample
     evil_player.evil!
+    players.reject(&:evil?).each(&:good!)
   end
 end
