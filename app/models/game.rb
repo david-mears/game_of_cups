@@ -41,7 +41,9 @@ class Game < ApplicationRecord
   end
 
   def assign_arthur
-    random_player = players.sample
-    random_player.arthur = true
+    arthur_player = players.sample
+    arthur_player.good!
+    arthur_player.arthur = true
+    arthur_player.save
   end
 end

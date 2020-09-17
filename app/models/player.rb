@@ -10,7 +10,7 @@ class Player < ApplicationRecord
     arthur: '♔'
   }.freeze
 
-  enum allegiance: { evil: 0, good: 1 }, _suffix: :allegiance
+  enum allegiance: { evil: 0, good: 1 }
 
   def allegiance_symbol
     SYMBOLS[allegiance&.to_sym]

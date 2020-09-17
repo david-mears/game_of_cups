@@ -22,5 +22,9 @@ RSpec.describe Game, type: :model do
     it 'assigns one player to be arthur' do
       expect(game.players.select(&:arthur?).size).to eq 1
     end
+
+    it 'gives arthur an allegiance of good' do
+      expect(game.players.select(&:arthur?).first).to be_good
+    end
   end
 end
