@@ -26,7 +26,7 @@ RSpec.feature 'Gameplay' do
       expect(page).to have_content("/games/#{word_api_slug}") # Displays the url to share
       expect(page).to have_content("1. Mr Bean (you)\n2.\n3.")
 
-      (number_of_players - 1).times { Player.create(game: game) }
+      (number_of_players - 1).times { Player.create(name: 'Slim Shady', game: game) }
 
       # Reload page to enable start button because test has no JS
       visit game_path(slug: game.slug)
@@ -52,8 +52,8 @@ RSpec.feature 'Gameplay' do
   context 'when leaving a game' do
     let(:word_api_slug) { 'kurz' }
     let!(:game) { Game.create(slug: 'kurz', number_of_players: 3) }
-    let!(:other_player_1) { Player.create(game: game) }
-    let!(:other_player_2) { Player.create(game: game) }
+    let!(:other_player_1) { Player.create(name: 'Gandalf', game: game) }
+    let!(:other_player_2) { Player.create(name: 'Elrond', game: game) }
 
     before do
       visit game_path(slug: 'kurz')
@@ -86,7 +86,7 @@ RSpec.feature 'Gameplay' do
 
   context 'when the game is already full' do
     let(:full_game) { Game.create(slug: 'full', number_of_players: 5) }
-    before { 5.times { Player.create(game: full_game) } }
+    before { 5.times { Player.create(name: 'Spartacus', game: full_game) } }
 
     context 'when the player does NOT belong to the game' do
       scenario 'reject user' do
