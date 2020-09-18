@@ -62,3 +62,13 @@ Then visit http://localhost:3000
 * Contributing
 
 Submit a PR with a description and meaningful commit messages
+
+* Glossary
+
+Robert C. Martin says in Clean Code that you shouldn't try and be clever-clever with naming (with puns or other jokes). It's inconsiderate to people with different cultural or linguistic backgrounds, for one thing, and you'll forget what you were referring to when you return to the code in a year, for another.
+
+However, as this is a side-project I am doing partly for fun, I'm going to take this opportunity to use some perfectly cromulent words I enjoy that don't see the daylight *that* much. I particularly like oligosyllabic ones. Hence this glossary.
+
+[draught](https://en.wiktionary.org/wiki/draft#English): Noun for an act of drinking, used for the Player-Cup join model. (Chose old-fashioned spelling to distinguish from 'draft'.)
+[quaff](https://en.wiktionary.org/wiki/quaff): Verb for drink. Method name.
+[quorate](https://en.wiktionary.org/wiki/quorate#English): Adjective for when the correct number of people are present. 
