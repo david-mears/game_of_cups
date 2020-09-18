@@ -16,7 +16,7 @@ class Player < ApplicationRecord
     SYMBOLS[allegiance&.to_sym]
   end
 
-  def drink(cup)
+  def quaff(cup)
     if cup.accursed_chalice?
       evil!
     elsif cup.merlins_goblet?

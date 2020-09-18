@@ -14,12 +14,12 @@ RSpec.describe Player, type: :model do
       expect(player.allegiance_symbol).to eq '♱'
     end
 
-    context 'when drinking the Accursed Chalice' do
+    context 'when quaffing the Accursed Chalice' do
       before do
         allow(cup).to receive(:accursed_chalice?).and_return(true)
         allow(cup).to receive(:merlins_goblet?).and_return(false)
         allow(cup).to receive(:holy_grail?).and_return(false)
-        player.drink(cup)
+        player.quaff(cup)
       end
 
       it 'becomes evil' do
@@ -27,12 +27,12 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    context "when drinking Merlin's Goblet" do
+    context "when quaffing Merlin's Goblet" do
       before do
         allow(cup).to receive(:accursed_chalice?).and_return(false)
         allow(cup).to receive(:merlins_goblet?).and_return(true)
         allow(cup).to receive(:holy_grail?).and_return(false)
-        player.drink(cup)
+        player.quaff(cup)
       end
 
       it 'remains good' do
@@ -48,12 +48,12 @@ RSpec.describe Player, type: :model do
       expect(player.allegiance_symbol).to eq '𖤐'
     end
 
-    context 'when drinking the Accursed Chalice' do
+    context 'when quaffing the Accursed Chalice' do
       before do
         allow(cup).to receive(:accursed_chalice?).and_return(true)
         allow(cup).to receive(:merlins_goblet?).and_return(false)
         allow(cup).to receive(:holy_grail?).and_return(false)
-        player.drink(cup)
+        player.quaff(cup)
       end
 
       it 'remains evil' do
@@ -61,12 +61,12 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    context "when drinking Merlin's Goblet" do
+    context "when quaffing Merlin's Goblet" do
       before do
         allow(cup).to receive(:accursed_chalice?).and_return(false)
         allow(cup).to receive(:merlins_goblet?).and_return(true)
         allow(cup).to receive(:holy_grail?).and_return(false)
-        player.drink(cup)
+        player.quaff(cup)
       end
 
       it 'becomes good' do
@@ -78,12 +78,12 @@ RSpec.describe Player, type: :model do
   context 'when Arthur' do
     let(:player) { Player.new(name: 'Bill', game: game, arthur: true) }
 
-    context 'when drinking the Holy Grail' do
+    context 'when quaffing the Holy Grail' do
       before do
         allow(cup).to receive(:accursed_chalice?).and_return(false)
         allow(cup).to receive(:merlins_goblet?).and_return(false)
         allow(cup).to receive(:holy_grail?).and_return(true)
-        player.drink(cup)
+        player.quaff(cup)
       end
 
       it 'ends the game' do
