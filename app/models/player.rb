@@ -17,11 +17,12 @@ class Player < ApplicationRecord
   end
 
   def drink(cup)
-    case cup.kind
-    when 'accursed_chalice'
+    if cup.accursed_chalice?
       evil!
-    when 'merlins_goblet'
+    elsif cup.merlins_goblet?
       good!
+    elsif arthur? && cup.holy_grail?
+      game.finished!
     end
   end
 

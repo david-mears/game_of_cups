@@ -12,7 +12,9 @@ RSpec.describe Player, type: :model do
   context 'when good' do
     context 'when drinking the Accursed Chalice' do
       before do
-        allow(cup).to receive(:kind).and_return('accursed_chalice')
+        allow(cup).to receive(:accursed_chalice?).and_return(true)
+        allow(cup).to receive(:merlins_goblet?).and_return(false)
+        allow(cup).to receive(:holy_grail?).and_return(false)
         player.drink(cup)
       end
 
@@ -23,7 +25,9 @@ RSpec.describe Player, type: :model do
 
     context "when drinking Merlin's Goblet" do
       before do
-        allow(cup).to receive(:kind).and_return('merlins_goblet')
+        allow(cup).to receive(:accursed_chalice?).and_return(false)
+        allow(cup).to receive(:merlins_goblet?).and_return(true)
+        allow(cup).to receive(:holy_grail?).and_return(false)
         player.drink(cup)
       end
 
@@ -38,7 +42,9 @@ RSpec.describe Player, type: :model do
 
     context 'when drinking the Accursed Chalice' do
       before do
-        allow(cup).to receive(:kind).and_return('accursed_chalice')
+        allow(cup).to receive(:accursed_chalice?).and_return(true)
+        allow(cup).to receive(:merlins_goblet?).and_return(false)
+        allow(cup).to receive(:holy_grail?).and_return(false)
         player.drink(cup)
       end
 
@@ -49,12 +55,31 @@ RSpec.describe Player, type: :model do
 
     context "when drinking Merlin's Goblet" do
       before do
-        allow(cup).to receive(:kind).and_return('merlins_goblet')
+        allow(cup).to receive(:accursed_chalice?).and_return(false)
+        allow(cup).to receive(:merlins_goblet?).and_return(true)
+        allow(cup).to receive(:holy_grail?).and_return(false)
         player.drink(cup)
       end
 
       it 'becomes good' do
         expect(player).to be_good
+      end
+    end
+  end
+
+  context 'when Arthur' do
+    let(:player) { Player.new(name: 'Bill', game: game, arthur: true) }
+
+    context 'when drinking the Holy Grail' do
+      before do
+        allow(cup).to receive(:accursed_chalice?).and_return(false)
+        allow(cup).to receive(:merlins_goblet?).and_return(false)
+        allow(cup).to receive(:holy_grail?).and_return(true)
+        player.drink(cup)
+      end
+
+      it 'ends the game' do
+        expect(game).to be_finished
       end
     end
   end
