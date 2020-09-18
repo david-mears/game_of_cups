@@ -10,20 +10,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
-
-
---
 -- Name: game_statuses; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -56,20 +42,39 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.cups (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id bigint NOT NULL,
     kind integer,
     image character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_id uuid
+    game_id bigint
 );
 
 
 --
--- Name: cups_players; Type: TABLE; Schema: public; Owner: -
+-- Name: cups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.cups_players (
+CREATE SEQUENCE public.cups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: cups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.cups_id_seq OWNED BY public.cups.id;
+
+
+--
+-- Name: draughts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.draughts (
     player_id bigint NOT NULL,
     cup_id bigint NOT NULL
 );
@@ -80,7 +85,7 @@ CREATE TABLE public.cups_players (
 --
 
 CREATE TABLE public.games (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id bigint NOT NULL,
     slug character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -90,18 +95,56 @@ CREATE TABLE public.games (
 
 
 --
+-- Name: games_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: games_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.games_id_seq OWNED BY public.games.id;
+
+
+--
 -- Name: players; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.players (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id bigint NOT NULL,
     name character varying,
     allegiance integer DEFAULT 1,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_id uuid,
+    game_id bigint,
     arthur boolean DEFAULT false
 );
+
+
+--
+-- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.players_id_seq OWNED BY public.players.id;
 
 
 --
@@ -111,6 +154,27 @@ CREATE TABLE public.players (
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: cups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cups ALTER COLUMN id SET DEFAULT nextval('public.cups_id_seq'::regclass);
+
+
+--
+-- Name: games id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.games ALTER COLUMN id SET DEFAULT nextval('public.games_id_seq'::regclass);
+
+
+--
+-- Name: players id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.players_id_seq'::regclass);
 
 
 --
@@ -154,10 +218,24 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: index_cups_on_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cups_on_game_id ON public.cups USING btree (game_id);
+
+
+--
 -- Name: index_games_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_games_on_slug ON public.games USING btree (slug);
+
+
+--
+-- Name: index_players_on_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_players_on_game_id ON public.players USING btree (game_id);
 
 
 --
@@ -183,7 +261,6 @@ ALTER TABLE ONLY public.players
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20200101000000'),
 ('20200816002231'),
 ('20200816010221'),
 ('20200816011452'),
@@ -195,10 +272,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200911155424'),
 ('20200913163000'),
 ('20200913163114'),
-('20200915182552'),
-('20200915183002'),
 ('20200917233347'),
 ('20200918002838'),
-('20200918160949');
+('20200918160949'),
+('20200918174248');
 
 

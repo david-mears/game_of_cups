@@ -1,5 +1,5 @@
 class AddGameIdToCups < ActiveRecord::Migration[6.0]
   def change
-    add_column :cups, :game_id, :uuid
+    add_reference :cups, :game, foreign_key: true
   end
 end
