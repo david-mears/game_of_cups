@@ -3,13 +3,45 @@ require 'rails_helper'
 RSpec.describe Player, type: :model do
   let(:game) { Game.create(slug: 'game', number_of_players: 3) }
   let(:player) { Player.new(name: 'Bill', game: game) }
+  let(:players) { Array.new }
   let(:cup) { instance_double(Cup) }
+
+  before do
+    allow(cup).to receive(:players).and_return(players)
+  end
 
   it 'has a default allegiance of good' do
     expect(player).to be_good
   end
 
+  describe '#has_quaffed?' do
+    context 'when the player is unassociated to the cup' do
+      it 'is false' do
+        expect(player).not_to have_quaffed cup
+      end
+    end
+
+    context 'when the player is associated to the cup' do
+      let(:players) { [player] }
+
+      it 'is true' do
+        expect(player).to have_quaffed cup
+      end
+    end
+  end
+
   describe '#quaff' do
+    context 'when drinking any cup' do
+      before do
+        allow(cup).to receive(:accursed_chalice?).and_return(true)
+        player.quaff(cup)
+      end
+
+      it 'creates an association between the cup and the player' do
+        expect(player).to have_quaffed(cup)
+      end
+    end
+
     context 'when good' do
       it 'can display a symbol of good' do
         expect(player.allegiance_symbol).to eq '♱'
@@ -18,8 +50,6 @@ RSpec.describe Player, type: :model do
       context 'when quaffing the Accursed Chalice' do
         before do
           allow(cup).to receive(:accursed_chalice?).and_return(true)
-          allow(cup).to receive(:merlins_goblet?).and_return(false)
-          allow(cup).to receive(:holy_grail?).and_return(false)
           player.quaff(cup)
         end
 
@@ -32,7 +62,6 @@ RSpec.describe Player, type: :model do
         before do
           allow(cup).to receive(:accursed_chalice?).and_return(false)
           allow(cup).to receive(:merlins_goblet?).and_return(true)
-          allow(cup).to receive(:holy_grail?).and_return(false)
           player.quaff(cup)
         end
 
@@ -52,8 +81,6 @@ RSpec.describe Player, type: :model do
       context 'when quaffing the Accursed Chalice' do
         before do
           allow(cup).to receive(:accursed_chalice?).and_return(true)
-          allow(cup).to receive(:merlins_goblet?).and_return(false)
-          allow(cup).to receive(:holy_grail?).and_return(false)
           player.quaff(cup)
         end
 
@@ -66,7 +93,6 @@ RSpec.describe Player, type: :model do
         before do
           allow(cup).to receive(:accursed_chalice?).and_return(false)
           allow(cup).to receive(:merlins_goblet?).and_return(true)
-          allow(cup).to receive(:holy_grail?).and_return(false)
           player.quaff(cup)
         end
 
@@ -84,11 +110,11 @@ RSpec.describe Player, type: :model do
           allow(cup).to receive(:accursed_chalice?).and_return(false)
           allow(cup).to receive(:merlins_goblet?).and_return(false)
           allow(cup).to receive(:holy_grail?).and_return(true)
-          player.quaff(cup)
         end
 
         it 'ends the game' do
-          expect(game).to be_finished
+          expect(game).to receive(:finished!)
+          player.quaff(cup)
         end
       end
     end

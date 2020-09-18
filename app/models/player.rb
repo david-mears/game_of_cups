@@ -1,5 +1,8 @@
 class Player < ApplicationRecord
   belongs_to :game
+  has_many :draughts, dependent: :destroy
+  has_many :cups, through: :draughts
+
   validates :name, presence: true
   validates :allegiance, presence: true
   validates :game_id, presence: true
@@ -21,6 +24,7 @@ class Player < ApplicationRecord
   end
 
   def quaff(cup)
+    cup.players << self
     if cup.accursed_chalice?
       evil!
     elsif cup.merlins_goblet?
@@ -28,6 +32,10 @@ class Player < ApplicationRecord
     elsif arthur? && cup.holy_grail?
       game.finished!
     end
+  end
+
+  def has_quaffed?(cup)
+    cup.players.include? self
   end
 
   def broadcast_new_player_name

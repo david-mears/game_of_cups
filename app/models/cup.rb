@@ -1,5 +1,8 @@
 class Cup < ApplicationRecord
   belongs_to :game
+  has_many :draughts, dependent: :destroy
+  has_many :players, through: :draughts
+
   validates :kind, presence: true
   validates :image, presence: true
   validates :game_id, presence: true
