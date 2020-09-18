@@ -10,10 +10,20 @@ class Player < ApplicationRecord
     arthur: '♔'
   }.freeze
 
-  enum allegiance: { evil: 0, good: 1 }, _suffix: :allegiance
+  enum allegiance: { evil: 0, good: 1 }
 
   def allegiance_symbol
     SYMBOLS[allegiance&.to_sym]
+  end
+
+  def quaff(cup)
+    if cup.accursed_chalice?
+      evil!
+    elsif cup.merlins_goblet?
+      good!
+    elsif arthur? && cup.holy_grail?
+      game.finished!
+    end
   end
 
   def broadcast_new_player_name

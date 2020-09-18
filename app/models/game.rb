@@ -14,6 +14,12 @@ class Game < ApplicationRecord
     trashed: 'trashed'
   }
 
+  def start
+    started!
+    players.sample.update!(arthur: true)
+    players.reject(&:arthur?).sample.evil!
+  end
+
   def quorate?
     players.count == number_of_players
   end

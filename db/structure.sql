@@ -86,7 +86,7 @@ CREATE TABLE public.games (
 CREATE TABLE public.players (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     name character varying,
-    allegiance integer,
+    allegiance integer DEFAULT 1,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     game_id uuid,
@@ -186,6 +186,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200913163000'),
 ('20200913163114'),
 ('20200915182552'),
-('20200915183002');
+('20200915183002'),
+('20200917233347');
 
 
