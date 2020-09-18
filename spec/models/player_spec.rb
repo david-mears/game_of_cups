@@ -10,6 +10,10 @@ RSpec.describe Player, type: :model do
   end
 
   context 'when good' do
+    it 'can display a symbol of good' do
+      expect(player.allegiance_symbol).to eq '♱'
+    end
+
     context 'when drinking the Accursed Chalice' do
       before do
         allow(cup).to receive(:accursed_chalice?).and_return(true)
@@ -39,6 +43,10 @@ RSpec.describe Player, type: :model do
 
   context 'when evil' do
     let(:player) { Player.new(name: 'Sauron', game: game, allegiance: 'evil') }
+
+    it 'can display a symbol of evil' do
+      expect(player.allegiance_symbol).to eq '𖤐'
+    end
 
     context 'when drinking the Accursed Chalice' do
       before do
