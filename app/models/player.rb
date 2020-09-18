@@ -1,5 +1,9 @@
 class Player < ApplicationRecord
   belongs_to :game
+  validates :name, presence: true
+  validates :allegiance, presence: true
+  validates :game_id, presence: true
+
   # TODO: belongs_to :user
 
   after_create :broadcast_new_player_name
