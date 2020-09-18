@@ -66,6 +66,16 @@ CREATE TABLE public.cups (
 
 
 --
+-- Name: cups_players; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cups_players (
+    player_id bigint NOT NULL,
+    cup_id bigint NOT NULL
+);
+
+
+--
 -- Name: games; Type: TABLE; Schema: public; Owner: -
 --
 
