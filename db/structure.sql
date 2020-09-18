@@ -76,8 +76,28 @@ ALTER SEQUENCE public.cups_id_seq OWNED BY public.cups.id;
 
 CREATE TABLE public.draughts (
     player_id bigint NOT NULL,
-    cup_id bigint NOT NULL
+    cup_id bigint NOT NULL,
+    id bigint NOT NULL
 );
+
+
+--
+-- Name: draughts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.draughts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: draughts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.draughts_id_seq OWNED BY public.draughts.id;
 
 
 --
@@ -164,6 +184,13 @@ ALTER TABLE ONLY public.cups ALTER COLUMN id SET DEFAULT nextval('public.cups_id
 
 
 --
+-- Name: draughts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.draughts ALTER COLUMN id SET DEFAULT nextval('public.draughts_id_seq'::regclass);
+
+
+--
 -- Name: games id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -191,6 +218,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.cups
     ADD CONSTRAINT cups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: draughts draughts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.draughts
+    ADD CONSTRAINT draughts_pkey PRIMARY KEY (id);
 
 
 --
@@ -275,6 +310,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200917233347'),
 ('20200918002838'),
 ('20200918160949'),
-('20200918174248');
+('20200918174248'),
+('20200918194534');
 
 
