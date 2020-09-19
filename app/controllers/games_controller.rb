@@ -32,6 +32,7 @@ class GamesController < ApplicationController
     @player = session_player
     @url = request.original_url
     render 'lobby' and return unless @game.quorate? && @game.started?
+    @draughts = @game.players.map(&:draughts).flatten
   end
 
   def start

@@ -58,7 +58,7 @@ body {
     to {box-shadow: 0 0 70px 1000px $black;}
   }
 
-  &.good {
+  &.good #holy_grail_quaffed_true {
     @keyframes pulsating {
       from {filter: brightness(100%);}
       to {filter: brightness(125%);}
@@ -73,7 +73,7 @@ body {
     }
   }
 
-  &.evil {
+  &.evil #holy_grail_quaffed_true {
     @keyframes glowing {
       from {box-shadow: 0 0 100px 15px #ffffff;}
       to {box-shadow: 0 0 100px 0px #ffffff;}
@@ -130,6 +130,14 @@ body {
     float: left;
     margin-right: 0.5rem;
   }
+}
+
+.marginnote.spacious {
+  margin-right: -80%;
+}
+
+#leaveGame {
+  align-self: r;;
 }
 
 // Lobby

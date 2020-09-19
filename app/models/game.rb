@@ -37,7 +37,7 @@ class Game < ApplicationRecord
   def create_cups
     filenames = Cup.read_n_random_filenames(3)
     cups = []
-    Cup::NAMES.keys.each_with_index do |kind, index|
+    Cup::NAMES.keys.shuffle.each_with_index do |kind, index|
       cup = Cup.create(game: self, kind: kind.to_s, image: filenames[index], label: (index + 1).to_s)
       cup.save
       cups.push cup
