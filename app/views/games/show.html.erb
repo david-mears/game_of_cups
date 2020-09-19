@@ -1,11 +1,7 @@
 <section>
   <p>
     <span class="marginnote">
-      Styled as if <span class="newthought"><%=@allegiance.capitalize%></span> <%=@allegiance_symbol%>
-    </span>
-    
-    <span class="marginnote">
-      <span class="newthought">Player:</span> <%=@player.name%>
+      <%=@player.name.titleize%>, you are <span class="newthought"><%=@allegiance.capitalize%></span> <%=@allegiance_symbol%>
     </span>
   </p>
   
@@ -23,21 +19,24 @@
       <textarea placeholder="I think... (drag to expand)"></textarea>
     </span>
     <span class="marginnote showOnHover">
-      <span class="reverseVisibility"><span class="newthought">Rulebook</span>(hover to show)</span>
-      <i>Who drinks of the </i><span class="newthought">Accursèd Chalice</span><i> shall turn to Evil;<br/>
+      <span class="reverseVisibility"><span class="newthought">Rulebook </span>(hover to show)</span>
+      <i>Whosoever drinks of the </i><span class="newthought">Accursèd Chalice</span><i> shall turn to Evil;<br/>
       and of </i><span class="newthought">Merlin's Goblet</span><i>, to the side of Good;<br/>
-      When Arthur finally brings the </i><span class="newthought">Holy Grail</span><i> to his lips, shall his side be ever victorious.</i>
+      Finally, when Arthur brings the </i><span class="newthought">Holy Grail</span><i> to his lips, shall his side be ever victorious.</i>
     </span>
   </p>
   <%= render partial: 'players' %>
-  <p><span class="newthought">Cups:</span></p>
 </section>
 
 <section>
-  <% @game.cups.each do |cup| %>
-    <figure>
-      <%= link_to image_tag("cups/#{cup.image}", alt: cup.human_readable_name, id: cup.kind), game_change_team_path(game_slug: @game.slug), method: :post, class: "noAnchorUnderlines" %>
-      <h4><i><%= cup.human_readable_name%></i></h4>
+  <% @game.cups.sort_by(&:label).each do |cup| %>
+    <% # include @allegiance as data for JS to know when to bother with animation %>
+    <figure data-player-allegiance='@allegiance'>
+      <p><%= cup.label %></p>
+      <%= link_to image_tag("cups/#{cup.image}", alt: (@player.quaffed?(cup) ? cup.human_readable_name : 'A cup of unknown identity'), id: cup.kind), game_change_team_path(game_slug: @game.slug), method: :post, class: "noAnchorUnderlines" %>
+      <% if @player.quaffed?(cup) %>
+        <h4><i><%= cup.player_readable_name%></i></h4>
+      <% end %>
     </figure>
   <% end %>
   <p>

@@ -31,13 +31,16 @@ RSpec.feature 'Gameplay' do
       # Reload page to enable start button because test has no JS
       visit game_path(slug: game.slug)
       click_on 'Start (when all the players are here)'
-      expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+      expect(page).to have_content("1\n2\n3")
 
       visit root_path
       fill_in 'game_slug', with: word_api_slug
       click_on 'Next'
-      expect(page).to have_content('Player: Mr Bean') # Remembers the player
-      expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+      expect(page).to have_content('Mr Bean, you are') # Remembers the player
+      expect(page).to have_content("1\n2\n3")
+      expect(page).not_to have_content('Holy Grail')
+      # TODO: Make that into a proper test that players only see cup names
+      # of cups they have quaffed.
       expect(current_path).to match(/#{word_api_slug}/)
     end
   end
