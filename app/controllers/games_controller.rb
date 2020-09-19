@@ -2,8 +2,8 @@ class GamesController < ApplicationController
   before_action :set_game, except: %w[index find new create game_not_found]
   before_action :check_game_status, only: %w[show]
   before_action :check_if_game_is_full, only: %w[show]
-  before_action :check_session_player_presence, only: %w[show]
   before_action :check_if_session_player_belongs_to_game, only: %w[show]
+  before_action :check_session_player_presence, only: %w[show]
 
   def index; end
 
@@ -20,7 +20,11 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     @game.slug = generate_slug
     @game.save
-    redirect_to game_path(slug: @game.slug)
+    if session_player.present?
+      redirect_to game_path(slug: @game.slug)
+    else
+      redirect_to new_game_player_path(game_slug: @game.slug)
+    end
   end
 
   def show
@@ -88,14 +92,14 @@ class GamesController < ApplicationController
     redirect_to root_path, alert: "Sorry, the game ‘#{@game.slug}’ is full."
   end
 
-  def check_session_player_presence
-    redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
-  end
-
   def check_if_session_player_belongs_to_game
     return if @game.players.include? session_player
 
-    session_player.destroy
+    session_player&.destroy
     session.destroy
+  end
+
+  def check_session_player_presence
+    redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
   end
 end
