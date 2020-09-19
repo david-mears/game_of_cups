@@ -32,7 +32,7 @@ class Player < ApplicationRecord
     end
   end
 
-  def has_quaffed?(cup)
+  def quaffed?(cup)
     cup.players.include? self
   end
 

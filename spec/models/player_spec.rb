@@ -14,10 +14,10 @@ RSpec.describe Player, type: :model do
     expect(player).to be_good
   end
 
-  describe '#has_quaffed?' do
+  describe '#quaffed?' do
     context 'when the player is unassociated to the cup' do
       it 'is false' do
-        expect(player).not_to have_quaffed cup
+        expect(player.quaffed?(cup)).to eq false
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe Player, type: :model do
       let(:players) { [player] }
 
       it 'is true' do
-        expect(player).to have_quaffed cup
+        expect(player.quaffed?(cup)).to eq true
       end
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe Player, type: :model do
       end
 
       it 'creates an association between the cup and the player' do
-        expect(player).to have_quaffed(cup)
+        expect(player.quaffed?(cup)).to eq true
       end
     end
 

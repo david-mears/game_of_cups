@@ -6,7 +6,8 @@ RSpec.describe Draught, type: :model do
   let(:cup) do
     Cup.create(kind: :merlins_goblet,
                image: 'another cup.jpg',
-               game: cup_game)
+               game: cup_game,
+               label: 'Cup N')
   end
 
   context 'when the player and the cup belong to the same game' do

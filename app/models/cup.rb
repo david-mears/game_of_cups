@@ -6,6 +6,7 @@ class Cup < ApplicationRecord
   validates :kind, presence: true
   validates :image, presence: true
   validates :game_id, presence: true
+  validates :label, presence: true
 
   NAMES = {
     accursed_chalice: 'The Accursèd Chalice',
