@@ -32,7 +32,6 @@ figure {
     height: 100px;
     max-width: 150px;
     border-radius: 5px;
-    border-color: $black;
     border-style: solid;
     background-color: $white;
 
@@ -73,6 +72,8 @@ body {
 
   &.good {
     img {
+      border-color: $black;
+
       &#merlins_goblet {
         box-shadow: 0 0 80px 10px #fdf4ab;
         /* x offset, y offset, blur size, spread size, color */
@@ -85,6 +86,8 @@ body {
   }
 
   &.evil {
+    border-color: $white;
+
     img {
       &#merlins_goblet {
         box-shadow: 0 0 100px 0px $white;
