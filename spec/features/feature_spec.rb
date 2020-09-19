@@ -38,7 +38,7 @@ RSpec.feature 'Gameplay' do
       click_on 'Next'
       expect(page).to have_content('Mr Bean, you are') # Remembers the player
       expect(page).to have_content("1\n2\n3")
-      expect(page).not_to have_content('Holy Grail')
+      expect(find('#cupsSection')).not_to have_content('Holy Grail')
       # TODO: Make that into a proper test that players only see cup names
       # of cups they have quaffed.
       expect(current_path).to match(/#{word_api_slug}/)

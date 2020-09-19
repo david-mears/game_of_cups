@@ -28,10 +28,9 @@
   <%= render partial: 'players' %>
 </section>
 
-<section>
+<section id="cupsSection" data-player-allegiance= <%= @allegiance %> >
   <% @game.cups.sort_by(&:label).each do |cup| %>
-    <% # include @allegiance as data for JS to know when to bother with animation %>
-    <figure data-player-allegiance='@allegiance'>
+    <figure>
       <p><%= cup.label %></p>
       <%= link_to image_tag("cups/#{cup.image}", alt: (@player.quaffed?(cup) ? cup.human_readable_name : 'A cup of unknown identity'), id: cup.kind), game_change_team_path(game_slug: @game.slug), method: :post, class: "noAnchorUnderlines" %>
       <% if @player.quaffed?(cup) %>
