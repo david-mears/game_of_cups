@@ -38,6 +38,7 @@ class GamesController < ApplicationController
     return unless @game.quorate?
 
     @game.started! unless @game.started?
+    @game.start
     @game.save
     ActionCable.server.broadcast 'games', { message: 'The game started', event: 'game_started' }
     redirect_to game_path(slug: slug_param)
@@ -63,7 +64,7 @@ class GamesController < ApplicationController
   end
 
   def slug_param
-    params.permit(:slug)[:slug].downcase
+    (params.permit(:slug)[:slug] || params.permit(:game_slug)[:game_slug]).downcase
   end
 
   def generate_slug

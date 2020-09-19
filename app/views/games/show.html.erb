@@ -8,6 +8,7 @@
       <span class="newthought">Player:</span> <%=@player.name%>
     </span>
   </p>
+  
 </section>
 
 <%= form_with do |f| %>
@@ -21,23 +22,27 @@
       My notes:<br/>
       <textarea placeholder="I think... (drag to expand)"></textarea>
     </span>
-  </p>  
-  <p><span class="newthought">Players:</span>
-    Arthur<sup>♔</sup>,
-    <% @game.players.each do |player| %>
-      <%= player&.name %><sup><%=player&.allegiance_symbol %></sup>
-    <% end %>
+    <span class="marginnote showOnHover">
+      <span class="reverseVisibility"><span class="newthought">Rulebook</span>(hover to show)</span>
+      <i>Who drinks of the </i><span class="newthought">Accursèd Chalice</span><i> shall turn to Evil;<br/>
+      and of </i><span class="newthought">Merlin's Goblet</span><i>, to the side of Good;<br/>
+      When Arthur finally brings the </i><span class="newthought">Holy Grail</span><i> to his lips, shall his side be ever victorious.</i>
+    </span>
   </p>
+  <%= render partial: 'players' %>
   <p><span class="newthought">Cups:</span></p>
 </section>
 
 <section>
   <% @game.cups.each do |cup| %>
     <figure>
-      <%= image_tag("cups/#{cup.image}", alt: cup.human_readable_name) %>
+      <%= link_to image_tag("cups/#{cup.image}", alt: cup.human_readable_name, id: cup.kind), game_change_team_path(game_slug: @game.slug), method: :post, class: "noAnchorUnderlines" %>
       <h4><i><%= cup.human_readable_name%></i></h4>
     </figure>
   <% end %>
+  <p>
+    
+  </p>
 </section>
 
 <%= button_to "Leave Game", action: "leave_game", slug: @game.slug %>

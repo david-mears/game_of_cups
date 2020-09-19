@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Player, type: :model do
   let(:game) { Game.create(slug: 'game', number_of_players: 3) }
   let(:player) { Player.new(name: 'Bill', game: game) }
-  let(:players) { Array.new }
+  let(:players) { [] }
   let(:cup) { instance_double(Cup) }
 
   before do

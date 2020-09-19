@@ -24,6 +24,14 @@ class Game < ApplicationRecord
     players.count == number_of_players
   end
 
+  def arthur
+    players.select(&:arthur?).first
+  end
+
+  def knights
+    players.reject(&:arthur?)
+  end
+
   private
 
   def create_cups

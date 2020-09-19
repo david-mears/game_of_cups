@@ -15,6 +15,13 @@
  */
 
 $tufte-breakpoint: 760px;
+$black: #111;
+$white: #fffff8;
+
+body.evil {
+  background-color: $black;
+  color: $white;
+}
 
 input, textarea, button {
   font: inherit;

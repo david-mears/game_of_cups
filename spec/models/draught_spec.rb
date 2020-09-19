@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe Draught, type: :model do
   let(:game) { Game.create(slug: 'game', number_of_players: 3) }
   let(:player) { Player.create(name: 'Bill', game: game) }
-  let(:cup) { Cup.create(kind: :merlins_goblet,
-    image: 'another cup.jpg',
-    game: cup_game) }
+  let(:cup) do
+    Cup.create(kind: :merlins_goblet,
+               image: 'another cup.jpg',
+               game: cup_game)
+  end
 
   context 'when the player and the cup belong to the same game' do
     let(:cup_game) { game }
@@ -22,7 +24,4 @@ RSpec.describe Draught, type: :model do
       expect(Draught.new(player: player, cup: cup)).not_to be_valid
     end
   end
-  
-
-  
 end

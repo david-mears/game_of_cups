@@ -32,14 +32,88 @@ figure {
     height: 100px;
     max-width: 150px;
     border-radius: 5px;
-    border-style: outset;
+    border-color: $black;
+    border-style: solid;
     background-color: $white;
+
+    @keyframes pulsating {
+      from {filter: brightness(95%);}
+      to {filter: brightness(120%); box-shadow: 0 0 100px 15px #ffffff;}
+    }
+
+    &#holy_grail:not(:hover) {
+      animation-name: pulsating;
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+    }
   }
   
   img:hover {
-    border-style: inset;
+    opacity: 70%;
   }  
 }
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+body {
+  @keyframes fillScreenWhite {
+    from {box-shadow: 0 0 80px 10px $white}
+    to {box-shadow: 0 0 0px 1000px $white;}
+  }
+
+  @keyframes fillScreenBlack {
+    from {}
+    to {box-shadow: 0 0 0px 1000px $black;}
+  }
+
+  &.good {
+    img {
+      &#merlins_goblet {
+        box-shadow: 0 0 80px 10px #fdf4ab;
+        /* x offset, y offset, blur size, spread size, color */
+      }
+      
+      &#accursed_chalice {
+        box-shadow: 0 0 25px 0px #11111193;
+      }
+    }
+  }
+
+  &.evil {
+    img {
+      &#merlins_goblet {
+        box-shadow: 0 0 100px 0px $white;
+        /* x offset, y offset, blur size, spread size, color */
+      }
+
+      &#accursed_chalice {
+        box-shadow: 0 0 30px 0 red;
+      }
+    }
+  }
+}
+
+.showOnHover {
+  visibility: hidden;
+
+  &:hover {
+    visibility: visible;
+    
+    .reverseVisibility {
+      display: none;
+    }
+  }
+
+  .reverseVisibility, .alwaysVisible {
+    visibility: visible;
+  }
+}
+
 
 // New game path
 
