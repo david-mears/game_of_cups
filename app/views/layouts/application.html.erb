@@ -11,7 +11,7 @@
     <%= favicon_link_tag asset_path('favicons/3_cups_on_white.jpg') %>
   </head>
 
-  <body class=<%=@allegiance%>>
+  <body class=<%=@player&.allegiance%>>
     <article>
       <% flash.each do |type, msg| %>
         <div>

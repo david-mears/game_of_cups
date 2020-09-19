@@ -4,6 +4,7 @@ class GamesController < ApplicationController
   before_action :check_if_game_is_full, only: %w[show]
   before_action :check_if_session_player_belongs_to_game, only: %w[show]
   before_action :check_session_player_presence, only: %w[show]
+  before_action :set_allegiance_symbol, only: %w[show]
 
   def index; end
 
@@ -31,11 +32,6 @@ class GamesController < ApplicationController
     @player = session_player
     @url = request.original_url
     render 'lobby' and return unless @game.quorate? && @game.started?
-  end
-
-  def change_team
-    session[:allegiance] = session[:allegiance] == 'good' ? 'evil' : 'good'
-    redirect_to game_path(slug: @game.slug)
   end
 
   def start
@@ -101,5 +97,9 @@ class GamesController < ApplicationController
 
   def check_session_player_presence
     redirect_to new_game_player_path(game_slug: slug_param) if session[:player_id].blank? || session_player.blank?
+  end
+
+  def set_allegiance_symbol
+    @allegiance_symbol = @allegiance == 'good' ? '♱' : '𖤐'
   end
 end

@@ -1,15 +1,10 @@
 <section>
   <p>
     <span class="marginnote">
-      <%=@player.name.titleize%>, you are <span class="newthought"><%=@allegiance.capitalize%></span> <%=@allegiance_symbol%>
+      <%=@player.name.titleize%>, you are <span class="newthought"><%=@player.allegiance.capitalize%></span> <%=@allegiance_symbol%>
     </span>
   </p>
-  
 </section>
-
-<%= form_with do |f| %>
-  <%= f.submit "Change team" %>
-<% end %>
 
 <section>
   
@@ -28,13 +23,13 @@
   <%= render partial: 'players' %>
 </section>
 
-<section id="cupsSection" data-player-allegiance= <%= @allegiance %> >
+<section id="cupsSection" data-player-allegiance= <%= @player.allegiance %> >
   <% @game.cups.sort_by(&:label).each do |cup| %>
     <figure>
       <p><%= cup.label %></p>
-      <%= link_to image_tag("cups/#{cup.image}", alt: (@player.quaffed?(cup) ? cup.human_readable_name : 'A cup of unknown identity'), id: cup.kind), game_change_team_path(game_slug: @game.slug), method: :post, class: "noAnchorUnderlines" %>
+      <%= link_to image_tag("cups/#{cup.image}", alt: (@player.quaffed?(cup) ? cup.human_readable_name : 'A cup of unknown identity'), id: cup.kind), game_player_quaff_path(game_slug: @game.slug, player_id: @player.id, params: {cup_id: cup.id}), method: :post, class: "noAnchorUnderlines", id: "#{cup.kind}_anchor" %>
       <% if @player.quaffed?(cup) %>
-        <h4><i><%= cup.player_readable_name%></i></h4>
+        <h4><i><%= cup.human_readable_name%></i></h4>
       <% end %>
     </figure>
   <% end %>

@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   post '/games/(/:slug)/start', to: 'games#start', as: 'start_game'
   get '/games/(/:slug)/trashed', to: 'games#game_trashed', as: 'game_trashed'
   resources :games, only: %i[create new show], param: :slug do
-    post '/change', to: 'games#change_team', as: 'change_team'
-    resources :players, only: %i[create new]
+    resources :players, only: %i[create new] do
+      post '/quaff', to: 'players#quaff'
+    end
   end
 
   post '/games/leave_game', to: 'games#leave_game'

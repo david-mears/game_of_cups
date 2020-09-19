@@ -13,7 +13,16 @@ class PlayersController < ApplicationController
     redirect_to game_path(slug: slug_param)
   end
 
+  def quaff
+    session_player.quaff Cup.find(cup_params[:cup_id])
+    redirect_to game_path(slug: @game.slug)
+  end
+
   private
+
+  def cup_params
+    params.permit(:cup_id)
+  end
 
   def player_params
     params.require(:player).permit(:name)

@@ -38,10 +38,23 @@ RSpec.feature 'Gameplay' do
       click_on 'Next'
       expect(page).to have_content('Mr Bean, you are') # Remembers the player
       expect(page).to have_content("1\n2\n3")
-      expect(find('#cupsSection')).not_to have_content('Holy Grail')
-      # TODO: Make that into a proper test that players only see cup names
-      # of cups they have quaffed.
-      expect(current_path).to match(/#{word_api_slug}/)
+
+      # Players only see the names of cups they have quaffed.
+      # Clicking a cup changes the player's allegiance.
+      # This test is agnostic as to whether Mr Bean starts the game as evil or good.
+      find('#merlins_goblet_anchor').click
+
+      expect(find('#cupsSection')).to have_content('Goblet')
+      expect(find('#cupsSection')).not_to have_content('Grail')
+      expect(find('#cupsSection')).not_to have_content('Chalice')
+      expect(page).to have_content('Mr Bean, you are Good')
+
+      find('#accursed_chalice_anchor').click
+
+      expect(find('#cupsSection')).to have_content('Chalice')
+      expect(find('#cupsSection')).to have_content('Goblet')
+      expect(find('#cupsSection')).not_to have_content('Grail')
+      expect(page).to have_content('Mr Bean, you are Evil')
     end
   end
 
