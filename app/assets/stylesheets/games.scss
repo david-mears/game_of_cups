@@ -33,20 +33,8 @@ figure {
     max-width: 150px;
     border-radius: 5px;
     border-style: solid;
+    border-color: $black;
     background-color: $white;
-
-    @keyframes pulsating {
-      from {filter: brightness(95%);}
-      to {filter: brightness(120%); box-shadow: 0 0 100px 15px #ffffff;}
-    }
-
-    &#holy_grail:not(:hover) {
-      animation-name: pulsating;
-      animation-duration: 4s;
-      animation-iteration-count: infinite;
-      animation-direction: alternate;
-      animation-timing-function: linear;
-    }
   }
   
   img:hover {
@@ -66,37 +54,37 @@ body {
   }
 
   @keyframes fillScreenBlack {
-    from {}
-    to {box-shadow: 0 0 0px 1000px $black;}
+    from {box-shadow: 0 0 70px 0px #000000;}
+    to {box-shadow: 0 0 70px 1000px $black;}
   }
 
   &.good {
-    img {
-      border-color: $black;
+    @keyframes pulsating {
+      from {filter: brightness(100%);}
+      to {filter: brightness(125%);}
+    }
 
-      &#merlins_goblet {
-        box-shadow: 0 0 80px 10px #fdf4ab;
-        /* x offset, y offset, blur size, spread size, color */
-      }
-      
-      &#accursed_chalice {
-        box-shadow: 0 0 25px 0px #11111193;
-      }
+    img#holy_grail {
+      animation-name: pulsating;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
     }
   }
 
   &.evil {
-    border-color: $white;
+    @keyframes glowing {
+      from {box-shadow: 0 0 100px 15px #ffffff;}
+      to {box-shadow: 0 0 100px 0px #ffffff;}
+    }
 
-    img {
-      &#merlins_goblet {
-        box-shadow: 0 0 100px 0px $white;
-        /* x offset, y offset, blur size, spread size, color */
-      }
-
-      &#accursed_chalice {
-        box-shadow: 0 0 30px 0 red;
-      }
+    img#holy_grail {
+      animation-name: glowing;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
     }
   }
 }
