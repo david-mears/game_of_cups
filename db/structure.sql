@@ -47,7 +47,8 @@ CREATE TABLE public.cups (
     image character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_id bigint
+    game_id bigint,
+    label character varying
 );
 
 
@@ -311,6 +312,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200918002838'),
 ('20200918160949'),
 ('20200918174248'),
-('20200918194534');
+('20200918194534'),
+('20200919160443');
 
 

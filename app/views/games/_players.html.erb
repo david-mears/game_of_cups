@@ -1,0 +1,10 @@
+<p style="text-align: center;">
+  <span class="newthought">Players:</span>
+  <%= @game.arthur.name %><sup>♔</sup>
+  <% @game.knights.each_with_index do |knight, index| %>
+    <%= knight&.name %>
+    <% if @game.finished? %>
+      <sup><%= knight&.allegiance_symbol %></sup>
+    <% end %>
+  <% end %>
+</p>

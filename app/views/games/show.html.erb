@@ -1,18 +1,10 @@
 <section>
   <p>
     <span class="marginnote">
-      Styled as if <span class="newthought"><%=@allegiance.capitalize%></span> <%=@allegiance_symbol%>
-    </span>
-    
-    <span class="marginnote">
-      <span class="newthought">Player:</span> <%=@player.name%>
+      <%=@player.name.titleize%>, you are <span class="newthought"><%=@player.allegiance.capitalize%></span> <%=@allegiance_symbol%>
     </span>
   </p>
 </section>
-
-<%= form_with do |f| %>
-  <%= f.submit "Change team" %>
-<% end %>
 
 <section>
   
@@ -21,23 +13,16 @@
       My notes:<br/>
       <textarea placeholder="I think... (drag to expand)"></textarea>
     </span>
-  </p>  
-  <p><span class="newthought">Players:</span>
-    Arthur<sup>♔</sup>,
-    <% @game.players.each do |player| %>
-      <%= player&.name %><sup><%=player&.allegiance_symbol %></sup>
-    <% end %>
+    <span class="marginnote showOnHover">
+      <span class="reverseVisibility"><span class="newthought">Rulebook </span>(hover to show)</span>
+      <i>Whosoever drinks of the </i><span class="newthought">Accursèd Chalice</span><i> shall turn to Evil;<br/>
+      and of </i><span class="newthought">Merlin's Goblet</span><i>, to the side of Good;<br/>
+      Finally, when Arthur brings the </i><span class="newthought">Holy Grail</span><i> to his lips, shall his side be ever victorious.</i>
+    </span>
   </p>
-  <p><span class="newthought">Cups:</span></p>
+  <%= render partial: 'players' %>
 </section>
 
-<section>
-  <% @game.cups.each do |cup| %>
-    <figure>
-      <%= image_tag("cups/#{cup.image}", alt: cup.human_readable_name) %>
-      <h4><i><%= cup.human_readable_name%></i></h4>
-    </figure>
-  <% end %>
-</section>
+<%= render partial: 'cups' %>
 
 <%= button_to "Leave Game", action: "leave_game", slug: @game.slug %>

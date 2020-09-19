@@ -24,13 +24,21 @@ class Game < ApplicationRecord
     players.count == number_of_players
   end
 
+  def arthur
+    players.select(&:arthur?).first
+  end
+
+  def knights
+    players.reject(&:arthur?)
+  end
+
   private
 
   def create_cups
     filenames = Cup.read_n_random_filenames(3)
     cups = []
     Cup::NAMES.keys.each_with_index do |kind, index|
-      cup = Cup.create(game: self, kind: kind.to_s, image: filenames[index])
+      cup = Cup.create(game: self, kind: kind.to_s, image: filenames[index], label: (index + 1).to_s)
       cup.save
       cups.push cup
     end

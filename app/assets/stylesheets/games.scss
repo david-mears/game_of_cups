@@ -32,14 +32,79 @@ figure {
     height: 100px;
     max-width: 150px;
     border-radius: 5px;
-    border-style: outset;
+    border-style: solid;
+    border-color: $black;
     background-color: $white;
   }
   
   img:hover {
-    border-style: inset;
+    opacity: 70%;
   }  
 }
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+body {
+  @keyframes fillScreenWhite {
+    from {box-shadow: 0 0 80px 10px $white}
+    to {box-shadow: 0 0 0px 1000px $white;}
+  }
+
+  @keyframes fillScreenBlack {
+    from {box-shadow: 0 0 70px 0px #000000;}
+    to {box-shadow: 0 0 70px 1000px $black;}
+  }
+
+  &.good {
+    @keyframes pulsating {
+      from {filter: brightness(100%);}
+      to {filter: brightness(125%);}
+    }
+
+    img#holy_grail {
+      animation-name: pulsating;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+    }
+  }
+
+  &.evil {
+    @keyframes glowing {
+      from {box-shadow: 0 0 100px 15px #ffffff;}
+      to {box-shadow: 0 0 100px 0px #ffffff;}
+    }
+
+    img#holy_grail {
+      animation-name: glowing;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+.showOnHover {
+  visibility: hidden;
+
+  &:hover {
+    visibility: visible;
+    
+    .reverseVisibility {
+      display: none;
+    }
+  }
+
+  .reverseVisibility, .alwaysVisible {
+    visibility: visible;
+  }
+}
+
 
 // New game path
 

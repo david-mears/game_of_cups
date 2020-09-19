@@ -31,14 +31,30 @@ RSpec.feature 'Gameplay' do
       # Reload page to enable start button because test has no JS
       visit game_path(slug: game.slug)
       click_on 'Start (when all the players are here)'
-      expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
+      expect(page).to have_content("1\n2\n3")
 
       visit root_path
       fill_in 'game_slug', with: word_api_slug
       click_on 'Next'
-      expect(page).to have_content('Player: Mr Bean') # Remembers the player
-      expect(page).to have_content("Cups:\nThe Accursèd Chalice\nMerlin’s Goblet\nThe Holy Grail")
-      expect(current_path).to match(/#{word_api_slug}/)
+      expect(page).to have_content('Mr Bean, you are') # Remembers the player
+      expect(page).to have_content("1\n2\n3")
+
+      # Players only see the names of cups they have quaffed.
+      # Clicking a cup changes the player's allegiance.
+      # This test is agnostic as to whether Mr Bean starts the game as evil or good.
+      find('#merlins_goblet_anchor').click
+
+      expect(find('#cupsSection')).to have_content('Goblet')
+      expect(find('#cupsSection')).not_to have_content('Grail')
+      expect(find('#cupsSection')).not_to have_content('Chalice')
+      expect(page).to have_content('Mr Bean, you are Good')
+
+      find('#accursed_chalice_anchor').click
+
+      expect(find('#cupsSection')).to have_content('Chalice')
+      expect(find('#cupsSection')).to have_content('Goblet')
+      expect(find('#cupsSection')).not_to have_content('Grail')
+      expect(page).to have_content('Mr Bean, you are Evil')
     end
   end
 

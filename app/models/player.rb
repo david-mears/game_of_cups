@@ -11,16 +11,14 @@ class Player < ApplicationRecord
 
   after_create :broadcast_new_player_name
 
-  SYMBOLS = {
-    good: '♱',
-    evil: '𖤐',
-    arthur: '♔'
-  }.freeze
-
   enum allegiance: { evil: 0, good: 1 }
 
   def allegiance_symbol
     SYMBOLS[allegiance&.to_sym]
+  end
+
+  def whether_arthur_symbol
+    SYMBOLS[:arthur] if arthur?
   end
 
   def quaff(cup)
@@ -34,7 +32,7 @@ class Player < ApplicationRecord
     end
   end
 
-  def has_quaffed?(cup)
+  def quaffed?(cup)
     cup.players.include? self
   end
 
