@@ -8,6 +8,7 @@ RSpec.describe Player, type: :model do
 
   before do
     allow(cup).to receive(:players).and_return(players)
+    allow(cup).to receive(:label).and_return('Cup N')
   end
 
   it 'has a default allegiance of good' do

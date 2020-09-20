@@ -22,15 +22,14 @@ $tufte-breakpoint: 760px;
 figure {
   text-align: center;
   display: inline-block;
-  width: 20%;
+  min-width: 20%;
 
   @media only screen and (max-width: $tufte-breakpoint){
     width: 33.3%;
   }
 
   img {
-    height: 100px;
-    max-width: 150px;
+    max-width: 200px;
     border-radius: 5px;
     border-style: solid;
     border-color: $black;
@@ -58,7 +57,7 @@ body {
     to {box-shadow: 0 0 70px 1000px $black;}
   }
 
-  &.good {
+  &.good #holy_grail_quaffed_true {
     @keyframes pulsating {
       from {filter: brightness(100%);}
       to {filter: brightness(125%);}
@@ -73,7 +72,7 @@ body {
     }
   }
 
-  &.evil {
+  &.evil #holy_grail_quaffed_true {
     @keyframes glowing {
       from {box-shadow: 0 0 100px 15px #ffffff;}
       to {box-shadow: 0 0 100px 0px #ffffff;}
@@ -130,6 +129,27 @@ body {
     float: left;
     margin-right: 0.5rem;
   }
+}
+
+.spacious .marginnote {
+  margin-right: -80%;
+}
+
+.marginnote#draughts {
+  background-color: #ffffff;
+  color: $black;
+  border: 1px;
+  border-style: solid;
+  height: 300px;
+  overflow: auto;
+  text-align: center;
+  line-height: 2.5rem;
+  border-radius: 4px;
+}
+
+
+#leaveGame {
+  text-align: right;
 }
 
 // Lobby

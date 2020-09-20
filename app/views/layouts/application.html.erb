@@ -11,8 +11,8 @@
     <%= favicon_link_tag asset_path('favicons/3_cups_on_white.jpg') %>
   </head>
 
-  <body class=<%=@player&.allegiance%>>
-    <article>
+  <body class=<%= @player&.allegiance %>>
+    <article style="<%= "padding-top: 0" if @game.present? && !@game.draft? %>"">
       <% flash.each do |type, msg| %>
         <div>
           <%= msg %>

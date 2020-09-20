@@ -44,16 +44,26 @@ RSpec.feature 'Gameplay' do
       # This test is agnostic as to whether Mr Bean starts the game as evil or good.
       find('#merlins_goblet_anchor').click
 
+      expect(page).to have_css('#merlins_goblet_quaffed_true')
+      expect(page).to have_css('#accursed_chalice_quaffed_false')
+      expect(page).to have_css('#holy_grail_quaffed_false')
+
       expect(find('#cupsSection')).to have_content('Goblet')
-      expect(find('#cupsSection')).not_to have_content('Grail')
       expect(find('#cupsSection')).not_to have_content('Chalice')
+      expect(find('#cupsSection')).not_to have_content('Grail')
+
       expect(page).to have_content('Mr Bean, you are Good')
 
       find('#accursed_chalice_anchor').click
 
-      expect(find('#cupsSection')).to have_content('Chalice')
+      expect(page).to have_css('#merlins_goblet_quaffed_true')
+      expect(page).to have_css('#accursed_chalice_quaffed_true')
+      expect(page).to have_css('#holy_grail_quaffed_false')
+
       expect(find('#cupsSection')).to have_content('Goblet')
+      expect(find('#cupsSection')).to have_content('Chalice')
       expect(find('#cupsSection')).not_to have_content('Grail')
+
       expect(page).to have_content('Mr Bean, you are Evil')
     end
   end

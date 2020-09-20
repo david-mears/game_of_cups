@@ -31,16 +31,16 @@ class GamesController < ApplicationController
   def show
     @player = session_player
     @url = request.original_url
-    render 'lobby' and return unless @game.quorate? && @game.started?
+    render 'lobby' and return unless @game.quorate? && !@game.draft?
+
+    @draughts = @game.players.map(&:draughts).flatten
   end
 
   def start
     return unless @game.quorate?
+    return unless @game.draft?
 
-    @game.started! unless @game.started?
     @game.start
-    @game.save
-    ActionCable.server.broadcast 'games', { message: 'The game started', event: 'game_started' }
     redirect_to game_path(slug: slug_param)
   end
 
@@ -100,6 +100,6 @@ class GamesController < ApplicationController
   end
 
   def set_allegiance_symbol
-    @allegiance_symbol = @allegiance == 'good' ? '♱' : '𖤐'
+    @allegiance_symbol = session_player&.allegiance == 'good' ? '♱' : '𖤐'
   end
 end
