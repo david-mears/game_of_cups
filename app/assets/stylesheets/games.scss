@@ -22,15 +22,14 @@ $tufte-breakpoint: 760px;
 figure {
   text-align: center;
   display: inline-block;
-  width: 20%;
+  min-width: 20%;
 
   @media only screen and (max-width: $tufte-breakpoint){
     width: 33.3%;
   }
 
   img {
-    height: 100px;
-    max-width: 150px;
+    max-width: 200px;
     border-radius: 5px;
     border-style: solid;
     border-color: $black;
@@ -132,12 +131,25 @@ body {
   }
 }
 
-.marginnote.spacious {
+.spacious .marginnote {
   margin-right: -80%;
 }
 
+.marginnote#draughts {
+  background-color: #ffffff;
+  color: $black;
+  border: 1px;
+  border-style: solid;
+  height: 300px;
+  overflow: auto;
+  text-align: center;
+  line-height: 2.5rem;
+  border-radius: 4px;
+}
+
+
 #leaveGame {
-  align-self: r;;
+  text-align: right;
 }
 
 // Lobby

@@ -30,6 +30,7 @@ class Player < ApplicationRecord
     elsif arthur? && cup.holy_grail?
       game.finished!
     end
+    broadcast_draught(cup)
   end
 
   def quaffed?(cup)
@@ -43,5 +44,16 @@ class Player < ApplicationRecord
       name: name,
       quorate: game.quorate?
     }
+  end
+
+  private
+
+  def broadcast_draught(cup)
+    verb = ['drank', 'swigged', 'took a draught of', 'sipped', 'quaffed',
+            'tasted', 'sampled', 'took a sip from', 'supped', 'drank'].sample
+    ActionCable.server.broadcast 'games',
+                                 { message: 'A cup was quaffed',
+                                   event: 'cup_quaffed',
+                                   description: "#{name} #{verb} cup #{cup.label}" }
   end
 end

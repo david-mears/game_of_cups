@@ -18,6 +18,7 @@ class Game < ApplicationRecord
     started!
     players.sample.update!(arthur: true)
     players.reject(&:arthur?).sample.evil!
+    ActionCable.server.broadcast 'games', { message: 'The game started', event: 'game_started' }
   end
 
   def quorate?

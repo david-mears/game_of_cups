@@ -1,36 +1,32 @@
-<section>
+<%= render partial: 'finished_game' if @game.finished? %>
+
+<section class="spacious">
   <p>
-    <span class="marginnote spacious">
+    <span class="marginnote">
       <%=@player.name %>, you are <span class="newthought"><%=@player.allegiance.capitalize%></span> <%=@allegiance_symbol%>
     </span>
-  </p>
-</section>
-
-<section>
-  
-  <p>
-    <span class="marginnote spacious">
-      My notes:<br/>
-      <textarea placeholder="I think... (drag to expand)"></textarea>
+    <span class="marginnote">
+      <%# My notes:<br/>
+      <textarea placeholder="I think... (drag to expand)"></textarea> %>
+      Log:
     </span>
-    <span class="marginnote showOnHover spacious">
+    <span class="marginnote" id="draughts">
+      <% @draughts.sort_by(&:id).each do |draught| %>
+        <%= draught.player == @player ? 'You' : draught.player.name %> drank cup <%= draught.cup.label %><br/>
+      <% end %>
+    </span>
+    <span class="marginnote showOnHover">
       <span class="reverseVisibility"><span class="newthought">Rulebook </span>(hover to show)</span>
       <i>Whosoever drinks of the </i><span class="newthought">Accursèd Chalice</span><i> shall turn to Evil;<br/>
       and of </i><span class="newthought">Merlin's Goblet</span><i>, to the side of Good;<br/>
       Finally, when Arthur brings the </i><span class="newthought">Holy Grail</span><i> to his lips, shall his side be ever victorious.</i>
     </span>
-  </p>
-  
+  </p>  
   <%= render partial: 'players' %>
+
+  <%= render partial: 'cups' %>
 </section>
 
-<%= render partial: 'cups' %>
-
-<section>
-  <% @draughts.sort_by(&:id).each do |draught| %>
-    <p><%= draught.player.name %> <%= ['drank', 'swigged', 'took a draught of', 'sipped', 'quaffed', 'tasted', 'sampled', 'tried', 'supped', 'drank'].sample %> cup <%= draught.cup.label %></p>
-  <% end %>
-</section>
 
 <div id="leaveGame">
   <%= button_to "Leave Game", games_leave_game_path(slug: @game.slug) %>

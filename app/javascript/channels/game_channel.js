@@ -2,7 +2,6 @@ import consumer from "./consumer"
  
 consumer.subscriptions.create({ channel: "GameChannel"}, {
   received(data) {
-
     if (data['event'] === 'new_player') {
       const players = document.getElementsByClassName('player');
 
@@ -20,6 +19,9 @@ consumer.subscriptions.create({ channel: "GameChannel"}, {
         button.disabled = false;
         button.value = 'Start the game already!'
       };
+    } else if (data['event'] === 'cup_quaffed') {
+      window.localStorage.setItem('last_draught', data['description'])
+      window.location.reload();
     } else {
       window.location.reload();
     }
