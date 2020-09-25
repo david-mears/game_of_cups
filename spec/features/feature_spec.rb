@@ -9,11 +9,13 @@ RSpec.feature 'Gameplay' do
   context 'basic gameplay' do
     let(:game) { Game.find_by(slug: word_api_slug) }
     let(:number_of_players) { 3 }
+    let(:number_of_evil_players_at_start) { 1 }
 
     scenario 'can create and view a game' do
       visit root_path
       click_on 'Make new game'
       fill_in 'game_number_of_players', with: number_of_players
+      fill_in 'game_number_of_evil_players_at_start', with: number_of_evil_players_at_start
       click_on 'Create Game'
       fill_in 'player_name', with: 'Mr Bean'
       click_on 'Create Player'
@@ -79,7 +81,7 @@ RSpec.feature 'Gameplay' do
 
   context 'when leaving a game' do
     let(:word_api_slug) { 'kurz' }
-    let!(:game) { Game.create(slug: 'kurz', number_of_players: 3) }
+    let!(:game) { Game.create(slug: 'kurz', number_of_players: 3, number_of_evil_players_at_start: 1) }
     let!(:other_player_1) { Player.create(name: 'Gandalf', game: game) }
     let!(:other_player_2) { Player.create(name: 'Elrond', game: game) }
 
@@ -106,6 +108,7 @@ RSpec.feature 'Gameplay' do
         visit root_path
         click_on 'Make new game'
         fill_in 'game_number_of_players', with: 4
+        fill_in 'game_number_of_evil_players_at_start', with: 1
         click_on 'Create Game'
         expect(page).to have_content('new player')
       end
@@ -130,6 +133,7 @@ RSpec.feature 'Gameplay' do
         visit root_path
         click_on 'Make new game'
         fill_in 'game_number_of_players', with: 10
+        fill_in 'game_number_of_evil_players_at_start', with: 1
         click_on 'Create Game'
         fill_in 'player_name', with: 'Alice'
         click_on 'Create Player'

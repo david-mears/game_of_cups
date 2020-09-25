@@ -3,8 +3,14 @@
 
   <section>
     <%= form_with model: @game do |f| %>
-      <%= label_tag :number_of_players, 'How many players are there?'%>
+      <%= label_tag :number_of_players, 'How many knights are there?'%>
       <%= f.number_field :number_of_players, min: 3, max: 20, required: true, autofocus: true %>
+      <br/><br/>
+      <%= label_tag :number_of_evil_players_at_start, 'How many shall be evil from the start?'%>
+      <%= f.number_field :number_of_evil_players_at_start, min: 1, max: 19, required: true %>
+      <br/><br/>
+      (This game is in alpha, so let me know what a good ratio of good-evil is. I guess 15-25% should be evil.)
+      <br/><br/>
       <%= f.submit %>
     <% end %>
     <p>Note: this is a social game. That means if you are playing remotely, you will need some way to talk to each other.</p>

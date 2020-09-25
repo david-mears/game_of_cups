@@ -17,7 +17,7 @@ class Game < ApplicationRecord
   def start
     started!
     players.sample.update!(arthur: true)
-    players.reject(&:arthur?).sample.evil!
+    players.reject(&:arthur?).shuffle.take(number_of_evil_players_at_start).each(&:evil!)
     GameChannel.broadcast_to(self, { message: 'The game started', event: 'game_started' })
   end
 
