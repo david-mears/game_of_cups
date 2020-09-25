@@ -2,7 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   let(:number_of_players) { 3 }
-  let(:game) { Game.create(slug: 'test', number_of_players: number_of_players) }
+  let(:number_of_evil_players_at_start) { 1 }
+  let(:game) do
+    Game.create(slug: 'test',
+                number_of_players: number_of_players,
+                number_of_evil_players_at_start: number_of_evil_players_at_start)
+  end
 
   describe '#create' do
     it 'runs a callback applying a default status of draft, which can be overridden' do
@@ -38,6 +43,7 @@ RSpec.describe Game, type: :model do
 
   describe '#start' do
     let(:number_of_players) { 5 }
+    let(:number_of_evil_players_at_start) { 3 }
     let(:players) { game.players }
 
     before do
@@ -59,12 +65,12 @@ RSpec.describe Game, type: :model do
       expect(players.select(&:arthur?).first).to be_good
     end
 
-    it 'makes one other player evil' do
-      expect(players.select(&:evil?).size).to eq 1
+    it 'makes three other players evil' do
+      expect(players.select(&:evil?).size).to eq 3
     end
 
     it 'leaves any other players good' do
-      expect(players.select(&:good?).size).to eq number_of_players - 1
+      expect(players.select(&:good?).size).to eq(number_of_players - number_of_evil_players_at_start)
     end
   end
 end
