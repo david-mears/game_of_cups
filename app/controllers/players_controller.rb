@@ -10,7 +10,8 @@ class PlayersController < ApplicationController
     @player.game = @game
     @player.save
     session[:player_id] = @player.id
-    redirect_to game_path(slug: slug_param), alert: @game.players.one? ? 'Great! Now reload the page.' : nil
+    redirect_to game_path(slug: slug_param),
+                alert: @game.players.one? ? "Welcome, #{player_params[:name]}! Now reload the page." : nil
   end
 
   def quaff
