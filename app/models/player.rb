@@ -38,12 +38,12 @@ class Player < ApplicationRecord
   end
 
   def broadcast_new_player_name
-    ActionCable.server.broadcast 'games', {
-      message: 'A new player joined',
-      event: 'new_player',
-      name: name,
-      quorate: game.quorate?
-    }
+    GameChannel.broadcast_to(game, {
+                               message: 'A new player joined',
+                               event: 'new_player',
+                               name: name,
+                               quorate: game.quorate?
+                             })
   end
 
   private
@@ -51,9 +51,8 @@ class Player < ApplicationRecord
   def broadcast_draught(cup)
     verb = ['drank', 'swigged', 'took a draught of', 'sipped', 'quaffed',
             'tasted', 'sampled', 'took a sip from', 'supped', 'drank'].sample
-    ActionCable.server.broadcast 'games',
-                                 { message: 'A cup was quaffed',
-                                   event: 'cup_quaffed',
-                                   description: "#{name} #{verb} cup #{cup.label}" }
+    GameChannel.broadcast_to(game, { message: 'A cup was quaffed',
+                                     event: 'cup_quaffed',
+                                     description: "#{name} #{verb} cup #{cup.label}" })
   end
 end

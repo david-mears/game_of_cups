@@ -1,6 +1,7 @@
 import consumer from "./consumer"
- 
-consumer.subscriptions.create({ channel: "GameChannel"}, {
+
+consumer.subscriptions.create({ channel: "GameChannel", 
+                                slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
   received(data) {
     if (data['event'] === 'new_player') {
       const players = document.getElementsByClassName('player');
@@ -27,7 +28,4 @@ consumer.subscriptions.create({ channel: "GameChannel"}, {
     }
   }
 })
-// TODO: find out what a 'room' is and whether I should use one to distinguish
-// streams of info about different games.
-// https://guides.rubyonrails.org/action_cable_overview.html#subscriber
 
