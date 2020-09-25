@@ -111,7 +111,8 @@ CREATE TABLE public.games (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     number_of_players integer,
-    status public.game_statuses
+    status public.game_statuses,
+    number_of_evil_players_at_start integer
 );
 
 
@@ -313,6 +314,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200918160949'),
 ('20200918174248'),
 ('20200918194534'),
-('20200919160443');
+('20200919160443'),
+('20200925170533');
 
 
