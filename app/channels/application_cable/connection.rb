@@ -3,7 +3,7 @@ module ApplicationCable
     identified_by :unique_id
  
     def connect
-      self.unique_id = 1 # SecureRandom.urlsafe_base64
+      self.unique_id = SecureRandom.urlsafe_base64
     end
   end
 end

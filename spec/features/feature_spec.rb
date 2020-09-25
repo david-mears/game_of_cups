@@ -21,6 +21,8 @@ RSpec.feature 'Gameplay' do
       # Goes to lobby because not yet quorate
       expect(current_path).to match(/#{word_api_slug}/)
       expect(game.number_of_players).to eq number_of_players
+      expect(page).to have_content('reload the page')
+      visit game_path(slug: game.slug)
       expect(page).to have_content('Lobby')
       expect(page).not_to have_content('Start') # Because we are not quorate
       expect(page).to have_content("/games/#{word_api_slug}") # Displays the url to share
