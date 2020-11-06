@@ -1,19 +1,19 @@
 # README
 
-* Ruby version
+## Ruby version
 
-2.7.1
+You'll find this in the Gemfile.
 
-* Node version
+## Node version
 
 I appear to be on nodejs 14.5.0, but others probably work too. Duncan was prompted to install 13.7.
 
-* System dependencies
+## System dependencies
 
 PostgreSQL 12.2
 Redis 5.0.8
 
-* Install library dependencies
+## Install library dependencies
 
 These are managed by bundler and yarn:
 
@@ -22,7 +22,7 @@ bundle install
 yarn install
 ```
 
-* Database creation
+## Database creation
 
 The 'proper' way:
 
@@ -39,31 +39,41 @@ bundle exec rails db:setup
 
 To avoid writing `bundle exec` all the time (which means 'use the bundled dependency, not the global version'), install rails globally (with the same version), or alias `rails` to `bundle exec rails` (preferred way).
 
-* Running the Ruby tests
+## Running the Ruby tests
 
 ```
 bundle exec rspec
 ```
 
-* Lint Ruby
+## Lint Ruby
 
 ```
 rubocop -a
 ```
 
-* Running the server
+## Running the server
 
-```
+### Using HTTP
+
+```bash
 bundle exec rails server
 ```
 
-Then visit http://localhost:3000
+### Using HTTPS
 
-* Contributing
+To set up HTTPS: https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/work
+
+```
+rails s -b 'ssl://localhost:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'
+```
+
+Then visit https://localhost:3000
+
+## Contributing
 
 Submit a PR with a description and meaningful commit messages
 
-* Glossary
+## Glossary
 
 Robert C. Martin says in Clean Code that you shouldn't try and be clever-clever with naming (with puns or other jokes). It's inconsiderate to people with different cultural or linguistic backgrounds, for one thing, and you'll forget what you were referring to when you return to the code in a year, for another.
 
