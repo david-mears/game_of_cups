@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.1-node
+      - image: circleci/ruby:2.7.2-node
     executor: ruby/default
     steps:
       - checkout
@@ -26,7 +26,7 @@ jobs:
     parallelism: 3 
     # here we set TWO docker images.
     docker:
-      - image: circleci/ruby:2.7.1-node # primary docker image
+      - image: circleci/ruby:2.7.2-node # primary docker image
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
