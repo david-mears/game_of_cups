@@ -40,3 +40,6 @@ yarn-debug.log*
 
 # Redis dump
 dump.rdb
+
+# Localhost certificates
+/config/localhost
