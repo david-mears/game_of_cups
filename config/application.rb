@@ -41,3 +41,9 @@ module GameOfCups
     config.assets.paths << Rails.root.join('app/assets/fonts')
   end
 end
+
+Raven.configure do |config|
+  config.dsn = ENV.fetch('SENTRY_ENDPOINT')
+  config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
+  config.environments = %w[ production ]
+end

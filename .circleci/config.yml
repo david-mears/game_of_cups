@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.1-node
+      - image: circleci/ruby:2.7.2-node
     executor: ruby/default
     steps:
       - checkout
@@ -26,7 +26,7 @@ jobs:
     parallelism: 3 
     # here we set TWO docker images.
     docker:
-      - image: circleci/ruby:2.7.1-node # primary docker image
+      - image: circleci/ruby:2.7.2-node # primary docker image
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
@@ -38,12 +38,14 @@ jobs:
           POSTGRES_PASSWORD: ""
           POSTGRES_HOST_AUTH_METHOD: trust
     environment: # these variables apply to the primary container
+      # Experimentally I commented out some that seem to already exist under the primary container
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
-      PGHOST: 127.0.0.1
-      PGUSER: postgres
+      # PGHOST: 127.0.0.1
+      # PGUSER: postgres
       PGPASSWORD: ""
-      RAILS_ENV: test
+      # RAILS_ENV: test
+      SENTRY_ENDPOINT: $SENTRY_ENDPOINT
     steps:
       - checkout 
       - ruby/install-deps
