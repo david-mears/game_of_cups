@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     @game = Game.find_by(slug: slug_param) or return redirect_to game_not_found_path(slug: slug_param)
   end
 
+  def be_really_bad
+    raise 'Something went very wrong'
+  end
+
   private
 
   def set_raven_context
