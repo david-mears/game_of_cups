@@ -13,6 +13,4 @@ Rails.application.routes.draw do
   end
 
   post '/games/leave_game', to: 'games#leave_game'
-
-  get '/make-error', to: 'application#be_really_bad'
 end
