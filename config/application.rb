@@ -45,5 +45,5 @@ end
 Raven.configure do |config|
   config.dsn = ENV.fetch('SENTRY_ENDPOINT')
   config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
-  config.environments = %w[production]
+  config.environments = %w[ production ]
 end
