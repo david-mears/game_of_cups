@@ -1,8 +1,8 @@
 <section id="cupsSection" data-player-allegiance= <%= @player.allegiance %> >
   <% @game.cups.sort_by(&:label).each do |cup| %>
     <figure id=<%= "#{cup.kind}_quaffed_#{@player.quaffed?(cup)}" %>>
-      <%= link_to image_tag("cups/#{cup.image}", alt: cup.alt_img_text(@player), id: cup.kind), game_player_quaff_path(game_slug: @game.slug, player_id: @player.id, params: {cup_id: cup.id}), method: :post, class: "noAnchorUnderlines", id: "#{cup.kind}_anchor" %>
       <%= image_tag("cups/#{cup.image}", alt: cup.alt_img_text(@player), id: cup.kind) %>
+      <%= button_to 'Drink', game_player_quaff_path(game_slug: @game.slug, player_id: @player.id, params: {cup_id: cup.id}), method: :post, id: "#{cup.kind}_button" %>
       <h4><i>
         <%= cup.label %>
         <% if @player.quaffed?(cup) || @game.finished? %>
