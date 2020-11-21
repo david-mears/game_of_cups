@@ -1,8 +1,10 @@
-<%= render partial: 'finished_game' if @game.finished? %>
+<div id="endGame">
+  <%= render partial: 'finished_game' if @game.finished? %>
+</div>
 
 <section class="spacious">
   <p>
-    <span class="marginnote">
+    <span id="playerInfo" class="marginnote" data-player-id=<%=@player.id %>>
       <%=@player.name %>, you are <span class="newthought"><%=@player.allegiance.capitalize%></span> <%=@allegiance_symbol%>
     </span>
     <span class="marginnote">

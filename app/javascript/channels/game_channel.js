@@ -22,7 +22,10 @@ consumer.subscriptions.create({ channel: "GameChannel",
         button.value = 'Start the game already!'
       };
     } else if (data['event'] === 'cup_quaffed') {
-      alertModal(data['description']);
+      const currentPlayerId = document.getElementById("playerInfo").dataset.playerId;
+      if (parseInt(data['quaffer']) !== parseInt(currentPlayerId)) {
+        alertModal(data['description']);
+      };
     } else {
       window.location.reload();
     }

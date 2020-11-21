@@ -50,7 +50,8 @@ class Player < ApplicationRecord
   def broadcast_draught(cup)
     GameChannel.broadcast_to(game, {
                                event: 'cup_quaffed',
-                               description: "#{name} drank cup #{cup.label}"
+                               description: "#{name} drank cup #{cup.label}",
+                               quaffer: id,
                              })
   end
 end
