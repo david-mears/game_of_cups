@@ -1,3 +1,5 @@
+import {createConsumer} from "@rails/actioncable";
+
 const alertModal = (message) => {
   const mainPage = document.getElementsByTagName('article')[0];
   mainPage.classList.remove('unBackgrounded');
@@ -9,7 +11,7 @@ const alertModal = (message) => {
     preExistingModals[i].classList.remove('slideIn');
   };
 
-  indexOfNewModal = Date.now();
+  const indexOfNewModal = Date.now();
   const newModal = `<div class="modal slideIn" id="modal${indexOfNewModal}" style="z-index: ${indexOfNewModal};">
                       <button class="closeModalButton" id="closeModal${indexOfNewModal}Button">✖</button>
                       <p>${message}</p>
@@ -17,11 +19,11 @@ const alertModal = (message) => {
   document.getElementById('modalCollection').insertAdjacentHTML('afterbegin', newModal)
 
   document.getElementById(`closeModal${indexOfNewModal}Button`).addEventListener('click', (e) => {
-    buttonId = e.target.id
-    indexOfModalToClose = buttonId.match(/\d+/)[0]
-    const modalToClose = document.getElementById(`modal${indexOfModalToClose}`)
-    modalToClose.classList.remove('slideIn')
-    modalToClose.classList.add('slideOut')
+    const buttonId = e.target.id;
+    const indexOfModalToClose = buttonId.match(/\d+/)[0];
+    const modalToClose = document.getElementById(`modal${indexOfModalToClose}`);
+    modalToClose.classList.remove('slideIn');
+    modalToClose.classList.add('slideOut');
     if (document.getElementsByClassName('modal').length === document.getElementsByClassName('slideOut').length) {
       mainPage.classList.remove('backgrounded');
       mainPage.classList.add('unBackgrounded');
@@ -29,10 +31,4 @@ const alertModal = (message) => {
   });
 };
 
-window.addEventListener('load', function() {
-  const lastDraught = window.localStorage.getItem('last_draught')
-  if (lastDraught != null) {
-    alertModal(lastDraught)
-  }
-  window.localStorage.clear()
-})
+export default alertModal

@@ -1,4 +1,5 @@
 import consumer from "./consumer"
+import alertModal from "../scripts/alertModal"
 
 consumer.subscriptions.create({ channel: "GameChannel", 
                                 slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
@@ -21,8 +22,7 @@ consumer.subscriptions.create({ channel: "GameChannel",
         button.value = 'Start the game already!'
       };
     } else if (data['event'] === 'cup_quaffed') {
-      window.localStorage.setItem('last_draught', data['description'])
-      window.location.reload();
+      alertModal(data['description']);
     } else {
       window.location.reload();
     }
