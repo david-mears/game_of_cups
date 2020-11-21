@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  let(:game) { Game.create(slug: 'game', number_of_players: 3) }
+  let(:game_status) { 'started' }
+  let(:game) { Game.create(slug: 'game', number_of_players: 3, status: game_status) }
   let(:player) { Player.new(name: 'Bill', game: game) }
   let(:players) { [] }
   let(:cup) { instance_double(Cup) }
@@ -117,6 +118,15 @@ RSpec.describe Player, type: :model do
           expect(game).to receive(:finished!)
           player.quaff(cup)
         end
+      end
+    end
+
+    context 'when the game has finished' do
+      let(:game_status) { 'finished' }
+
+      it 'refuses to quaff' do
+        player.quaff(cup)
+        expect(player.quaffed?(cup)).to eq false
       end
     end
   end

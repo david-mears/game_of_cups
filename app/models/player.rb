@@ -22,6 +22,8 @@ class Player < ApplicationRecord
   end
 
   def quaff(cup)
+    return unless game.started?
+
     cup.players << self
     if cup.accursed_chalice?
       evil!
