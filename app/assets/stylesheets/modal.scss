@@ -1,0 +1,93 @@
+$black: #111;
+$white: #fffff8;
+
+.good {
+  .modal {
+    background-color: $black;
+    color: $white;
+    border-color: $white;
+  }
+}
+
+.evil {
+  .modal {
+    background-color: $white;
+    color: $black;
+    border-color: $black;
+  }
+}
+
+#modalCollection {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+
+  .modal {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.8);
+    padding: 50px;
+    margin-bottom: -25%;
+    border-radius: 5px;
+    border: 2px solid;
+    font-size: 150%;
+    position: relative;
+    animation-duration: 0.5s;
+
+    button.closeModalButton {
+      float: right;
+      position: relative;
+      bottom: 65px;
+      left: 65px;
+      margin-left: 100%; // To make the following paragraph be on its own line
+      border-radius: 1000px;
+    }
+
+    &.slideOut {
+      overflow: hidden;
+      animation-name: slideOut;
+      animation-fill-mode: forwards;
+
+      button.closeModalButton {
+        display: none;
+      }
+    }
+
+    &.slideIn {
+      animation-name: slideIn;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    top: -60vh;
+  }
+
+  to {
+    top: 0vh;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    height: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border: 2px solid;
+    opacity: 100%;
+    margin-bottom: -25%;
+  }
+
+  to {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+    opacity: 0%;
+    // Set margin-bottom negative because the <p> remains after the animation and takes space,
+    // and because I need the <p> to continue to exist during the animation as it determines the width
+    // of the element. The value depends on the font size.
+    margin-bottom: -24.5px;
+  }
+}
