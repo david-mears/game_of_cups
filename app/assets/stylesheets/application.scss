@@ -18,6 +18,43 @@ $tufte-breakpoint: 760px;
 $black: #111;
 $white: #fffff8;
 
+article {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+
+  &.backgrounded {
+    animation-name: backgrounded;
+  }
+
+  &.unBackgrounded {
+    animation-name: unBackgrounded;
+  }
+}
+
+@keyframes backgrounded {
+  from {
+    opacity: 100%;
+    filter: grayscale(.0) blur(0px);
+  }
+
+  to {
+    opacity: 50%;
+    filter: grayscale(.3) blur(1px);
+  }
+}
+
+@keyframes unBackgrounded {
+  from {
+    opacity: 50%;
+    filter: grayscale(.3) blur(1px);
+  }
+
+  to {
+    opacity: 100%;
+    filter: grayscale(.0) blur(0px);
+  }
+}
+
 body.evil {
   background-color: $black;
   color: $white;
@@ -39,4 +76,8 @@ input, textarea, button {
   -ms-hyphens: auto;
   hyphens: auto;
   line-height: 1.8;
+}
+
+a.noAnchorUnderlines {
+  text-decoration: none;
 }

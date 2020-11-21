@@ -12,7 +12,8 @@
   </head>
 
   <body class=<%= @player&.allegiance %>>
-    <article style="<%= "padding-top: 0" if @game.present? && !@game.draft? %>"">
+    <div id="modalCollection"></div>
+    <article style="<%= "padding-top: 0" if @game.present? && !@game.draft? %>">
       <% flash.each do |type, msg| %>
         <div>
           <%= msg %>

@@ -46,7 +46,7 @@ RSpec.feature 'Gameplay' do
       # Players only see the names of cups they have quaffed.
       # Clicking a cup changes the player's allegiance.
       # This test is agnostic as to whether Mr Bean starts the game as evil or good.
-      find('#merlins_goblet_anchor').click
+      find('#merlins_goblet_button').click
 
       expect(page).to have_css('#merlins_goblet_quaffed_true')
       expect(page).to have_css('#accursed_chalice_quaffed_false')
@@ -58,7 +58,7 @@ RSpec.feature 'Gameplay' do
 
       expect(page).to have_content('Mr Bean, you are Good')
 
-      find('#accursed_chalice_anchor').click
+      find('#accursed_chalice_button').click
 
       expect(page).to have_css('#merlins_goblet_quaffed_true')
       expect(page).to have_css('#accursed_chalice_quaffed_true')

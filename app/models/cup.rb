@@ -21,6 +21,10 @@ class Cup < ApplicationRecord
     filenames.shuffle.take(number_of_filenames)
   end
 
+  def alt_img_text(player)
+    (player.quaffed?(self) ? human_readable_name : 'A cup of unknown identity')
+  end
+
   def human_readable_name
     NAMES[kind.to_sym]
   end
