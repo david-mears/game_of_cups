@@ -33,6 +33,12 @@ class Game < ApplicationRecord
     players.reject(&:arthur?)
   end
 
+  def victorious_knights
+    return [] unless finished?
+
+    knights.select{ |knight| knight.allegiance == arthur.allegiance }
+  end
+
   private
 
   def create_cups

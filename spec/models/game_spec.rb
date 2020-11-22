@@ -73,4 +73,30 @@ RSpec.describe Game, type: :model do
       expect(players.select(&:good?).size).to eq(number_of_players - number_of_evil_players_at_start)
     end
   end
+
+  describe '#victorious_knights' do
+    context 'when the game is not finished' do
+      it 'returns an empty array' do
+        expect(game.victorious_knights).to be_empty
+      end
+    end
+
+    context 'when the game is finished' do
+      let(:number_of_players) { 4 }
+
+      before do
+        number_of_players.times do |index|
+          Player.create(name: "Player #{index + 1}", game: game)
+        end
+        game.players.first.update!(arthur: true, allegiance: 'evil')
+        game.players.second.update!(allegiance: 'evil')
+        game.players.last.update!(allegiance: 'evil')
+        game.finished!
+      end
+
+      it 'returns the knights with the same allegiance as arthur' do
+        expect(game.victorious_knights.map(&:name)).to eq(['Player 2', 'Player 4'])
+      end
+    end
+  end
 end
