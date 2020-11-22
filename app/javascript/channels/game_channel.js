@@ -4,6 +4,9 @@ import alertModal from "../scripts/alertModal"
 consumer.subscriptions.create({ channel: "GameChannel", 
                                 slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
   received(data) {
+    const playerData = document.getElementById('playerInfo').dataset
+    const currentPlayerId = parseInt(playerData.playerId);
+
     if (data['event'] === 'new_player') {
       const players = document.getElementsByClassName('player');
 
@@ -24,15 +27,14 @@ consumer.subscriptions.create({ channel: "GameChannel",
 
     } else if (data['event'] === 'cup_quaffed') {
       const playerData = document.getElementById("playerInfo").dataset;
-      const currentPlayerId = playerData.playerId;
 
-      if (data['quaffer'] !== parseInt(currentPlayerId)) {
+      if (data['quaffer'] !== currentPlayerId) {
         alertModal(data['description']);
       };
       if (data['status'] === 'finished') {
         const arthurAllegiance = data['arthur_allegiance']
-        const playerIsVictorious = data['victorious_knights'].includes(currentPlayerId)
-        const playerIsArthur = (data['arthur'] === parseInt(currentPlayerId))
+        const playerIsVictorious = data['victorious_knights'].includes(playerData.playerId)
+        const playerIsArthur = (parseInt(data['arthur']) === currentPlayerId)
 
         const gameOverHeading = `<h1 style="margin-top: 0">The End</h1>`
         const gameOverMessage = playerIsVictorious ? `You were victorious!` : `You lost!`
@@ -45,8 +47,33 @@ consumer.subscriptions.create({ channel: "GameChannel",
         document.getElementById('endGame').innerHTML = (gameOverHeading + gameOverDetails)
       }
 
-    } else {
-      window.location.reload();
+    } else if (data['event'] === 'game_started') {
+      let message = `The game has started! Arthur is ${data['arthur_name']}.`
+
+      if (data['evil_players'].flat().includes(playerData.playerId)) {
+        let evilNames = [];
+        let playerIndex;
+        let i;
+        for (i = 0; i < data['evil_players'].length; i++) {
+          evilNames.append(data['evil_players'][i][1]);
+          if (data['evil_players'][i][0] === playerData.playerId) {
+            playerIndex = i
+          };
+        };
+        evilNames.splice(playerIndex, 1);
+
+        const listOfOtherEvilPlayers = (evilNames.length === 0) ?
+          'You are the only evil player.'
+        :
+          `You are evil, along with ${[evilNames.slice(0, (evilNames.length - 1)).join(', '),
+          evilNames[evilNames.length - 1]].join(' & ')}`
+
+        message = `${message}</p><p>${listOfOtherEvilPlayers}.</p>`
+      } else {
+        message = `${message}</p><p>You are good.</p>`
+      }
+      message = `${message}<p><a href="${window.location}"><button>OK</button></a></p>`
+      alertModal(message, false);
     }
   }
 })

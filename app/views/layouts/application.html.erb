@@ -12,6 +12,7 @@
   </head>
 
   <body class=<%= @player&.allegiance %>>
+    <div id="playerInfo" data-player-id=<%=@player&.id %>></div>
     <div id="modalCollection"></div>
     <article style="<%= "padding-top: 0" if @game.present? && !@game.draft? %>">
       <% flash.each do |type, msg| %>

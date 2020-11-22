@@ -1,6 +1,4 @@
-import {createConsumer} from "@rails/actioncable";
-
-const alertModal = (message) => {
+const alertModal = (message, withCloseButton = true) => {
   const mainPage = document.getElementsByTagName('article')[0];
   mainPage.classList.remove('unBackgrounded');
   mainPage.classList.add('backgrounded');
@@ -12,8 +10,9 @@ const alertModal = (message) => {
   };
 
   const indexOfNewModal = Date.now();
+  const button = withCloseButton ? `<button class="closeModalButton" id="closeModal${indexOfNewModal}Button">✖</button>` : ``
   const newModal = `<div class="modal slideIn" id="modal${indexOfNewModal}" style="z-index: ${indexOfNewModal};">
-                      <button class="closeModalButton" id="closeModal${indexOfNewModal}Button">✖</button>
+                      ${button}
                       <p>${message}</p>
                     </div>`
   document.getElementById('modalCollection').insertAdjacentHTML('afterbegin', newModal)

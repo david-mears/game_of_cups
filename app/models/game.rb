@@ -18,7 +18,14 @@ class Game < ApplicationRecord
     started!
     players.sample.update!(arthur: true)
     players.reject(&:arthur?).shuffle.take(number_of_evil_players_at_start).each(&:evil!)
-    GameChannel.broadcast_to(self, { message: 'The game started', event: 'game_started' })
+    evil_players = players.select(&:evil?)
+    GameChannel.broadcast_to(self, {
+      event: 'game_started',
+      # TODO:
+      # The problem is below. It seems that a 2-D array is too much to ask of ActionCable. Split it back into two 1-D arrays.
+      evil_players: evil_players.pluck(:id, :name),
+      arthur_name: arthur&.name
+    })
   end
 
   def quorate?
