@@ -16,15 +16,8 @@ class PlayersController < ApplicationController
 
   def quaff
     return unless @game.started?
-    @player = session_player
-    if @player.quaff Cup.find(cup_params[:cup_id])
-      respond_to do |format|
-        format.html { redirect_to game_path(slug: @game.slug) }
-        format.js
-      end
-    else
-      render game_path(slug: @game.slug)
-    end
+
+    session_player.quaff Cup.find(cup_params[:cup_id])
   end
 
   private

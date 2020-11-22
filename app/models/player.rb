@@ -32,7 +32,7 @@ class Player < ApplicationRecord
     elsif arthur? && cup.holy_grail?
       game.finished!
     end
-    broadcast_draught(cup)
+    broadcast_draught
   end
 
   def quaffed?(cup)
@@ -49,11 +49,21 @@ class Player < ApplicationRecord
 
   private
 
-  def broadcast_draught(cup)
+  def broadcast_draught
     GameChannel.broadcast_to(game, {
                                event: 'cup_quaffed',
-                               description: "#{name} drank cup #{cup.label}",
+                               description: description,
                                quaffer: id,
+                               arthur: game.arthur&.id,
+                               arthur_allegiance: game.arthur&.allegiance,
+                               victorious_knights: game.victorious_knights.pluck(:id),
+                               status: game.status
                              })
+  end
+
+  def description
+    scratch = "#{name} drank cup #{cup.label}."
+    scratch += ' Game over!' if game.finished?
+    scratch
   end
 end

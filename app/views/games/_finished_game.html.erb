@@ -4,5 +4,5 @@
   <p class="center">You <%= @game.arthur.allegiance == @player.allegiance ? 'were victorious' : 'lost' %>!</p>
 <% else %>
   <p class="center">You drank from the Holy Grail. Your allegiance is to the forces of <span class="newthought"><%= @game.arthur.allegiance %></span>.</p>
-  <p class="center">The <%= @game.arthur.allegiance %> side <%= @game.arthur.allegiance == @player.allegiance ? 'were victorious' : 'lost' %>.</p>
+  <p class="center">The <%= @game.arthur.allegiance %> side were victorious.</p>
 <% end %>

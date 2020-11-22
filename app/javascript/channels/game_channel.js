@@ -21,11 +21,30 @@ consumer.subscriptions.create({ channel: "GameChannel",
         button.disabled = false;
         button.value = 'Start the game already!'
       };
+
     } else if (data['event'] === 'cup_quaffed') {
-      const currentPlayerId = document.getElementById("playerInfo").dataset.playerId;
-      if (parseInt(data['quaffer']) !== parseInt(currentPlayerId)) {
+      const playerData = document.getElementById("playerInfo").dataset;
+      const currentPlayerId = playerData.playerId;
+
+      if (data['quaffer'] !== parseInt(currentPlayerId)) {
         alertModal(data['description']);
       };
+      if (data['status'] === 'finished') {
+        const arthurAllegiance = data['arthur_allegiance']
+        const playerIsVictorious = data['victorious_knights'].includes(currentPlayerId)
+        const playerIsArthur = (data['arthur'] === parseInt(currentPlayerId))
+
+        const gameOverHeading = `<h1 style="margin-top: 0">The End</h1>`
+        const gameOverMessage = playerIsVictorious ? `You were victorious!` : `You lost!`
+        const gameOverDetails = !playerIsArthur ?
+          `<p class="center">Arthur drank from the Holy Grail, sealing your fate. Arthur's allegiance is to the forces of <span class="newthought">${arthurAllegiance}</span>.</p>
+           <p class="center">${gameOverMessage}</p>`
+        :
+          `<p class="center">You drank from the Holy Grail. Your allegiance is to the forces of <span class="newthought">${arthurAllegiance}</span>.</p>
+           <p class="center">The ${arthurAllegiance} side were victorious.</p>`
+        document.getElementById('endGame').innerHTML = (gameOverHeading + gameOverDetails)
+      }
+
     } else {
       window.location.reload();
     }

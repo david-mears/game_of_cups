@@ -36,7 +36,7 @@ class Game < ApplicationRecord
   def victorious_knights
     return [] unless finished?
 
-    knights.select{ |knight| knight.allegiance == arthur.allegiance }
+    knights.select { |knight| knight.allegiance == arthur.allegiance }
   end
 
   private
