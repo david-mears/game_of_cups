@@ -1,17 +1,22 @@
-<%= render partial: 'finished_game' if @game.finished? %>
+<%= render partial: 'leave_game' %>
+
+<div id="endOfGame">
+  <%= render partial: 'finished_game' if @game.finished? %>
+</div>
 
 <section class="spacious">
   <p>
     <span class="marginnote">
-      <%=@player.name %>, you are <span class="newthought"><%=@player.allegiance.capitalize%></span> <%=@allegiance_symbol%>
+      <%=@player.name %>, you are
+        <span class="newthought" id="allegiance"><%=@player.allegiance%></span>
+<!-- TODO: update the symbol when migrated to Redux -->
+      <%=@allegiance_symbol%>
     </span>
     <span class="marginnote">
-      <%# My notes:<br/>
-      <textarea placeholder="I think... (drag to expand)"></textarea> %>
       Log:
     </span>
     <span class="marginnote" id="draughts">
-      <% @draughts.sort_by(&:id).each do |draught| %>
+      <% @draughts.sort_by(&:created_at).each do |draught| %>
         <%= draught.player == @player ? 'You' : draught.player.name %> drank cup <%= draught.cup.label %><br/>
       <% end %>
     </span>
@@ -25,11 +30,4 @@
   <%= render partial: 'players' %>
 
   <%= render partial: 'cups' %>
-
-  <button id="addModalButton">Add modal</button>
 </section>
-
-
-<div id="leaveGame">
-  <%= button_to "Leave Game", games_leave_game_path(slug: @game.slug) %>
-</div>

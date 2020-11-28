@@ -1,30 +1,20 @@
 import consumer from "./consumer"
+import doGameStartUpdate from "../scripts/doGameStartUpdate"
+import doNewPlayerUpdate from "../scripts/doNewPlayerUpdate"
+import doQuaffUpdate from "../scripts/doQuaffUpdate"
 
 consumer.subscriptions.create({ channel: "GameChannel", 
                                 slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
   received(data) {
+    const playerData = document.getElementById('playerInfo').dataset
+    const currentPlayerId = parseInt(playerData.playerId);
+
     if (data['event'] === 'new_player') {
-      const players = document.getElementsByClassName('player');
-
-      let i;
-      for (i = 0; i < players.length; i++) {
-        const playerNameElement = document.getElementById(`playerName${i}`);
-        if (playerNameElement.innerText === '') {
-          playerNameElement.innerHTML = data['name'];
-          break;
-        };
-      };
-
-      if (data['quorate'] === true) {
-        const button = document.getElementById('startButton');
-        button.disabled = false;
-        button.value = 'Start the game already!'
-      };
+      doNewPlayerUpdate(data);
     } else if (data['event'] === 'cup_quaffed') {
-      window.localStorage.setItem('last_draught', data['description'])
-      window.location.reload();
-    } else {
-      window.location.reload();
+      doQuaffUpdate(data, currentPlayerId)
+    } else if (data['event'] === 'game_started') {
+      doGameStartUpdate(data, currentPlayerId)
     }
   }
 })

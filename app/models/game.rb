@@ -18,7 +18,13 @@ class Game < ApplicationRecord
     started!
     players.sample.update!(arthur: true)
     players.reject(&:arthur?).shuffle.take(number_of_evil_players_at_start).each(&:evil!)
-    GameChannel.broadcast_to(self, { message: 'The game started', event: 'game_started' })
+    GameChannel.broadcast_to(self, {
+      event: 'game_started',
+      evil_player_ids: evil_players.pluck(:id),
+      evil_player_names: evil_players.pluck(:name),
+      arthur_id: arthur&.id,
+      arthur_name: arthur&.name
+    })
   end
 
   def quorate?
@@ -31,6 +37,16 @@ class Game < ApplicationRecord
 
   def knights
     players.reject(&:arthur?)
+  end
+
+  def victorious_knights
+    return [] unless finished?
+
+    knights.select { |knight| knight.allegiance == arthur.allegiance }
+  end
+
+  def evil_players
+    players.select(&:evil?)
   end
 
   private

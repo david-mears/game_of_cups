@@ -41,7 +41,6 @@ class GamesController < ApplicationController
     return unless @game.draft?
 
     @game.start
-    redirect_to game_path(slug: slug_param)
   end
 
   def game_not_found

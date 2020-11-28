@@ -8,10 +8,11 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= favicon_link_tag asset_path('favicons/3_cups_on_white.jpg') %>
+    <%= favicon_link_tag asset_path('favicons/wikimedia_goblet.svg') %>
   </head>
 
   <body class=<%= @player&.allegiance %>>
+    <div id="playerInfo" data-player-id=<%=@player&.id %>></div>
     <div id="modalCollection"></div>
     <article style="<%= "padding-top: 0" if @game.present? && !@game.draft? %>">
       <% flash.each do |type, msg| %>

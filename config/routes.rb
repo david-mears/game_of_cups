@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get '/games/(/:slug)/not_found', to: 'games#game_not_found', as: 'game_not_found'
   post '/games/find', to: 'games#find'
+  get '/games/leave_game', to: 'games#leave_game'
   post '/games/(/:slug)/start', to: 'games#start', as: 'start_game'
   get '/games/(/:slug)/trashed', to: 'games#game_trashed', as: 'game_trashed'
   resources :games, only: %i[create new show], param: :slug do
@@ -11,6 +12,4 @@ Rails.application.routes.draw do
       post '/quaff', to: 'players#quaff'
     end
   end
-
-  post '/games/leave_game', to: 'games#leave_game'
 end

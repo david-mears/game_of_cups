@@ -9,9 +9,9 @@ class Cup < ApplicationRecord
   validates :label, presence: true
 
   NAMES = {
-    accursed_chalice: 'The Accursèd Chalice',
+    accursed_chalice: 'the Accursèd Chalice',
     merlins_goblet: 'Merlin’s Goblet',
-    holy_grail: 'The Holy Grail'
+    holy_grail: 'the Holy Grail'
   }.freeze
 
   enum kind: { accursed_chalice: 0, merlins_goblet: 1, holy_grail: 2 }

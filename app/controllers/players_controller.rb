@@ -18,7 +18,6 @@ class PlayersController < ApplicationController
     return unless @game.started?
 
     session_player.quaff Cup.find(cup_params[:cup_id])
-    redirect_to game_path(slug: @game.slug)
   end
 
   private
