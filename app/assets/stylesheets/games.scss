@@ -19,6 +19,15 @@ $tufte-breakpoint: 760px;
 
 // Show game path
 
+#allegiance, .cupLabel {
+  text-transform: capitalize; // Use css to be DRY because this text is inserted by JS or Ruby
+}
+
+.cupLabel {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 figure {
   text-align: center;
   display: inline-block;
@@ -28,8 +37,11 @@ figure {
     width: 33.3%;
   }
 
-  img {
+  .cupLabel, img {
     max-width: 200px;
+  }
+
+  img {
     border-radius: 5px;
     border-style: solid;
     border-color: $black;
@@ -100,6 +112,30 @@ body {
   }
 }
 
+#leaveGame {
+  text-align: right;
+
+  svg {
+    g {
+      path {
+        fill: $black;
+      }
+    }
+  }
+}
+
+.evil {
+  #leaveGame {
+    svg {
+      g {
+        path {
+          fill: $white;
+        }
+      }
+    }
+  }
+}
+
 
 // New game path
 
@@ -141,11 +177,6 @@ body {
   text-align: center;
   line-height: 2.5rem;
   border-radius: 4px;
-}
-
-
-#leaveGame {
-  text-align: right;
 }
 
 // Lobby

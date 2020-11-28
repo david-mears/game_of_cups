@@ -6,6 +6,12 @@ $white: #fffff8;
     background-color: $black;
     color: $white;
     border-color: $white;
+
+    svg {
+      path {
+        fill: $white;
+      }
+    }
   }
 }
 
@@ -14,6 +20,12 @@ $white: #fffff8;
     background-color: $white;
     color: $black;
     border-color: $black;
+
+    svg {
+      path {
+        fill: $black;
+      }
+    }
   }
 }
 

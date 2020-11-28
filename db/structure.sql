@@ -78,7 +78,9 @@ ALTER SEQUENCE public.cups_id_seq OWNED BY public.cups.id;
 CREATE TABLE public.draughts (
     player_id bigint NOT NULL,
     cup_id bigint NOT NULL,
-    id bigint NOT NULL
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -315,6 +317,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200918174248'),
 ('20200918194534'),
 ('20200919160443'),
-('20200925170533');
+('20200925170533'),
+('20201127212903');
 
 

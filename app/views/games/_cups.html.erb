@@ -2,8 +2,9 @@
   <% @game.cups.sort_by(&:label).each do |cup| %>
     <figure id=<%= "#{cup.kind}_quaffed_#{@player.quaffed?(cup)}" %>>
       <%= image_tag("cups/#{cup.image}", alt: cup.alt_img_text(@player), id: cup.kind) %>
+      </br>
       <button
-        id=<%= "#{cup.kind}_button"%>
+        id=<%= "#{cup.kind}_button" %>
         data-remote="true"
         data-url=<%= game_player_quaff_path(game_slug: @game.slug, player_id: @player.id) %>
         data-params="cup_id=<%= cup.id %>"
@@ -13,12 +14,12 @@
         Drink
       </button>
 
-      <h4><i>
+      <h3 class="cupLabel" id=<%= "cup_#{cup.label}_label" %>><i>
         <%= cup.label %>
         <% if @player.quaffed?(cup) || @game.finished? %>
           — <%= cup.human_readable_name%>
         <% end %>
-      </i></h4>
+      </i></h3>
     </figure>
   <% end %>
 </section>
