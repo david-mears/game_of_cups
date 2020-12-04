@@ -36,6 +36,8 @@ $white: #fffff8;
   transform: translate(-50%, -50%);
   z-index: 99;
   text-align: center;
+  max-height: 100%;
+  overflow: scroll;
 
   .modal {
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.8);
