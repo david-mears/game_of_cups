@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  before_action :set_no_leave_game, only: %w[index]
   before_action :set_game, except: %w[index find new create game_not_found]
   before_action :check_game_status, only: %w[show]
   before_action :check_if_game_is_full, only: %w[show]
@@ -50,8 +51,8 @@ class GamesController < ApplicationController
   def game_trashed; end
 
   def leave_game
-    @game.players.destroy(session_player)
-    @game.trashed! if @game.players.empty?
+    @game.players.destroy(session_player) unless session_player.blank? || @game.blank?
+    @game&.trashed! if @game&.players&.empty?
     session.destroy
     redirect_to root_path
   end
@@ -63,7 +64,7 @@ class GamesController < ApplicationController
   end
 
   def slug_param
-    (params.permit(:slug)[:slug] || params.permit(:game_slug)[:game_slug]).downcase
+    (params.permit(:slug)[:slug] || params.permit(:game_slug)[:game_slug])&.downcase
   end
 
   def generate_slug
