@@ -14,8 +14,8 @@ const allegianceMessage = (playerId, data) => {
       };
     };
     otherEvilPlayerNames.splice(playerIndex, 1);
-    const listOfTheOtherEvilPlayers = otherEvilPlayerNames.length == 1 ?
-      listOfTheOtherEvilPlayers[0]
+    const listOfTheOtherEvilPlayers = (otherEvilPlayerNames.length == 1) ?
+      otherEvilPlayerNames[0]
     :
       [
         otherEvilPlayerNames.slice(0, (otherEvilPlayerNames.length - 1)).join(', '),
