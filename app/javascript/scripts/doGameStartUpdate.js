@@ -14,10 +14,13 @@ const allegianceMessage = (playerId, data) => {
       };
     };
     otherEvilPlayerNames.splice(playerIndex, 1);
-    const listOfTheOtherEvilPlayers = [
-      otherEvilPlayerNames.slice(0, (otherEvilPlayerNames.length - 1)).join(', '),
-      otherEvilPlayerNames[otherEvilPlayerNames.length - 1]
-    ].join(' & ')
+    const listOfTheOtherEvilPlayers = otherEvilPlayerNames.length == 1 ?
+      listOfTheOtherEvilPlayers[0]
+    :
+      [
+        otherEvilPlayerNames.slice(0, (otherEvilPlayerNames.length - 1)).join(', '),
+        otherEvilPlayerNames[otherEvilPlayerNames.length - 1]
+      ].join(' & ')
 
     const task = `Corrupt Arthur to your side, then have him drink of the Holy Grail.`
     return (otherEvilPlayerNames.length === 0) ?
