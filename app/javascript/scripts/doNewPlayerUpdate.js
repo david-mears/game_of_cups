@@ -11,6 +11,7 @@ const doNewPlayerUpdate = (data) => {
   };
 
   if (data['quorate'] === true) {
+    console.log(document.getElementById('startButton'))
     const button = document.getElementById('startButton');
     button.disabled = false;
     button.value = 'Start the game already!'

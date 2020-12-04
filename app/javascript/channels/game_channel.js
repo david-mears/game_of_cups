@@ -5,7 +5,10 @@ import doQuaffUpdate from "../scripts/doQuaffUpdate"
 
 consumer.subscriptions.create({ channel: "GameChannel", 
                                 slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
+
   received(data) {
+    console.log(data)
+
     const playerData = document.getElementById('playerInfo').dataset
     const currentPlayerId = parseInt(playerData.playerId);
 
