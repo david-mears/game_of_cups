@@ -3,8 +3,18 @@
     <h1>Lobby</h1>
 
     <section>
-      <p>Share this URL to invite players: <a href="<%=@url%>"><%=@url%></a> </p>
-      <%= button_to 'Start (when all the players are here)', start_game_path(slug: @game.slug), disabled: (!@game.quorate? || @game.started? ), id: 'startButton' %>
+      <p>Share this URL to invite players: <a href="<%=@url%>"><%=@url%></a> </p>      
+      <button
+        id="startButton"
+        data-remote="true"
+        data-url=<%= start_game_path(slug: @game.slug) %>
+        data-method="post"
+        data-disable-with="Starting game..."
+        disabled=<%= @ready_to_start %>
+      >
+        <%= @ready_to_start ? 'Start (when all the players are here)' : 'Start the game already!' %>
+      </button>
+      
       <h2>The Players</h2>
         <div id="players">
         <% @game.number_of_players.times do |index| %>
