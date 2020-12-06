@@ -20,7 +20,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    @game.slug = generate_slug
+    @game.slug = Game.generate_slug
     @game.save
     if session_player.present?
       redirect_to game_path(slug: @game.slug)
@@ -65,16 +65,6 @@ class GamesController < ApplicationController
 
   def slug_param
     (params.permit(:slug)[:slug] || params.permit(:game_slug)[:game_slug])&.downcase
-  end
-
-  def generate_slug
-    begin
-      slug = WordsApi.new.get_word(min_letters: 4, max_letters: 4)
-    rescue StandardError
-      slug = ('a'..'z').to_a.sample(4).join
-    end
-    slug = set_slug if slug == 'find' || slug.include?('.') || Game.all.map(&:slug).include?(slug)
-    slug
   end
 
   def check_game_status

@@ -49,6 +49,16 @@ class Game < ApplicationRecord
     players.select(&:evil?)
   end
 
+  def self.generate_slug
+    begin
+      slug = WordsApi.new.get_word(min_letters: 5, max_letters: 5)
+    rescue StandardError
+      slug = ('a'..'z').to_a.sample(5).join
+    end
+    slug = generate_slug if slug == 'find' || slug.include?('.') || Game.all.map(&:slug).include?(slug)
+    slug
+  end
+
   private
 
   def create_cups
