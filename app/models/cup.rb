@@ -11,10 +11,16 @@ class Cup < ApplicationRecord
   NAMES = {
     accursed_chalice: 'the Accursèd Chalice',
     merlins_goblet: 'Merlin’s Goblet',
-    holy_grail: 'the Holy Grail'
+    holy_grail: 'the Holy Grail',
+    blindness: 'the Cup of Blindness'
   }.freeze
 
-  enum kind: { accursed_chalice: 0, merlins_goblet: 1, holy_grail: 2 }
+  enum kind: {
+    accursed_chalice: 0,
+    merlins_goblet: 1,
+    holy_grail: 2,
+    blindness: 3
+  }
 
   def self.read_n_random_filenames(number_of_filenames)
     filenames = Dir.entries('./app/assets/images/cups').reject { |file| File.directory? file }

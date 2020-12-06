@@ -11,6 +11,9 @@
       <br/><br/>
       (This game is in alpha, so let me know what a good ratio of good-evil is. I guess 15-25% should be evil.)
       <br/><br/>
+      <%= f.check_box :surprise_cup %>
+      <%= label_tag :surprise_cup, 'Add a random surprise cup?'%>
+      <br/><br/>
       <%= f.submit %>
     <% end %>
     <p>Note: this is a social game. That means if you are playing remotely, you will need some way to talk to each other.</p>

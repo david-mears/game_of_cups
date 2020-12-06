@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  NUMBER_OF_BASIC_CUPS = 3.freeze
+
   has_many :cups, dependent: :destroy
   has_many :players, dependent: :destroy
   validates :slug, presence: true, uniqueness: true
@@ -56,14 +58,26 @@ class Game < ApplicationRecord
   private
 
   def create_cups
-    filenames = Cup.read_n_random_filenames(3)
-    cups = []
-    Cup::NAMES.keys.shuffle.each_with_index do |kind, index|
-      cup = Cup.create(game: self, kind: kind.to_s, image: filenames[index], label: (index + 1).to_s)
-      cup.save
-      cups.push cup
+    image_filenames = Cup.read_n_random_filenames(number_of_cups_to_create)
+    Cup::NAMES.keys[0..(NUMBER_OF_BASIC_CUPS - 1)].shuffle.each_with_index do |kind, index|
+      Cup.create(game: self, kind: kind.to_s, image: image_filenames[index], label: (index + 1).to_s)
     end
-    self.cups = cups
+    return unless surprise_cup
+
+    create_surprise_cup(image_filenames)
+  end
+
+  def create_surprise_cup(image_filenames)
+    cups << Cup.create(
+      game: self,
+      kind: Cup::NAMES.keys[NUMBER_OF_BASIC_CUPS..].sample.to_s,
+      image: image_filenames[NUMBER_OF_BASIC_CUPS],
+      label: (NUMBER_OF_BASIC_CUPS + 1).to_s
+    )
+  end
+
+  def number_of_cups_to_create
+    surprise_cup ? NUMBER_OF_BASIC_CUPS + 1 : NUMBER_OF_BASIC_CUPS
   end
 
   def set_default_status

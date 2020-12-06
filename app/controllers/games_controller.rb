@@ -63,7 +63,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:number_of_players, :slug, :number_of_evil_players_at_start)
+    params.require(:game).permit(:number_of_players, :slug, :number_of_evil_players_at_start, :surprise_cup)
   end
 
   def slug_param

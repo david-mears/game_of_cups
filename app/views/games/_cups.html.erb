@@ -1,5 +1,5 @@
 <section id="cupsSection" data-player-allegiance= <%= @player.allegiance %> >
-  <% @game.cups.sort_by(&:label).each do |cup| %>
+  <% @game.cups.sort_by(&:label).each_with_index do |cup, index| %>
     <figure id=<%= "#{cup.kind}_quaffed_#{@player.quaffed?(cup)}" %>>
       <%= image_tag("cups/#{cup.image}", alt: cup.alt_img_text(@player), id: cup.kind) %>
       </br>
@@ -21,5 +21,8 @@
         <% end %>
       </i></h3>
     </figure>
+    <% if @game.cups.length == 4 && index == 1 %>
+      <br/>
+    <% end %>
   <% end %>
 </section>
