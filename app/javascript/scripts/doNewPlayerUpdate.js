@@ -1,6 +1,6 @@
 const updateStartButton = (button) => {
   button.disabled = false;
-  button.value = 'Start the game already!'
+  button.innerText = 'Start the game already!'
 }
 
 const getAndUpdateStartButton = () => {
@@ -10,7 +10,6 @@ const getAndUpdateStartButton = () => {
     // the player running this very function.
     setTimeout(() => {
       getAndUpdateStartButton();
-      console.log('tick')
     }, 100);
   } else {
     updateStartButton(button)

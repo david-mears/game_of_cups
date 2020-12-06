@@ -27,10 +27,12 @@ const alertModal = (message, withCloseButton = true) => {
                     </div>`
   document.getElementById('modalCollection').insertAdjacentHTML('afterbegin', newModal)
 
-  document.getElementById(`closeModal${indexOfNewModal}Button`).addEventListener('click', (e) => {
-    const buttonId = e.target.id;
-    closeModal(buttonId.match(/\d+/)[0], mainPage);
-  });
+  if (withCloseButton) {
+    document.getElementById(`closeModal${indexOfNewModal}Button`).addEventListener('click', (e) => {
+      const buttonId = e.target.id;
+      closeModal(buttonId.match(/\d+/)[0], mainPage);
+    });
+  };
 };
 
 export default alertModal
