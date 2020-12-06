@@ -1,3 +1,22 @@
+const updateStartButton = (button) => {
+  button.disabled = false;
+  button.value = 'Start the game already!'
+}
+
+const getAndUpdateStartButton = () => {
+  let button = document.getElementById('startButton');
+  if (button === null) {
+    // Page may not have loaded yet, especially if the 'new player' is
+    // the player running this very function.
+    setTimeout(() => {
+      getAndUpdateStartButton();
+      console.log('tick')
+    }, 100);
+  } else {
+    updateStartButton(button)
+  }
+}
+
 const doNewPlayerUpdate = (data) => {
   const players = document.getElementsByClassName('player');
 
@@ -11,10 +30,7 @@ const doNewPlayerUpdate = (data) => {
   };
 
   if (data['quorate'] === true) {
-    console.log(document.getElementById('startButton'))
-    const button = document.getElementById('startButton');
-    button.disabled = false;
-    button.value = 'Start the game already!'
+    getAndUpdateStartButton()
   };
 }
 
