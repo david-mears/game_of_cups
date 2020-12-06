@@ -18,15 +18,16 @@ import doQuaffUpdate from "../scripts/doQuaffUpdate"
 
 // https://philippe.bourgau.net/how-to-subscribe-to-an-actioncable-channel-on-a-specific-page-with-custom-data/
 
-// TODO: Once this is fixed, see if I can get rid of the 'refresh page' step for game-creator.
-
 const unsubscribeAndResubscribe = () => {
+  console.log("unsub and resub")
   // Unsubscribe players from all games, in case the current subscription is for a different
   // game (one they've left). This prevents the problem of being subscribed to two games at once.
 
   consumer.subscriptions.subscriptions.forEach(subscription => {
     subscription.unsubscribe();
   });
+
+  console.log("have unsubbed")
 
   consumer.subscriptions.create({ channel: "GameChannel", 
                                   slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
@@ -47,6 +48,9 @@ const unsubscribeAndResubscribe = () => {
       }
     }
   })
+
+  console.log("resubbed")
+
 }
 
 window.addEventListener('turbolinks:load', function() {
