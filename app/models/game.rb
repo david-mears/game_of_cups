@@ -18,13 +18,7 @@ class Game < ApplicationRecord
     started!
     players.sample.update!(arthur: true)
     players.reject(&:arthur?).shuffle.take(number_of_evil_players_at_start).each(&:evil!)
-    GameChannel.broadcast_to(self, {
-      event: 'game_started',
-      evil_player_ids: evil_players.pluck(:id),
-      evil_player_names: evil_players.pluck(:name),
-      arthur_id: arthur&.id,
-      arthur_name: arthur&.name
-    })
+    broadcast_game_start
   end
 
   def quorate?
@@ -74,5 +68,15 @@ class Game < ApplicationRecord
 
   def set_default_status
     draft! if status.nil?
+  end
+
+  def broadcast_game_start
+    GameChannel.broadcast_to(self, {
+      event: 'game_started',
+      evil_player_ids: evil_players.pluck(:id),
+      evil_player_names: evil_players.pluck(:name),
+      arthur_id: arthur&.id,
+      arthur_name: arthur&.name
+    })
   end
 end
