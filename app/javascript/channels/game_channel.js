@@ -3,6 +3,7 @@ import consumer from "./consumer"
 import doGameStartUpdate from "../scripts/doGameStartUpdate"
 import doNewPlayerUpdate from "../scripts/doNewPlayerUpdate"
 import doQuaffUpdate from "../scripts/doQuaffUpdate"
+import alertModal from "../scripts/alertModal"
 
 
 // This file is only run on page loads triggered by page refreshes or directly entering a url in the url address bar
@@ -19,7 +20,6 @@ import doQuaffUpdate from "../scripts/doQuaffUpdate"
 // https://philippe.bourgau.net/how-to-subscribe-to-an-actioncable-channel-on-a-specific-page-with-custom-data/
 
 const unsubscribeAndResubscribe = () => {
-  console.log("unsub and resub")
   // Unsubscribe players from all games, in case the current subscription is for a different
   // game (one they've left). This prevents the problem of being subscribed to two games at once.
 
@@ -27,14 +27,10 @@ const unsubscribeAndResubscribe = () => {
     subscription.unsubscribe();
   });
 
-  console.log("have unsubbed")
-
   consumer.subscriptions.create({ channel: "GameChannel", 
                                   slug: window.location.pathname.split('/').filter(word => word.length > 1)[1]}, {
 
     received(data) {
-      console.log(data)
-
       const playerData = document.getElementById('playerInfo').dataset
       const currentPlayerId = parseInt(playerData.playerId);
 
@@ -43,17 +39,48 @@ const unsubscribeAndResubscribe = () => {
       } else if (data['event'] === 'cup_quaffed') {
         doQuaffUpdate(data, currentPlayerId)
       } else if (data['event'] === 'game_started') {
-        console.log('got the game_started event')
         doGameStartUpdate(data, currentPlayerId)
+      } else if (data['event'] === 'heartbeat') {
+        lastSeenHeartbeatNumber = data['number']
       }
     }
   })
-
-  console.log("resubbed")
-
 }
 
 window.addEventListener('turbolinks:load', function() {
-  console.log('turbolinks load')
   unsubscribeAndResubscribe()
+  numberOfUnsuccessfulPings = 0;
 })
+
+// Periodically find out if connection has dropped.
+
+window.setInterval(ping, 1000);
+
+function ping() {
+  const slug = window.location.pathname.split('/').filter(word => word.length > 1)[1]
+
+  if (slug === "" || slug === "new" || slug === undefined) {
+    return false;
+  } else {
+    let thisPingsHeartbeatNumber = lastSeenHeartbeatNumber;
+
+    if (thisPingsHeartbeatNumber === previousPingsHeartbeatNumber) {
+      numberOfUnsuccessfulPings++
+    }
+
+    if (numberOfUnsuccessfulPings > 1 && document.getElementsByClassName('badConnection').length === 0) {
+      alertModal(`<p class="badConnection">Thine internet is ill connected</p>
+      <p>
+        <a href="${window.location}">
+          <button>Reload!</button>
+        </a>
+      </p> `, false)
+    }
+
+    previousPingsHeartbeatNumber = thisPingsHeartbeatNumber;
+  }
+}
+
+let lastSeenHeartbeatNumber;
+let previousPingsHeartbeatNumber;
+let numberOfUnsuccessfulPings;
