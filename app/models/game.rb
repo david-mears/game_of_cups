@@ -4,8 +4,9 @@ class Game < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :number_of_players, presence: true
 
-  after_create :set_default_status
-  after_create :create_cups
+  MAX_GAME_LENGTH_IN_SECONDS = 20 * 60
+
+  after_create :begin_heartbeat, :set_default_status, :create_cups
 
   enum status: {
     draft: 'draft',
@@ -78,5 +79,9 @@ class Game < ApplicationRecord
       arthur_id: arthur&.id,
       arthur_name: arthur&.name
     })
+  end
+
+  def begin_heartbeat
+    HeartbeatWorker.perform_async(slug)
   end
 end
